@@ -1,239 +1,143 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>Sistema LabFitness</title>
 
-	<!--  Bootstrap -->
-	<link rel="stylesheet" type="text/css"
-		href="resources/css/bootstrap.css" />
-
-
-	<!-- CSS Local -->
-	<link rel="stylesheet" type="text/css" href="resources/css/styles.css" />
-	<link rel="stylesheet" type="text/css"
-		href="resources/css/TableBootstrap.css" />
-	<link rel="stylesheet" type="text/css" href="resources/css/drop.css" />
-	<link rel="stylesheet" type="text/css"
-		href="resources/css/jquery.datetimepicker.css" />
-	<link rel="stylesheet" type="text/css" href="resources/css/theme.css" />
-	<link rel="stylesheet" type="text/css"
-		href="resources/css/primefaces.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/panel.css" />
-	<link rel="stylesheet" type="text/css" href="resources/css/PainelInicial.css" />
+            <meta charset="utf-8"/>
+            <meta name="description" content="Sistema de Avaliacao fisica e cricao de fichas de musculacao"/>
+            <meta name="generator" content="Brackets"/>
+            <meta name="keywords" content="labfitness,musculacao,ficha,saude,academia,regiane faia,leonardo bezerra
+                                           avalicao fisica,antropometria,anamnese"/>
+            <meta name="application-name" content="labfitness"/>
+            <meta http-equiv="X-UA-Compatible" content="IE-edge"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  
+            
+            
+            
+            <!-- Required meta tags -->
+    
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
 
-	<!-- Scripts Bootstrap -->
-	<script src="resources/js/TableBootstrap.js" />
-	<script src="resources/js/bootstrap.min.js" />
-	<script type="text/javascript" src="resources/js/drop.js" />
+<!-- Bootstrap CSS -->
+<link href="resources/css/estilos.css" rel="stylesheet" />
 
-
-
-	<!-- <script type="text/javascript" src="recursos/js/jquery-2.1.1.js"/>	-->
-	<script type="text/javascript" src="resources/js/script.js"
-		charset="charset=UTF-8" />
-	<script type="text/javascript" src="resources/js/validaCampos.js" />
-	<script type="text/javascript"
-		src="resources/js/jquery.datetimepicker.js" charset="charset=UTF-8" />
-
-
-	<script type="text/javascript" src="resources/js/enter.js" />
-
-
-
-
-
-
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous" />
 	
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+	<script src="resources/js/bootstrap.min.js"></script>
+	<script src="resources/js/jquery.js"></script>
 
 
-	<!--		
- <script>
-$(document).ready(function() {
-    jQuery('body').on('keydown', 'input, select, textarea', function(e) {
-        var self = $(this)
-                , form = self.parents('form:eq(0)')
-                , focusable
-                , next
-                ;
-        if (e.keyCode == 13) {
-            focusable = form.find('input,a,select,button,textarea').filter(':visible');
-            next = focusable.eq(focusable.index(this) + 1);
-            if (next.length) {
-                next.focus();
-            } else {
-                form.submit();
-            }
-            return false;
-        }
-    });
-});
-</script> -->
 
-	<!-- mmmmmmmmmmmm 
+<link href="resources/css/estilos.css" rel="stylesheet" />
+<link href="resources/css/custom.css" rel="stylesheet" />
 
-<script language="JavaScript">/*Este script foi desenvolvido por Crystian Zini Valduga,   com a finalidade de ajudar programadores web.É muito fácil copiar, por isso respeite quem teve a idéia   de fazê-lo. Amanha pode ser você no meu lugar.   Abraço   Bom proveito   Crystian*/
-var campos = new Array();// Função que adiciona os campos que vão receber o focofunction 
-addCampos(nome){campos[campos.length] = nome;}// Função que trata o evento do teclado.(Quando se clica no enter)
-function enter(evt){var ret = new Boolean(true);   
-var tecla = (navigator.appName == 'Netscape') ? evt.keyCode : window.event.keyCode;   
-var nome = (navigator.appName == 'Netscape')?evt.target.name: event.srcElement.name;   
-var type = (navigator.appName == 'Netscape')?evt.target.type: event.srcElement.type;   
-if(tecla == 13){	   
-	if(type == "button") return true;	   
-	ret = nextCampo(nome);	   
-	return ret;   
-	}   
-	return ret;}// Função que passa o foco para o próximo campo.
-	function nextCampo(nome){
-		for(i=0; i<campos.length;i++){
-			if(campos[i]== nome){		   
-			if(i==campos.length-1){			   
-				obj = eval('document.forms[0].'+campos[0]);			   
-				obj.focus();			   break;		   
-				} else {			   
-					obj = eval('document.forms[0].'+campos[i+1]);			   
-					obj.focus();			   break;		   
-					}	   
-			}   
-		}   
-		return false;}// atribuição do manipulador ao evento
-		if(navigator.appName=="Netscape") document.onkeypress = enter;
-		else document.onkeydown = enter;
-</script>
-
- mmmmmmmmmmmmm -->
-
-	<script>
-
-	function validate(evt) {
-		  var theEvent = evt || window.event;
-		  var key = theEvent.keyCode || theEvent.which;
-		  key = String.fromCharCode( key );
-		  var regex = /[0-9]|\,/;
-		  if( !regex.test(key) ) {
-		    theEvent.returnValue = false;
-		    if(theEvent.preventDefault) theEvent.preventDefault();
-		  }
-		}
-
-	
-	PrimeFaces.locales['pt'] = {
-	    closeText: 'Fechar',
-	    prevText: 'Anterior',
-	    nextText: 'Próximo',
-	    currentText: 'Começo',
-	    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-	    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Dez'],
-	    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
-	    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
-	    dayNamesMin: ['D','S','T','Q','Q','S','S'],
-	    weekHeader: 'Semana',
-	    firstDay: 0,
-	    isRTL: false,
-	    showMonthAfterYear: false,
-	    yearSuffix: '',
-	    timeOnlyTitle: 'Só Horas',
-	    timeText: 'Tempo',
-	    hourText: 'Hora',
-	    minuteText: 'Minuto',
-	    secondText: 'Segundo',
-	    ampm: false,
-	    month: 'Mês',
-	    week: 'Semana',
-	    day: 'Dia',
-	    allDayText : 'Todo o Dia'
-	};
-	</script>
-
-	<script>
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
-});
-</script>
+<link href="resources/css/bootstrap.min.css" rel="stylesheet" />
 </h:head>
-<h:body style="font-size:13px;">
+<h:body id="dados_cadastrais">
+
+	<header>
+
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<section class="container">
+				<div class="navbar-header">
+
+					<a href="#" class="navbar-toggle collapsed"> REGIANE FAIA </a>
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#movelmenu"
+						aria-expanded="false">
 
 
 
-
-	<div class="paginaFundo">
-		<div class="paginaFrente">
-			<div id='cssmenu'>
-				<ul>
-					<!-- <li><a href='Home.xhtml'>Início</a></li> -->
-					<li><a href='Home.xhtml'>Home</a></li>
-					<li><a href='DadosBipap.xhtml'>BIPAP</a></li>
-					<li><a href='DadosDiu.xhtml'>DIU</a></li>
-					<li><a href='DadosOPME.xhtml'>OPME</a></li>
-					<li><a href='DadosQtOral.xhtml'>QT ORAL</a></li>
-					<li><a href='Baixas.xhtml'>Baixas</a></li>
-					<li><a href='Competencias.xhtml'>Competencias</a></li>
-					<li class='active has-sub'><a href='#'>Relatórios</a>
-						<ul>
-							<li><a href='RelatorioValores.xhtml'>Relatório Conferência Valores</a></li>
-							<li><a href='RelatorioTransacao.xhtml'>Relatório Conferência Geral</a></li>
-							<li><a href='RelatorioDiu.xhtml'>Relatório de DIU por Item          </a></li>
-							<li><a href='RelatorioDiuDevolvidos.xhtml'>Relatório de DIU Devolvidos          </a></li>							
-							<li><a href='RelatorioUnimedB.xhtml'>Relatório Unimed Brasil OPME</a></li>							
-														
-						</ul>
-					</li>
-					<li><a href='ControleAcesso.xhtml'>Controle Acesso</a></li>
-				</ul>
-				
-			</div>
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
 
 
-
-			<div id="topo" style="margin-top: 0%;">
-				<h5>Desenvolvido pelo setor de TI (DSS) da Unimed Juiz de Fora - Sistemas Centralização OPME - Versão 1.0.1</h5>
-			</div>
-
-			<div id="Logo">
-				<img src="resources/img/logo_unimed_atualizada.png"
-					class="img-responsive center-block" />
-			</div>
-
-			<div id="subTopo">
-				<div class="collapse navbar-collapse"
-					id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav navbar-right">
-								<li style="rgba(0, 0, 0, 1)"><a href="/SistemaDadosOPME/Login.xhtml" style="rgba(0, 0, 0, 1)">Sair</a></li>
-							
-					</ul>
 				</div>
-			</div>
 
+				<div class="collapse navbar-collapse" id="movelmenu">
+
+					<a href="#" class="navbar-brand"> REGIANE FAIA </a>
+
+
+					<ul class="nav nav-pills justify-content-end ">
+
+						<li><a href="Home.xhtml">Home</a></li>
+						<li class="active"><a href="DadosCadastrais.xhtml"
+							target="_parent">Dados Cadastrais</a></li>
+						<li><a href="ficha.html" target="_parent">Ficha</a></li>
+						<li><a href="anamnese.html" target="_parent">Anamnese</a></li>
+						<li><a href="antropometria.html" target="_parent">Antropometria</a></li>
+						<li><a href="vodois.html" target="_parent">VO2</a></li>
+
+
+
+					</ul>
+
+
+				</div>
+			</section>
+		</nav>
+
+	</header>
+
+	<article>
+
+		<div class="container">
+
+			<form class="form-horizontal">
+			
 			<div id="page-wrapper">
-				<ui:insert name="corpo" />
-			</div>
-
-			<div class="rodaPe">
-				<p class="lf">
-					Copyright &copy; 2015 <a href="#" class="up">Unimed Juiz de
-						Fora - Sistema Centralização Dados OPME</a> - Todos os direitos
-					reservados
-				</p>
-				<div style="clear: both;"></div>
-			</div>
+		<ui:insert name="corpo" />
+	</div>
+			
+			</form>
+			
 
 		</div>
-	</div>
-	<script type="text/javascript" src="resources/js/script.js"
-		charset="charset=UTF-8" />
+
+		<footer> </footer>
+
+
+	</article>
+
+
+
+
+
+
+	<nav class="navbar navbar-default navbar-fixed-bottom text-center">
+
+	</nav>
+
+
+
 </h:body>
+
+
 
 </html>
