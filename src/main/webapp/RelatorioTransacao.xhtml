@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:opt="http://primefaces.prime.com.tr/optimus"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="#{perfilAcessoController.perfilTemplete}">
+	<ui:define name="corpo">
+		<script type="text/javascript"
+			src="recursos/js/jquery.validate.min.js" charset="charset=UTF-8" />
+		<script type="text/javascript" src="recursos/js/validaLogin.js"
+			charset="charset=UTF-8" />
+
+		<p:growl autoUpdate="true" />
+		<div class="titulo">
+			<legend>Conferência Geral</legend>
+		</div>
+
+		<div class="form-horizontal">
+
+			<h:form class="formularioCentro" id="relatorioForm"
+				enctype="multipart/form-data">
+
+
+
+				<div class="row" style="padding-bottom: 20px;">
+					<div class="col-md-4" style="width: 14%;">
+						<p:outputLabel value="Data Inicial:" />
+
+						<p:inputMask mask="99/99/9999" size="22" maxlength="100"
+							id="dataInicio"
+							value="#{relatorioTransacaoController.dataInicio}">
+
+						</p:inputMask>
+					</div>
+
+					<div class="col-md-4" style="width: 14%;">
+						<p:outputLabel value="Data Final:" />
+
+						<p:inputMask mask="99/99/9999" size="22" maxlength="100"
+							id="dataFinal" value="#{relatorioTransacaoController.dataFinal}">
+
+						</p:inputMask>
+					</div>
+					<div class="col-md-4" style="width: 14%;">
+					
+					<p:outputLabel value="Situação Nota:" />
+						<p:selectOneMenu
+							value="#{relatorioTransacaoController.situacaoFiltro}">
+
+							<f:selectItem itemLabel="Aberta" itemValue="Aberta"
+								noSelectionOption="true" />
+							<f:selectItem itemLabel="Baixadas" itemValue="Baixadas" />
+							<f:selectItem itemLabel="Todas" itemValue="Todas" />						
+
+						</p:selectOneMenu>
+					</div>
+
+
+					<div class="col-md-4" style="width: 23%; padding-top: 18px;">
+						<p:commandButton update="gridNotas"
+							actionListener="#{relatorioTransacaoController.carregarTabela()}"
+							value="Carregar Tabela" class="btn btn-success btn-sm">
+						</p:commandButton>
+
+					</div>
+				</div>
+
+
+
+
+
+				<p:commandButton value="Gerar Data Transação"
+					class="btn btn-success btn-sm"
+					actionListener="#{relatorioTransacaoController.carregaDatasTrasacao()}"
+					style="  margin-left: 87%;    margin-bottom: 10px;"
+					update="gridNotas" />
+
+				<p:dataTable var="registro" widgetVar="gridNotas"
+					value="#{relatorioTransacaoController.listaNotaFiscal}"
+					id="gridNotas" emptyMessage="Não há notas fiscais cadastradas."
+					filteredValue="#{relatorioTransacaoController.listaNotaFiscalFiltrada}"
+					scrollable="true" scrollHeight="450">
+					<f:facet name="header">
+						<!-- <h:outputText value="Data Transação" />
+						<p:graphicImage library="images" name="SPP_Interrogacao.png" 
+							style="height: 15px; margin-left: 5px;" data-toggle="tooltip"
+							title="A busca no filtro deste campo deve seguir o mesmo padrão das datas exibidas na tabela AAAA-MM-DD e devem ser separados por ífen. Exemplo: 2016-04-06.">
+						</p:graphicImage> -->
+
+						<f:facet name="header">
+							<h:commandLink style="MARGIN-LEFT: 81%;padding-right: 15px;">
+								<p:graphicImage value="resources/img/excel.png" />
+								<p:dataExporter type="xls" target="gridNotas"
+									fileName="Relatorio_contabilidade"
+									postProcessor="#{relatorioTransacaoController.postProcessXLS}" />
+							</h:commandLink>
+
+						</f:facet>
+
+
+					</f:facet>
+
+					<p:column headerText="Tipo Nota Fiscal" filterMatchMode="contains"
+						sortBy="#{registro.tipoRegistro}"
+						filterBy="#{registro.tipoRegistro}" filterStyle="width: 53px;"
+						style="padding: 4px 4px;text-align: center;width: 61px;">
+						<f:facet name="header">
+							<h:outputText value="Tipo" />
+						</f:facet>
+						<h:outputText value="#{registro.tipoRegistro}" />
+					</p:column>
+
+					<p:column headerText="Nr.Nota" sortBy="#{registro.numero}" filterMatchMode="contains"
+						filterBy="#{registro.numero}" filterStyle="width: 57px;"
+						style="padding: 4px 4px;text-align: center;width: 65px;">
+						<f:facet name="header">
+							<h:outputText value="Nr.Nota" />
+						</f:facet>
+						<h:outputText value="#{registro.numero}" />
+					</p:column>
+
+					<p:column headerText="Valor Nota" filterBy="#{registro.valor}" filterMatchMode="contains"
+						filterStyle="width: 75px;" sortBy="#{registro.valor}"
+						style="padding: 4px 4px;text-align: center;width: 83px;">
+						<f:facet name="header">
+							<h:outputText value="Valor Nota" />
+						</f:facet>
+						<h:outputText value="#{registro.valor}">
+							<f:convertNumber pattern="#0.00" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="C.Forn.GPS" filterStyle="width: 80px;" filterMatchMode="contains"
+						filterBy="#{registro.fornecedor.cdPrestador}"
+						
+						sortBy="#{registro.fornecedor.cdPrestador}"
+						style="padding: 4px 4px;text-align: center;width: 88px;">
+						<f:facet name="header">
+							<h:outputText value="C.Forn.GPS" />
+						</f:facet>
+						<h:outputText value="#{registro.fornecedor.cdPrestador}">
+							<f:convertNumber pattern="00000000" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="C.Forn.EMS" filterStyle="width: 82px;" filterMatchMode="contains"
+						filterBy="#{registro.fornecedor.cdContratante}"
+						
+						sortBy="#{registro.fornecedor.cdContratante}"
+						style="padding: 4px 4px;text-align: center;width: 90px;">
+						<f:facet name="header">
+							<h:outputText value="C.Forn.EMS" />
+						</f:facet>
+						<h:outputText value="#{registro.fornecedor.cdContratante}" />
+					</p:column>
+
+					<p:column headerText="Nome Fornecedor" 
+						sortBy="#{registro.fornecedor.nome}"
+						filterBy="#{registro.fornecedor.nome}" filterMatchMode="contains"
+						filterStyle="width: 224px;" style="padding: 4px 4px;">
+						<f:facet name="header">
+							<h:outputText value="Nome Fornecedor" />
+						</f:facet>
+						<h:outputText value="#{registro.fornecedor.nome}" />
+					</p:column>
+
+					<p:column headerText="Carteira Benef." filterMatchMode="contains"
+						sortBy="#{registro.beneficiario.cdCarteiraInteiraString}"
+						style="padding: 4px 4px;width: 145px;text-align: center;"
+						filterBy="#{registro.beneficiario.cdCarteiraInteiraString} "
+						filterStyle="width: 136px;">
+						<f:facet name="header">
+							<h:outputText value="Carteira Benef." />
+						</f:facet>
+
+						<h:outputText
+							value="#{registro.beneficiario.cdCarteiraInteiraString}">
+
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Nm.Benef." filterMatchMode="contains"
+						sortBy="#{registro.beneficiario.nome}" style="padding: 4px 4px;"
+						filterBy="#{registro.beneficiario.nome}"
+						filterStyle="width: 226px;">
+						<f:facet name="header">
+							<h:outputText value="Nome Beneficiário" />
+						</f:facet>
+						<h:outputText value="#{registro.beneficiario.nome}" />
+
+
+					</p:column>
+					
+					<p:column headerText="C.Hosp."
+						filterBy="#{registro.hospital.cdPrestador}" filterMatchMode="contains"
+						filterStyle="width: 63px;" sortBy="#{registro.hospital.cdPrestador}"
+						style="padding: 4px 4px;width: 70px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="C.Hosp." />
+						</f:facet>
+						<h:outputText value="#{registro.hospital.cdPrestador}">
+							<f:convertNumber pattern="00000000" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Nome Hosp." sortBy="#{registro.hospital.nome}" filterMatchMode="contains"
+						filterBy="#{registro.hospital.nome}" filterStyle="width: 90px;"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Nome Hosp." />
+						</f:facet>
+						<h:outputText value="#{registro.hospital.nome}" />
+					</p:column>
+
+					<p:column style="padding: 4px 4px;width: 90px;text-align: center;"
+						filterBy="#{registro.status}" filterMatchMode="contains"
+						filterStyle="width: 80px;">
+
+						<f:facet name="header">
+							<h:outputText value="Situação Nota" />
+
+
+						</f:facet>
+						<h:outputText value="#{registro.status}" />
+					</p:column>
+
+					<p:column headerText="Comp.Baixa" 
+						sortBy="#{registro.competenciaBaixa}" filterStyle="width: 84px;"
+						filterBy="#{registro.competenciaBaixa}" filterMatchMode="contains"
+						style="padding: 4px 4px;width: 93px;text-align: center;">
+						
+						<f:facet name="header">
+							<h:outputText value="Comp.Baixa" />
+
+
+						</f:facet>
+
+						<h:outputText value="#{registro.competenciaBaixa}" />
+					</p:column>
+
+					<p:column headerText="Dt.Transação"
+						sortBy="#{registro.dataTransacaoString}"
+						filterStyle="width: 90px;"
+						filterBy="#{registro.dataTransacaoString}"
+						filterMatchMode="contains"
+						style="padding: 4px 4px;width: 100px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Dt. Transação" />
+						</f:facet>
+						<h:outputText value="#{registro.dataTransacaoString}" />
+
+
+
+					</p:column>
+
+
+				</p:dataTable>
+			</h:form>
+
+			<p:ajaxStatus id="startAjax" onstart="PF('start').show();"
+				oncomplete="PF('start').hide();">
+			</p:ajaxStatus>
+			<p:dialog widgetVar="start" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false">
+				<h:graphicImage value="#{resource['img:carregandoo.gif']}"></h:graphicImage>
+			</p:dialog>
+
+
+
+		</div>
+
+	</ui:define>
+</ui:composition>
+</html>

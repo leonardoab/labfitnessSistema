@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:opt="http://primefaces.prime.com.tr/optimus"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="#{perfilAcessoController.perfilTemplete}">
+	<ui:define name="corpo">
+		<script type="text/javascript"
+			src="recursos/js/jquery.validate.min.js" charset="charset=UTF-8" />
+		<script type="text/javascript" src="recursos/js/validaLogin.js"
+			charset="charset=UTF-8" />
+
+		<p:growl autoUpdate="true" />
+		<div class="titulo">
+			<legend>Controle Acesso</legend>
+		</div>
+
+
+
+
+
+
+		<div class="form-horizontal">
+
+			<h:form class="formularioCentro" id="Competencias"
+				enctype="multipart/form-data">
+				
+				
+				<div class="row" style="padding-bottom: 20px;">
+					<div class="col-md-4" style="width: 14%;">
+						<p:outputLabel value="Login Rede:" />
+
+						<p:inputText  size="22" maxlength="100"
+							id="login" required="true" requiredMessage="Favor preencha o campo Login Rede"
+							value="#{controleAcessoController.novoColaborador.usuarioRede}">
+
+						</p:inputText>
+					</div>
+
+					<div class="col-md-4" style="width: 9%;">
+					
+					<p:outputLabel value="Perfil:" />
+						<p:selectOneMenu style="width: 100px;"
+							value="#{controleAcessoController.novoColaborador.perfilAcesso}"
+							
+							>
+							
+							<f:selectItem itemLabel="Baixas" itemValue="BAIXAS" noSelectionOption="true" />
+							<f:selectItem itemLabel="BIPAP" itemValue="BIPAP" />
+							<f:selectItem itemLabel="Contabilidade" itemValue="CONTABILIDADE" />	
+							<f:selectItem itemLabel="DIU" itemValue="DIU" />
+							<f:selectItem itemLabel="OPME" itemValue="OPME" />
+							<f:selectItem itemLabel="QTORAL" itemValue="QTORAL" />		
+							<f:selectItem itemLabel="Total" itemValue="TOTAL" />						
+
+						</p:selectOneMenu>
+					</div>
+
+
+					<div class="col-md-4" style="width: 23%; padding-top: 18px;">
+						<p:commandButton update="gridAcessos login"
+							actionListener="#{controleAcessoController.incluirAcesso()}"
+							value="Incluir Usuário" class="btn btn-success btn-sm">
+						</p:commandButton>
+
+					</div>
+				</div>
+				
+				
+				<div>ACESSOS -> PÁGINAS</div>
+				<div>BAIXAS -> Baixas</div>
+				<div>BIPAP -> BIPAP,Relatório Conferência Valores,Relatório Conferência Geral</div>
+				<div>CONTABILIDADE -> Competências,Relatório Conferência Geral</div>			
+				<div>DIU -> DIU</div>	
+				<div>OPME -> DIU,OPME,Relatório Conferência Valores,Relatório Conferência Geral,Relatório de DIU por Item,
+				Relatório de DIU Devolvidos,Relatório Unimed Brasil OPME
+				</div>
+				<div>QTORAL -> QTORAL,Relatório Conferência Valores,Relatório Conferência Geral</div>
+				<div>TOTAL -> TODAS PÁGINAS</div>
+
+				<p:dataTable var="registro" style="padding-top: 20px;"
+					value="#{controleAcessoController.listaColaboradores}"
+					id="gridAcessos" widgetVar="gridCompetencias"
+					scrollable="true" scrollHeight="450">
+
+
+					<p:column headerText="Login Rede"
+						style="padding: 4px 4px;text-align: center;">
+						<h:outputText value="#{registro.usuarioRede}" />
+					</p:column>
+					
+					<p:column headerText="Perfil"
+						style="padding: 4px 4px;text-align: center;">
+						<h:outputText value="#{registro.perfilAcesso}" />
+					</p:column>
+
+					<p:column style="padding: 4px 4px;width: 25px;text-align: center;">
+						<p:commandLink update="gridAcessos" process="@this"
+							styleClass="ui-icon ui-icon-cancel" title="Excluir Acesso"
+							action="#{controleAcessoController.removeColaborador()}">
+							<f:setPropertyActionListener value="#{registro}"
+								target="#{controleAcessoController.colaboradorSelecionada}" />
+						</p:commandLink>
+					</p:column>
+
+
+				</p:dataTable>
+			</h:form>
+		</div>
+		<p:ajaxStatus id="startAjax" onstart="PF('start').show();"
+			oncomplete="PF('start').hide();">
+		</p:ajaxStatus>
+		<p:dialog widgetVar="start" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<h:graphicImage value="#{resource['img:carregandoo.gif']}"></h:graphicImage>
+		</p:dialog>
+
+
+
+
+
+
+	</ui:define>
+</ui:composition>
+</html>

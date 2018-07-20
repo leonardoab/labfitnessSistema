@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:opt="http://primefaces.prime.com.tr/optimus"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="#{perfilAcessoController.perfilTemplete}">
+	<ui:define name="corpo">
+		<script type="text/javascript"
+			src="recursos/js/jquery.validate.min.js" charset="charset=UTF-8" />
+		<script type="text/javascript" src="recursos/js/validaLogin.js"
+			charset="charset=UTF-8" />
+
+		<p:growl autoUpdate="true" />
+		<div class="titulo">
+			<legend>Títulos em Aberto</legend>
+		</div>
+
+		<div class="form-horizontal">
+
+			<h:form class="formularioCentro" id="relatorioForm"
+				enctype="multipart/form-data">
+
+
+				<div class="form-group">
+					<div class="col-sm-5" style="margin-left: 0%;    margin-bottom: -5%;">
+						<label for="IcdnCliente" class="control-label">Código do Cliente</label>
+						<p:inputMask mask="9?999999" class="form-control" name="cdnCliente"
+							pt:placeholder="Código do cliente" style="  width: 97%;"
+							id="IcdnCliente"
+							value="#{titAcrController.cdnCliente}" />
+					</div>
+				</div>
+
+				<p:commandButton value="Buscar Títulos"
+					class="btn btn-success btn-sm"
+					actionListener="#{titAcrController.preencherListaTitAcr()}"
+					style="margin-left: 36%;    margin-bottom: 10px;    margin-top: 6px;"
+					update="gridTitAcr" />
+
+				<p:dataTable var="registro" paginator="true"
+					paginatorAlwaysVisible="true" widgetVar="listaTitAcr"
+					paginatorPosition="bottom" value="#{titAcrController.listaTitAcr}"
+					id="gridTitAcr" emptyMessage="Não há títulos em aberto.">
+					<f:facet name="header">
+						<h:commandLink style="MARGIN-LEFT: 59%;">
+							<p:graphicImage value="resources/img/excel.png" width="24"
+								style="margin-left: 500px;" />
+							<p:dataExporter type="xls" target="gridTitAcr"
+								fileName="registro" />
+						</h:commandLink>
+					</f:facet>
+
+
+					<p:column headerText="Código Cliente"
+						style="padding: 4px 4px;text-align: center;">
+						<h:outputText value="#{registro.cdnCliente}" />
+					</p:column>
+
+					<p:column headerText="Especialidade Docto"
+						style="padding: 4px 4px;text-align: center;">
+						<h:outputText value="#{registro.codEspecDocto}" />
+					</p:column>
+
+					<p:column headerText="Código Estabelecimento"
+						style="padding: 4px 4px;text-align: center;">
+						<h:outputText value="#{registro.codEstab}" />
+					</p:column>
+
+					<p:column headerText="Código Parcela"
+						style="padding: 4px 4px;text-align: center;">
+						<h:outputText value="#{registro.codParcela}" />
+					</p:column>
+
+					<p:column headerText="Código Ser Docto"
+						style="padding: 4px 4px;text-align: center;">
+						<h:outputText value="#{registro.codSerDocto}" />
+					</p:column>
+
+					<p:column headerText="Código Título Acr"
+						style="padding: 4px 4px;text-align: center;">
+						<h:outputText value="#{registro.codTitAcr}" />
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+		</div>
+
+	</ui:define>
+</ui:composition>
+</html>

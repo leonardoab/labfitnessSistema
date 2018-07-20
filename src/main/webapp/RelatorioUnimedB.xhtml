@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:opt="http://primefaces.prime.com.tr/optimus"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="#{perfilAcessoController.perfilTemplete}">
+	<ui:define name="corpo">
+		<script type="text/javascript"
+			src="recursos/js/jquery.validate.min.js" charset="charset=UTF-8" />
+		<script type="text/javascript" src="recursos/js/validaLogin.js"
+			charset="charset=UTF-8" />
+
+		<p:growl autoUpdate="true" />
+		<div class="titulo">
+			<legend>Relatório Unimed Brasil</legend>
+		</div>
+
+		<div class="form-horizontal">
+
+			<h:form class="formularioCentro" id="relatorioForm"
+				enctype="multipart/form-data">
+
+				<div class="row" style="    padding-bottom: 20px;">
+					<div class="col-md-4" style="width: 14%;">
+						<p:outputLabel value="Data Inicial:" />
+
+						<p:inputMask mask="99/99/9999" size="22" maxlength="100"
+							id="dataInicio" required="true"
+							requiredMessage="Competência obrigatória"
+							value="#{relatorioUnimedBController.dtinicio}">
+							
+
+						</p:inputMask>
+					</div>
+					
+					<div class="col-md-4" style="width: 14%;">
+						<p:outputLabel value="Data Final:" />
+
+						<p:inputMask mask="99/99/9999" size="22" maxlength="100"
+							id="dataFinal" required="true"
+							requiredMessage="Competência obrigatória"
+							value="#{relatorioUnimedBController.dtfinal}">
+							
+
+						</p:inputMask>
+					</div>
+					
+
+					<div class="col-md-4" style="width: 23%;    padding-top: 18px;">
+						<h:commandButton
+							actionListener="#{relatorioUnimedBController.carregaDados()}"
+							value="Gerar Dados" class="btn btn-success btn-sm">
+							<p:dataExporter type="xls" target="gridNotas" fileName="#{relatorioUnimedBController.competenciaAlterada}_UnimedBrasil" />
+						</h:commandButton>
+
+					</div>
+				</div>
+
+
+				<p:dataTable var="registro" rendered="false"
+					value="#{relatorioUnimedBController.listaNotaDetalhe}"
+					id="gridNotas" emptyMessage="Não há notas fiscais cadastradas.">
+					
+					
+					
+
+					<p:column headerText="Nome Unimed Origem"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Nome Unimed Origem" />
+						</f:facet>
+							<h:outputText value="UNIMED JUIZ DE FORA COOP TRAB MED LTDA" />
+					</p:column>
+					
+					
+					
+					<p:column headerText="Nome Unimed Executora"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Nome Unimed Executora" />
+						</f:facet>
+					    <h:outputText value="#{registro.notaFiscal.beneficiario.nomeUnimedUnidade}" />
+					</p:column>
+
+					<p:column headerText="Nome Fornecedor"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Nome Fornecedor" />
+						</f:facet>
+						<h:outputText value="#{registro.notaFiscal.fornecedor.nome}" />
+					</p:column>
+
+					<p:column headerText="CNPJ Fornecedor"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="CNPJ Fornecedor" />
+						</f:facet>
+						<h:outputText value="#{registro.notaFiscal.fornecedor.cnpj}">
+
+							<f:convertNumber pattern="0000000000000" />
+						</h:outputText>
+
+					</p:column>
+
+					<p:column headerText="Marca"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Marca" />
+						</f:facet>
+
+					</p:column>
+
+
+					<p:column headerText="Preço pago"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Preço pago" />
+						</f:facet>
+
+						<h:outputText value="#{registro.opmeQtBipap.valor}">
+							<f:convertNumber pattern="R$#0.00" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Nr. Nota Fiscal"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Nr. Nota Fiscal" />
+						</f:facet>
+						<h:outputText value="#{registro.notaFiscal.numero}" />
+					</p:column>
+
+					<p:column headerText="Nr. Registro Anvisa"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Nr. Registro Anvisa" />
+						</f:facet>
+						<h:outputText value="#{registro.opmeQtBipap.cdAnvisa}" />
+					</p:column>
+
+					<p:column headerText="Referência do produto"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Referência do produto" />
+						</f:facet>
+						<h:outputText value="#{registro.opmeQtBipap.observacao}" />
+					</p:column>
+
+					<p:column headerText="Descrição Técnica do Material"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Descrição Técnica do Material" />
+						</f:facet>
+						<h:outputText value="#{registro.opmeQtBipap.nomeInsumo}" />
+					</p:column>
+
+					<p:column headerText="CRM do Médico"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="CRM do Médico" />
+						</f:facet>
+						<h:outputText value="#{registro.notaFiscal.medico.cdPrestador}" />
+					</p:column>
+
+					<p:column headerText="Nome do Prestador"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Nome do Prestador" />
+						</f:facet>
+						<h:outputText value="#{registro.notaFiscal.hospital.nome}" />
+					</p:column>
+
+					<p:column headerText="CNPJ do Prestador"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="CNPJ do Prestador" />
+						</f:facet>
+						<h:outputText value="#{registro.notaFiscal.hospital.cnpj}" />
+					</p:column>
+
+					<p:column headerText="Nome Beneficiario"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Nome Beneficiario" />
+						</f:facet>
+						<h:outputText value="#{registro.notaFiscal.beneficiario.nome}" />
+					</p:column>
+
+					<p:column headerText="Código Beneficiario"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Código Beneficiario" />
+						</f:facet>
+						<h:outputText value="#{registro.notaFiscal.beneficiario.unidade}" /> - <h:outputText
+							value="#{registro.notaFiscal.beneficiario.cdCarteiraInteira}" />
+					</p:column>
+
+					<p:column headerText="Data Realização"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Data Realização" />
+						</f:facet>
+						<h:outputText value="#{registro.notaFiscal.dtRealizacao}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+								timeZone="America/Sao_Paulo" />
+						</h:outputText>
+
+
+					</p:column>
+
+					<p:column headerText="Quantidade"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Quantidade" />
+						</f:facet>
+						<h:outputText value="#{registro.opmeQtBipap.quantidade}" />
+					</p:column>
+					
+					<p:column headerText="Data Inclusao"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Data Inclusao" />
+						</f:facet>
+						<h:outputText value="#{registro.notaFiscal.dtInsercao}" />
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+			<p:ajaxStatus id="startAjax" onstart="PF('start').show();"
+				oncomplete="PF('start').hide();" >
+			</p:ajaxStatus>
+			<p:dialog widgetVar="start" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false">
+				<h:graphicImage value="#{resource['img:carregandoo.gif']}"></h:graphicImage>
+			</p:dialog>
+		</div>
+
+	</ui:define>
+</ui:composition>
+</html>

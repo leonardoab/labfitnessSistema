@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    
+     <!-- /*ATUALIZAÇÕES*/
+/*DATA = 		      					ANALISTA = 								*/
+/*DATA = 			  					ANALISTA = 								*/
+/*DATA = 			  					ANALISTA = 								*/
+/*DATA = 			  					ANALISTA = 								*/
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:opt="http://primefaces.prime.com.tr/optimus"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="Templete.xhtml">
+	<ui:define name="corpo">
+		<h:form id="FormRelatorio">
+			<p:growl autoUpdate="true" />
+			<div class="titulo">
+				<legend>Vincular Grupo Colaborador</legend>
+			</div>
+
+			<div class="formularioCorpo"
+				style="height: 724px; margin-bottom: -12%;">
+				<div class="form-horizontal">
+
+
+			
+
+
+					<div class="form-group" style="margin-left: -6%; margin-top: 3%;">
+
+
+						<div class="col-sm-3"
+							style="margin-left: 23%; width: 28%; margin-top: 4%;">
+							<p:outputLabel for="IGrupo" value="Grupo" />
+							<div class="input-group">
+								<span class="input-group-addon"> <span
+									class="glyphicon glyphicon glyphicon-user"></span>
+								</span>
+								<h:selectOneMenu class="form-control" id="IGrupo"
+									required="true"
+									requiredMessage="Grupo : é um campo Obrigatório !!!"
+									value="#{vincularPermissaoGrupo.grupoSelecionado}">
+									<f:selectItem itemValue="" itemLabel="SELEÇÃO GRUPO" />
+									<f:selectItems value="#{vincularPermissaoGrupo.grupos}" />
+									<p:ajax
+										listener="#{vincularPermissaoGrupo.carregaColaboradorGrupo()}"
+										update="@form" event="change" partialSubmit="true" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+
+						<p:commandLink type="button"
+							style="margin-left: -290px; margin-top: 70px;" 
+							pt:data-toggle="modal" pt:data-target="#myModal"
+							styleClass="ui-icon ui-icon-search" process="@this,IGrupo"></p:commandLink>
+
+						<div class="col-sm-3"
+							style="margin-left: 2%; width: 28%; margin-top: -5%;">
+							<p:outputLabel for="IPagina" value="Páginas" />
+							<div class="input-group">
+								<span class="input-group-addon"> <span
+									class="glyphicon glyphicon glyphicon-list-alt"></span>
+								</span>
+								<h:selectOneMenu class="form-control" id="IPagina"
+									style="width: 109%;" required="true"
+									requiredMessage="Página : É um campo obrigatório !!!"
+									value="#{vincularPermissaoGrupo.grupoPermissao.pagina}">
+									<f:selectItem itemValue="" itemLabel="SELEÇÃO PÁGINA" />
+									<f:selectItem itemValue="atualizarguias" itemLabel="ATUALIZAR GUIAS" />
+									<f:selectItem itemValue="cadastrargrupo" itemLabel="CADASTRAR GRUPOS" />
+									<f:selectItem itemValue="editargrupo" itemLabel="EDITAR GRUPOS" />
+									<f:selectItem itemValue="home" itemLabel="HOME" />
+									<f:selectItem itemValue="vinculargrupocolaborador" itemLabel="VINCULAR GRUPO COLABORADOR" />
+									<f:selectItem itemValue="vincularpermissaoGrupo" itemLabel="VINCULAR GRUPO PERMISSÃO" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+
+
+					</div>
+
+
+					<p:commandButton class="btn btn-primary btn-sm"
+						style="margin-top: -127px;margin-bottom: -20%;margin-left: 70%;" 
+						value="Adicionar" ajax="true" update="tableGrupo" action="#{vincularPermissaoGrupo.adicionarTabela()}">
+					</p:commandButton>
+
+
+					<p:commandButton class="btn btn-success btn-sm"
+						style="margin-left: 721px;margin-top: -19%;margin-bottom: -20%;"
+						value="Salvar" ajax="true" update="@form" action="#{vincularPermissaoGrupo.salvar()}">
+					</p:commandButton>
+
+
+					<p:dataTable var="grupo" id="tableGrupo"
+						emptyMessage="Não Existem Grupos"
+						value="#{vincularPermissaoGrupo.gruposPermissao}"
+						style="  width: 81%; margin-left: 10%;margin-top: 2%;">
+						<p:column headerText="Grupo" style="text-align: center">
+							<h:outputText value="#{grupo.grupo.descricao}" />
+						</p:column>
+						<p:column headerText="Página" style="text-align: center">
+							<h:outputText value="#{grupo.pagina}" />
+						</p:column>
+
+						<p:column style="text-align: center">
+							<p:commandLink type="button" title="Remover da Tabela" process="@none,@this"
+								styleClass="ui-icon ui-icon-closethick" update="tableGrupo"
+								action="#{vincularPermissaoGrupo.removerTabela()}" >
+								<f:setPropertyActionListener value="#{grupo}"
+									target="#{vincularPermissaoGrupo.selectGrupoPermissao}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header"></div>
+								<div class="modal-body">
+
+									<p:outputLabel value="Grupo : #{vincularPermissaoGrupo.grupoSelecionado} "
+										style="  margin-left: 10%; margin-top: 2%;font-family: -webkit-pictograph;font-size: 140%; color: darkgrey; margin-bottom: 2%;"></p:outputLabel>
+									
+									<p:dataTable var="grupo" id="tabeladeGrupos"
+										emptyMessage="Não Existem Colaboradores nos Grupos"
+										value="#{vincularPermissaoGrupo.colaboradorGrupo}"
+										style="  width: 81%; margin-left: 10%;margin-top: 2%;">
+										<p:column headerText="Matricula" style="text-align: center">
+											<h:outputText value="#{grupo.matricula}" />
+										</p:column>
+										<p:column headerText="Grupo" style="text-align: center">
+											<h:outputText value="#{grupo.nomeColaborador}" />
+										</p:column>
+										
+									</p:dataTable>
+
+
+								</div>
+
+								<div class="modal-footer"></div>
+							</div>
+						</div>
+					</div>
+
+
+
+
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

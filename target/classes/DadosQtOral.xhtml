@@ -1,0 +1,922 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:opt="http://primefaces.prime.com.tr/optimus"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="#{perfilAcessoController.perfilTemplete}">
+	<ui:define name="corpo">
+		<script type="text/javascript"
+			src="recursos/js/jquery.validate.min.js" charset="charset=UTF-8" />
+		<script type="text/javascript" src="recursos/js/validaLogin.js"
+			charset="charset=UTF-8" />
+
+		<p:growl autoUpdate="true" />
+		<div class="titulo">
+			<legend>Dados QT ORAL</legend>
+		</div>
+
+		<div class="form-horizontal">
+
+			<h:form class="formularioCentro" id="QtOralForm"
+				enctype="multipart/form-data">
+
+				<p:commandButton value="Novo Registro"
+					class="btn btn-success btn-sm" onclick="PF('dlg2').show();"
+					actionListener="#{dadosQtOralController.limparFormulario}"
+					style="  margin-left: 90.5%;    margin-bottom: 10px;"
+					update=":form" />
+
+				<p:dataTable var="registro"
+					value="#{dadosQtOralController.listaNotaFiscal}" id="gridNotas"
+					widgetVar="gridNotas"
+					emptyMessage="Não há notas fiscais cadastradas."
+					filteredValue="#{dadosQtOralController.listaNotaFiscalFiltradas}"
+					scrollable="true" scrollHeight="450">
+
+					<f:facet name="header">
+						<h:commandLink style="MARGIN-LEFT: 81%;padding-right: 15px;">
+							<p:graphicImage value="resources/img/excel.png" />
+							<p:dataExporter type="xls" target="gridNotas"
+								fileName="Registro_QTORAL" />
+						</h:commandLink>
+						
+					</f:facet>
+
+					<p:column headerText="Nr. Nota" sortBy="#{registro.numero}" filterMatchMode="contains"
+						style="padding: 4px 4px;text-align: center;"
+						filterBy="#{registro.numero}" filterStyle="width: 113px;">
+						<h:outputText value="#{registro.numero}" />
+
+
+					</p:column>
+					<p:column headerText="Valor Nota" sortBy="#{registro.valor}" filterMatchMode="contains"
+						style="padding: 4px 4px;text-align: center;"
+						filterBy="#{registro.valor}" filterStyle="width: 113px;">
+						<h:outputText value="#{registro.valor}">
+							<f:convertNumber pattern="R$#0.00" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Qtd" sortBy="#{registro.qtdItens}" filterMatchMode="contains"
+						style="width: 48px; text-align: center;padding: 4px 4px;"
+						filterBy="#{registro.qtdItens}" filterStyle="width: 40px;">
+						<h:outputText value="#{registro.qtdItens}" />
+					</p:column>
+					<p:column headerText="C.Forn." sortBy="#{registro.fornecedor.cdPrestador}" filterMatchMode="contains"
+						style="padding: 4px 4px;width: 67px;text-align: center;"
+						filterBy="#{registro.fornecedor.cdPrestador}"
+						filterStyle="width: 59px;">
+						<h:outputText value="#{registro.fornecedor.cdPrestador}">
+							<f:convertNumber pattern="00000000" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Nm.Forn." sortBy="#{registro.fornecedor.nome}" filterMatchMode="contains"
+						style="padding: 4px 4px;text-align: center;"
+						filterBy="#{registro.fornecedor.nome}"
+						filterStyle="width: 113px;">
+						<h:outputText value="#{registro.fornecedor.nome}" />
+					</p:column> 
+					<p:column headerText="Dt.Emis." sortBy="#{registro.dataEmissao}" filterMatchMode="contains"
+						style="padding: 4px 4px;width: 71px;text-align: center;"
+						filterBy="#{registro.dataEmissao}" filterStyle="width: 63px;">
+						<h:outputText value="#{registro.dataEmissao}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+								timeZone="America/Sao_Paulo" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Nr.Pedido" sortBy="#{registro.nrPedido}" filterMatchMode="contains"
+						style="padding: 4px 4px;text-align: center;"
+						filterBy="#{registro.nrPedido}" filterStyle="width: 113px;">
+						<h:outputText value="#{registro.nrPedido}" />
+					</p:column>
+					<p:column headerText="Guia.Aut." sortBy="#{registro.guiaAutorizacao.numeroGuiaCompleto}"
+						style="padding: 4px 4px;width: 85px;text-align: center;" filterMatchMode="contains"
+						filterBy="#{registro.guiaAutorizacao.numeroGuiaCompleto}"
+						filterStyle="width: 77px;">
+						<h:outputText
+							value="#{registro.guiaAutorizacao.numeroGuiaCompleto}" />
+					</p:column>
+					<p:column headerText="Carteira Benef." sortBy="#{registro.beneficiario.cdCarteiraInteiraString}"
+						style="padding: 4px 4px;width: 125px;text-align: center;" filterStyle="width: 116px;"
+						filterBy="#{registro.beneficiario.cdCarteiraInteiraString}" filterMatchMode="contains"
+						>
+
+						<h:outputText
+							value="#{registro.beneficiario.cdCarteiraInteiraString}">
+
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Nm.Benef." style="padding: 4px 4px;" sortBy="#{registro.beneficiario.nome}"
+						filterBy="#{registro.beneficiario.nome}" filterStyle="width: 113px;" filterMatchMode="contains"
+						>
+						<h:outputText value="#{registro.beneficiario.nome}" />
+
+
+					</p:column>
+
+					<p:column style="padding: 4px 4px;width: 140px;text-align: center;"
+						filterBy="#{registro.status}"  filterMatchMode="contains"
+						filterStyle="display: none;" >
+
+						<f:facet name="header">
+							<h:outputText value="Situação Nota" />
+							<p:selectOneMenu value="#{dadosQtOralController.situacaoFiltro}">
+
+								<f:selectItem itemLabel="Aberta" itemValue="Aberta"
+									noSelectionOption="true" />
+								<f:selectItem itemLabel="Todas" itemValue="Todas" />
+
+
+								<p:ajax event="change"
+									listener="#{dadosQtOralController.BuscarPorStatus()}"
+									update="gridNotas" />
+
+							</p:selectOneMenu>
+						</f:facet>
+						<h:outputText value="#{registro.status}" />
+					</p:column>
+
+
+
+					<p:column headerText="Senha Autorização"
+						style="padding: 4px 4px;width: 85px;text-align: center;"
+						filterBy="#{registro.senhaAutorizacao}" filterMatchMode="contains"
+						filterStyle="display: none;">
+						<h:outputText value="#{registro.senhaAutorizacao}" />
+					</p:column>
+
+					<p:column style="padding: 4px 4px;width: 20px;text-align: center;">
+
+
+
+
+						<p:commandLink update=":formDados"
+							oncomplete="PF('usuarioMudanca').show()"
+							styleClass="ui-icon ui-icon-clipboard" title="Dados Registro">
+							<f:setPropertyActionListener value="#{registro}"
+								target="#{dadosQtOralController.notaFiscalSelecionada}" />
+						</p:commandLink>
+
+
+
+
+
+					</p:column>
+					<p:column style="padding: 4px 4px;width: 20px;text-align: center;">
+						<p:commandLink update=":form" oncomplete="PF('dlg2').show()"
+							styleClass="ui-icon ui-icon-wrench" title="Editar Nota"
+							action="#{dadosQtOralController.carregarNota()}">
+							<f:setPropertyActionListener value="#{registro}"
+								target="#{dadosQtOralController.notaFiscalSelecionada}" />
+						</p:commandLink>
+					</p:column>
+					<p:column style="padding: 4px 4px;width: 20px;text-align: center;">
+						<p:commandLink update=":formItens :form" oncomplete="PF('itens').show()"
+							styleClass="ui-icon ui-icon-search" title="Itens Nota"
+							action="#{dadosQtOralController.carregarDetalhesNota()}">
+							<f:setPropertyActionListener value="#{registro}"
+								target="#{dadosQtOralController.notaFiscalSelecionada}" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</div>
+
+		<p:dialog header="Dados Registro" widgetVar="usuarioMudanca"
+			modal="true" height="120" id="dlg_editar_dados" closeOnEscape="true"
+			width="400">
+			<h:panelGroup id="pnl_Dialogo_5">
+				<h:form id="formDados" style="font-size:12px;"
+					class="formularioCentro">
+
+					<div class="row">
+						<div class="col-md-6">
+							<p:outputLabel value="Matricula Usuário Inserção:" />
+							<p:outputLabel
+								value="#{dadosQtOralController.notaFiscalSelecionada.usuarioInsercao}" />
+						</div>
+
+						<div class="col-md-6">
+							<p:outputLabel value="Data Inserção:" />
+							<p:outputLabel
+								value="#{dadosQtOralController.notaFiscalSelecionada.dtInsercao}">
+								<f:convertDateTime pattern="dd/MM/yyyy - HH:mm:ss"
+									timeZone="America/Sao_Paulo" />
+							</p:outputLabel>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<p:outputLabel value="Matricula Usuário Atualização:" />
+							<p:outputLabel
+								value="#{dadosQtOralController.notaFiscalSelecionada.usuarioAtualizacao}"
+								id="usuarioAtualizacao" />
+						</div>
+
+						<div class="col-md-6">
+							<p:outputLabel value="Data Atualização:" />
+
+
+							<p:outputLabel
+								value="#{dadosQtOralController.notaFiscalSelecionada.dtAtualizacao}"
+								id="dtAtualizacao">
+								<f:convertDateTime pattern="dd/MM/yyyy - HH:mm:ss"
+									timeZone="America/Sao_Paulo" />
+							</p:outputLabel>
+
+
+
+						</div>
+					</div>
+
+
+				</h:form>
+			</h:panelGroup>
+		</p:dialog>
+
+		<!-- Tela Dialog -->
+		<p:dialog header="Nota Fiscal" widgetVar="dlg2" modal="true"
+			height="500" id="dlg_editar" closeOnEscape="true" width="600">
+			<h:panelGroup id="pnl_Dialogo">
+				<h:form id="form" style="font-size:12px;" class="formularioCentro">
+
+					<p:growl id="messages" autoUpdate="true" closable="true" />
+
+
+					<div class="row">
+						<div class="col-md-4" style="width: 31%;">
+
+
+							<p:outputLabel value="Número Nota Fiscal:" />
+							<p:inputText size="22" maxlength="100" id="numeroNotaFiscal"
+								required="true" requiredMessage="Número Nota Fiscal obrigatório"
+								value="#{dadosQtOralController.notaFiscal.numero}"
+								disabled="#{dadosQtOralController.habilitaLimpar}">
+								<p:ajax event="change"
+									listener="#{dadosQtOralController.ValidaBeneficiarioUnidade()}" />
+							</p:inputText>
+
+						</div>
+
+						<div class="col-md-4" style="width: 31%;">
+
+							<p:outputLabel value="Valor Nota Fiscal:" />
+							<pe:inputNumber id="valorNotaFiscal"
+							      disabled="#{dadosQtOralController.notaFiscal.travadoParcial}"
+								value="#{dadosQtOralController.notaFiscal.valor}"
+								required="true" requiredMessage="Valor Nota Fiscal obrigatório"
+								symbolPosition="s" decimalSeparator="," thousandSeparator=".">
+								<p:ajax event="blur" update="valorNotaFiscal" />
+							</pe:inputNumber>
+						</div>
+						<div class="col-md-4" style="width: 31%;">
+
+							<p:outputLabel value="Qtd Itens Nota Fiscal:" />
+							<p:inputText size="22" maxlength="100" id="quantidadeItens"
+								disabled="true" required="true"
+								requiredMessage="Quantidade de Itens Fiscal obrigatória"
+								value="#{dadosQtOralController.notaFiscal.qtdItens}" />
+
+						</div>
+					</div>
+
+
+
+					<div class="row">
+						<div class="col-md-4" style="width: 31%;">
+
+							<p:outputLabel value="Valor Frete:" />
+							<pe:inputNumber id="valorFrete"
+							    disabled="#{dadosQtOralController.notaFiscal.travadoParcial}"
+								value="#{dadosQtOralController.notaFiscal.frete}"
+								required="true" requiredMessage="Valor Frete obrigatório"
+								symbolPosition="s" decimalSeparator="," thousandSeparator=".">
+								<p:ajax event="blur" update="valorFrete" />
+							</pe:inputNumber>
+
+						</div>
+
+						<div class="col-md-4" style="width: 31%;">
+
+							<p:outputLabel value="Valor IPI:" />
+
+							<pe:inputNumber id="valorIpi"
+							     disabled="#{dadosQtOralController.notaFiscal.travadoParcial}"
+								value="#{dadosQtOralController.notaFiscal.ipi}" required="true"
+								requiredMessage="Valor IPI obrigatório" symbolPosition="s"
+								decimalSeparator="," thousandSeparator=".">
+								<p:ajax event="blur" update="valorIpi" />
+							</pe:inputNumber>
+
+
+						</div>
+						<div class="col-md-4" style="width: 31%;">
+
+							<p:outputLabel value="Valor Desconto:" />
+
+							<pe:inputNumber id="valorDesconto"
+							     disabled="#{dadosQtOralController.notaFiscal.travadoParcial}"
+								value="#{dadosQtOralController.notaFiscal.desconto}"
+								required="true" requiredMessage="Valor Desconto obrigatório"
+								symbolPosition="s" decimalSeparator="," thousandSeparator=".">
+								<p:ajax event="blur" update="valorDesconto" />
+							</pe:inputNumber>
+
+
+						</div>
+					</div>
+
+
+
+
+
+
+
+
+
+					<div class="row">
+						<div class="col-sm-4" style="width: 31%;">
+							<p:outputLabel value="Código Fornecedor:" />
+							<p:inputMask mask="?99999999" id="codigoFornecedor"
+								disabled="#{dadosQtOralController.lgFornecedorTravado}"
+								value="#{dadosQtOralController.notaFiscal.fornecedor.cdPrestador}"
+								size="22" style="font-weight: 100;" required="true"
+								requiredMessage="Codigo Fornecedor é obrigatório">
+								<p:ajax listener="#{dadosQtOralController.ValidaFornecedor()}"
+									update="codigoFornecedor nomeFornecedor" event="change" />
+							</p:inputMask>
+						</div>
+						<div class="col-sm-6" style="width: 57%;">
+							<p:outputLabel value="Nome Fornecedor:" />
+							<p:autoComplete id="nomeFornecedor"
+								value="#{dadosQtOralController.notaFiscal.fornecedor}"
+								style="font-weight: 100;"
+								completeMethod="#{dadosQtOralController.BucarFornecedorNome}"
+								size="52"
+								disabled="#{dadosQtOralController.lgFornecedorTravado}"
+								required="true" requiredMessage="Nome Fornecedor obrigatório"
+								var="dados" itemValue="#{dados}" itemLabel="#{dados.nome}"
+								converter="entityConverter" forceSelection="true">
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.cdPrestador}" />
+								</p:column>
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.nome}" />
+								</p:column>
+								<p:ajax event="itemSelect"
+									listener="#{dadosQtOralController.onItemSelectFornecedor}"
+									update="codigoFornecedor nomeFornecedor" />
+							</p:autoComplete>
+						</div>
+						<div style="padding-top: 28px;">
+							<p:commandLink styleClass="ui-icon ui-icon-circle-close"
+								process="@this,nomeFornecedor,codigoFornecedor"
+								actionListener="#{dadosQtOralController.limpaFornecedor}"
+								update="nomeFornecedor,codigoFornecedor" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-4" style="width: 7%;">
+							<p:outputLabel value="Unid:" />
+							<p:inputMask mask="?9999" size="1" maxlength="10"
+								id="unidadeCarteiraBeneficiario" required="true"
+								requiredMessage="Unidade Carteira Beneficiário obrigatória"
+								value="#{dadosQtOralController.notaFiscal.beneficiario.unidade}"
+								disabled="#{dadosQtOralController.lgBeneficiarioTravado}">
+								<p:ajax event="change"
+									listener="#{dadosQtOralController.ValidaBeneficiarioUnidade()}" />
+							</p:inputMask>
+						</div>
+						<div class="col-md-4" style="width: 24%;">
+							<p:outputLabel value="Nr Carteira:" />
+							<p:inputMask mask="9999999999999" size="14" maxlength="100"
+								id="carteiraBeneficiario" required="true"
+								requiredMessage="Carteira Beneficiário obrigatória"
+								value="#{dadosQtOralController.notaFiscal.beneficiario.cdCarteiraInteira}"
+								disabled="#{dadosQtOralController.lgBeneficiarioTravado}">
+								<p:ajax listener="#{dadosQtOralController.ValidaBeneficiario()}"
+									update="nomeBeneficiario,carteiraBeneficiario,anoGuiaAutorizacao,unidadeCarteiraBeneficiario"
+									event="change" process="@this" />
+							</p:inputMask>
+						</div>
+						<div class="col-md-6" style="width: 57%;">
+							<p:outputLabel value="Nome Beneficiário:" />
+							<p:inputText id="nomeBeneficiario"
+								value="#{dadosQtOralController.notaFiscal.beneficiario.nome}"
+								size="52" disabled="true" />
+						</div>
+						<div style="padding-top: 28px;">
+							<p:commandLink id="beneficiarioNome"
+								styleClass="ui-icon ui-icon-circle-close"
+								process="@this,nomeBeneficiario,carteiraBeneficiario,unidadeCarteiraBeneficiario"
+								actionListener="#{dadosQtOralController.limpaBeneficiario()}"
+								update="nomeBeneficiario,carteiraBeneficiario,unidadeCarteiraBeneficiario,anoGuiaAutorizacao,guiaAutorizacao" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4" style="width: 31%;">
+							<p:outputLabel value="Data Emissão:" />
+							<p:inputMask mask="99/99/9999" size="22" maxlength="100"
+							 disabled="#{dadosQtOralController.notaFiscal.travadoParcial}"
+								id="dataEmissao" required="true"
+								requiredMessage="Data Emissão obrigatória" pattern="dd/MM/yyyy"
+								value="#{dadosQtOralController.notaFiscal.dataEmissao}">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+									timeZone="America/Sao_Paulo" />
+								<p:ajax event="change"
+									listener="#{dadosQtOralController.ValidaBeneficiarioUnidade()}" />
+							</p:inputMask>
+						</div>
+						<div class="col-md-4" style="width: 31%;">
+							<p:outputLabel value="Número Pedido:" />
+							<p:inputText size="22" maxlength="100" id="numeroPedido"
+							 disabled="#{dadosQtOralController.notaFiscal.travadoParcial}"
+								required="true" requiredMessage="Número Pedido obrigatório"
+								value="#{dadosQtOralController.notaFiscal.nrPedido}">
+								<p:ajax event="change"
+									listener="#{dadosQtOralController.ValidaBeneficiarioUnidade()}" />
+							</p:inputText>
+						</div>
+						<div class="col-md-4" style="width: 11%;">
+							<p:outputLabel value="Ano:" />
+							<p:selectOneMenu id="anoGuiaAutorizacao"
+							 disabled="#{dadosQtOralController.notaFiscal.travadoParcial}"
+								value="#{dadosQtOralController.notaFiscal.guiaAutorizacao.ano}"
+								style="width:60px" required="true"
+								requiredMessage="Ano Guia Autorização obrigatório">
+								<f:selectItem itemLabel="Ano" itemValue=""
+									noSelectionOption="true" />
+								<f:selectItems
+									value="#{dadosQtOralController.listaAnoNrGuiasDisponivel}" />
+								<p:ajax event="change"
+									listener="#{dadosQtOralController.liberaAnoGuia()}"
+									update="guiaAutorizacao" />
+							</p:selectOneMenu>
+						</div>
+						<div class="col-md-4" style="width: 22%;">
+							<p:outputLabel value="Nr Guia:" />
+							<p:selectOneMenu id="guiaAutorizacao"
+							 disabled="#{dadosQtOralController.notaFiscal.travadoParcial}"
+								value="#{dadosQtOralController.notaFiscal.guiaAutorizacao.numero}"
+								required="true"
+								requiredMessage="Número Guia Autorização obrigatório"
+								style="width:77px">
+								<f:selectItem itemLabel="Nr. Guia" itemValue=""
+									noSelectionOption="true" />
+								<f:selectItems
+									value="#{dadosQtOralController.listaNrGuiasDisponivel}" />
+								<p:ajax event="change"
+									listener="#{dadosQtOralController.ValidaBeneficiarioUnidade()}" />
+							</p:selectOneMenu>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col-md-4" style="width: 31%;">
+							<p:outputLabel value="Data Vencimento:" />
+							<p:inputMask mask="99/99/9999" size="22" maxlength="100"
+							 disabled="#{dadosQtOralController.notaFiscal.travadoParcial}"
+								id="dataVencimento" required="true"
+								requiredMessage="Data Vencimento obrigatória"
+								pattern="dd/MM/yyyy"
+								value="#{dadosQtOralController.notaFiscal.dataVencimento}">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+									timeZone="America/Sao_Paulo" />
+								<p:ajax event="change"
+									listener="#{dadosQtOralController.ValidaBeneficiarioUnidade()}" />
+							</p:inputMask>
+						</div>
+
+						<div class="col-md-4" style="width: 31%;">
+							<p:outputLabel value="Senha Autorização" />
+							<p:inputText size="22" maxlength="100" id="senhaAutorizacao"
+							  disabled="#{dadosQtOralController.notaFiscal.travadoParcial}"
+								value="#{dadosQtOralController.notaFiscal.senhaAutorizacao}">
+							</p:inputText>
+
+						</div>
+
+						<!-- <div class="col-md-4" style="width: 22%;">
+							<p:outputLabel value="Situação:" />
+							<p:selectOneMenu id="situacaoNota"
+								value="#{dadosQtOralController.notaFiscal.status}"
+								required="true" requiredMessage="Status da Nota obrigatória"
+								style="width:120px">
+								<f:selectItem itemLabel="Aberta" itemValue="Aberta" />
+								<f:selectItem itemLabel="Ajuste Contabil"
+									itemValue="Ajuste Contabil" />
+								<f:selectItem itemLabel="Baixa Ajuste" itemValue="Baixa Ajuste" />
+								<f:selectItem itemLabel="Baixa Completa"
+									itemValue="Baixa Completa" />
+								<f:selectItem itemLabel="Baixa Parcial"
+									itemValue="Baixa Parcial" />
+								<f:selectItem itemLabel="Cancelada" itemValue="Cancelada" />
+								<p:ajax event="change"
+									listener="#{dadosQtOralController.ValidaBeneficiarioUnidade()}" />
+
+							</p:selectOneMenu>
+						</div> -->
+
+
+					</div>
+					<div class="row">
+
+						<!-- <div class="col-md-4" style="width: 31%;">
+							<p:outputLabel value="Competência de Baixa:" />
+							<p:inputMask mask="99/9999" size="22" maxlength="100"
+								id="competenciaBaixa"
+								value="#{dadosQtOralController.notaFiscal.competenciaBaixa}">
+
+							</p:inputMask>
+						</div> -->
+
+
+
+						<div class="col-sm-6"
+							style="width: 19%; padding-left: 25%; padding-top: 13px;">
+							<p:commandButton value="Detalhes Nota"
+								class="btn btn-info btn-sm" update=":formItens"
+								oncomplete="PF('itens').show()"
+								rendered="#{dadosQtOralController.habilitaDetalhe}"
+								style="  margin-left: 180px;    " title="Itens Nota"
+								process="@this" id="detalhesNotaBotao">
+
+							</p:commandButton>
+						</div>
+						<div class="col-sm-6"
+							style="width: 14%; float: right; padding-right: 21%; padding-top: 13px;">
+							<h:commandButton value="Salvar" class="btn btn-success btn-sm"
+								style="  margin-left: 10px;    margin-top: 3px;"
+								 disabled="#{dadosQtOralController.notaFiscal.travadoParcial}"
+								icon="ui-icon-circle-check">
+								<f:ajax listener="#{dadosQtOralController.inserirNotaFiscal()}"
+									execute="form" render="form :QtOralForm" />
+							</h:commandButton>
+						</div>
+
+
+					</div>
+
+
+
+				</h:form>
+			</h:panelGroup>
+		</p:dialog>
+		<!-- Tela Dialog -->
+		<p:dialog header="Adicionar Insumo Nota Fiscal " widgetVar="itens"
+			modal="true" height="450" id="itens" closeOnEscape="true" width="750">
+			<h:panelGroup id="pnl_Dialogo_Insumo">
+				<h:form id="formItens" style="font-size:12px;"
+					class="formularioCentro">
+					<p:growl id="messages" autoUpdate="true" closable="true" />
+					<div class="row">
+						<div class="col-md-4" style="width: 6%;">
+							<p:outputLabel value="Tipo:" />
+							<p:inputMask mask="?99" size="1" id="tipoInsumo" required="true"
+								requiredMessage="Tipo Insumo obrigatório"
+								value="#{dadosQtOralController.opmeQtBipapItem.tpInsumo}"
+								disabled="#{dadosQtOralController.lgInsumoTravado}">
+
+
+								<p:ajax event="change"
+									listener="#{dadosQtOralController.ValidaBeneficiarioUnidade()}" />
+							</p:inputMask>
+
+
+						</div>
+
+						<div class="col-md-4" style="width: 12%;">
+
+							<p:outputLabel value="Codigo:" />
+							<p:inputMask mask="?99999999" size="9" id="codigoInsumo"
+								value="#{dadosQtOralController.opmeQtBipapItem.cdInsumo}"
+								required="true" requiredMessage="Código Insumo obrigatório"
+								disabled="#{dadosQtOralController.lgInsumoTravado}">
+								<p:ajax listener="#{dadosQtOralController.ValidaInsumo()}"
+									update="nomeInsumo,codigoInsumo,tipoInsumo" event="change"
+									process="@this" />
+
+
+							</p:inputMask>
+
+						</div>
+
+						<div class="col-sm-4" style="width: 35%;">
+							<p:outputLabel value="Nome Insumo:" />
+							<p:autoComplete id="nomeInsumo"
+								value="#{dadosQtOralController.opmeQtBipapItem}"
+								style="font-weight: 100;"
+								completeMethod="#{dadosQtOralController.BuscaInsumoNome}"
+								size="40" required="true"
+								requiredMessage="Nome Insumo obrigatório" var="dados"
+								itemValue="#{dados}" itemLabel="#{dados.nomeInsumo}"
+								disabled="#{dadosQtOralController.lgInsumoTravado}"
+								converter="entityConverter" forceSelection="true">
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.cdInsumo}" />
+								</p:column>
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.nomeInsumo}" />
+								</p:column>
+								<p:ajax event="itemSelect"
+									listener="#{dadosQtOralController.onItemSelectInsumo}"
+									update="nomeInsumo codigoInsumo tipoInsumo" />
+							</p:autoComplete>
+						</div>
+
+						<div class="col-md-4" style="width: 7%;">
+							<p:outputLabel value="Qtd:" />
+							<p:inputMask mask="?999" size="2" maxlength="100" required="true"
+								requiredMessage="Quantidade de Insumo obrigatório"
+								id="quantidadeItensInsumo"
+								value="#{dadosQtOralController.opmeQtBipapItem.quantidade}" />
+						</div>
+						<div class="col-md-4" style="width: 16%; padding-right: 0px;">
+							<p:outputLabel value="Valor Unitário:" />
+
+							<pe:inputNumber id="Input2" style="width: 100px;"
+								value="#{dadosQtOralController.opmeQtBipapItem.valor}"
+								required="true" requiredMessage="Valor Insumo obrigatório"
+								symbolPosition="s" decimalSeparator="," thousandSeparator=".">
+								<p:ajax event="blur" update="Input2" />
+							</pe:inputNumber>
+
+
+						</div>
+
+
+
+						<div style="padding-top: 28px; width: 5%;" class="col-md-4">
+							<p:commandLink styleClass="ui-icon ui-icon-circle-close"
+								process="@this"
+								actionListener="#{dadosQtOralController.limpaInsumo}"
+								update="nomeInsumo,codigoInsumo,tipoInsumo,Input2,quantidadeItensInsumo" />
+						</div>
+
+
+						<div class="col-md-4" style="width: 12%;">
+
+
+							<h:commandButton value="Cadastrar" class="btn btn-success btn-sm"
+							   disabled="#{dadosQtOralController.notaFiscal.travadoParcial}"
+								style="  margin-top: 20px;" icon="ui-icon-circle-check">
+								<f:ajax
+									listener="#{dadosQtOralController.inserirNotaFiscalDetalhe()}"
+									execute="formItens" render="formItens :QtOralForm :form" />
+							</h:commandButton>
+
+
+
+						</div>
+					</div>
+
+
+
+					<div class="row">
+						<div class="col-md-4" style="width: 71%;">
+							<p:outputLabel value="Observações:" />
+							<p:inputText size="95" id="observacao" maxlength="300"
+								value="#{dadosQtOralController.opmeQtBipapItem.observacao}">
+
+
+
+							</p:inputText>
+
+
+						</div>
+						<div class="col-md-4"
+							style="width: 28%; padding-top: 25px; padding-left: 70px;">
+							Total Detalhe : 
+							<h:outputText id="total"
+								value="#{dadosQtOralController.valorDetalheTotal}">
+								<f:convertNumber pattern="#0.00" />
+							</h:outputText>
+						</div>
+					</div>
+
+					<div class="row">
+						<p:dataTable value="#{dadosQtOralController.listaopmeQtBipap}"
+							id="itensNota" var="item" style="table-layout: auto;"
+							emptyMessage="Não há insumos cadastrados." scrollable="true"
+							scrollHeight="250">
+							<p:column headerText="Tipo" style="text-align: center;">
+								<h:outputText value="#{item.tpInsumo}">
+									<f:convertNumber pattern="#00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Código" style="text-align: center;">
+								<h:outputText value="#{item.cdInsumo}"
+									style="text-align: center;">
+									<f:convertNumber pattern="#00000000" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Nome">
+								<h:outputText value="#{item.nomeInsumo}"
+									style="text-align: center;">
+									<f:convertNumber pattern="#00000000" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Observações" style="text-align: center;">
+								<h:outputText value="#{item.observacao}">
+
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Qtd" style="text-align: center;">
+								<h:outputText value="#{item.quantidade}" />
+							</p:column>
+							<p:column headerText="Valor Total" style="text-align: center;">
+								<h:outputText value="#{item.valor}">
+									<f:convertNumber pattern="#0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column style="width: 40px;text-align: center;">
+								<p:commandLink styleClass="ui-icon ui-icon-cancel"
+								     disabled="#{dadosQtOralController.notaFiscal.travadoParcial}"
+									onclick="PF('itensOpmeExclusao').show();" process="@this"
+									action="#{dadosQtOralController.ValidaBeneficiarioUnidade()}">
+									<f:setPropertyActionListener value="#{item}"
+										target="#{dadosQtOralController.opmeQtBipapSelecionado}" />
+
+								</p:commandLink>
+							</p:column>
+
+							<p:column style="width: 40px;text-align: center;">
+								<p:commandLink styleClass="ui-icon ui-icon-wrench"
+								     disabled="#{dadosQtOralController.notaFiscal.travadoParcial}"
+									onclick="PF('itensOpmeAlterar').show();" process="@this"
+									update=":formItensAlterar" title="Editar Insumo"
+									action="#{dadosQtOralController.selecionaInsumo()}">
+									<f:setPropertyActionListener value="#{item}"
+										target="#{dadosQtOralController.opmeQtBipapSelecionado}" />
+								</p:commandLink>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</h:form>
+			</h:panelGroup>
+		</p:dialog>
+
+		<p:dialog header="Excluir Item QT ORAL" widgetVar="itensOpmeExclusao"
+			modal="true" height="150" id="itensOpmeExclusao" closeOnEscape="true"
+			width="290">
+			<h:panelGroup id="pnl_Dialogo_Exclusao">
+				<h:form id="formItensExclusao">
+					<p:outputLabel
+						value="Você deseja realmente realizar a exclusão deste item?"></p:outputLabel>
+
+					<p:commandButton value="Sim" class="btn btn-success btn-sm"
+						style="  margin-top: 20px;"
+						action="#{dadosQtOralController.excluirOpme()}"
+						onclick="itensOpmeExclusao.hide();" process="@this"
+						update=":formItens:itensNota :formItens:total :QtOralForm :form" />
+
+					<p:commandButton value="Nao" class="btn btn-danger btn-sm"
+						style="  margin-top: 20px;" onclick="itensOpmeExclusao.hide();"
+						process="@this" />
+				</h:form>
+			</h:panelGroup>
+		</p:dialog>
+		<p:dialog header="Alterar Item QT Oral" widgetVar="itensOpmeAlterar"
+			modal="true" height="230" id="itensOpmeAlterar" closeOnEscape="true"
+			width="500">
+			<h:panelGroup id="pnl_Dialogo_Alterar">
+				<h:form id="formItensAlterar">
+					<div class="row">
+
+						<div class="col-md-4" style="width: 12%;">
+
+
+							<p:outputLabel value="Tipo:" />
+							<p:inputMask mask="?99" size="2" id="tipoInsumoAlteracao"
+								required="true" requiredMessage="Tipo Insumo obrigatório"
+								value="#{dadosQtOralController.opmeQtBipapItem.tpInsumo}"
+								disabled="#{dadosQtOralController.lgInsumoTravadoAlteracao}">
+
+
+								<p:ajax event="change"
+									listener="#{dadosQtOralController.ValidaBeneficiarioUnidade()}" />
+							</p:inputMask>
+
+
+						</div>
+
+						<div class="col-md-4" style="width: 23%;">
+
+							<p:outputLabel value="Codigo:" />
+							<p:inputMask mask="?99999999" size="11"
+								id="codigoInsumoAlteracao"
+								value="#{dadosQtOralController.opmeQtBipapItem.cdInsumo}"
+								required="true" requiredMessage="Código Insumo obrigatório"
+								disabled="#{dadosQtOralController.lgInsumoTravadoAlteracao}">
+								<p:ajax listener="#{dadosQtOralController.ValidaInsumo()}"
+									update="nomeInsumoAlteracao,codigoInsumoAlteracao,tipoInsumoAlteracao"
+									event="change" process="@this" />
+
+
+							</p:inputMask>
+
+						</div>
+
+						<div class="col-sm-4" style="width: 35%;">
+							<p:outputLabel value="Nome Insumo:" />
+							<p:autoComplete id="nomeInsumoAlteracao"
+								value="#{dadosQtOralController.opmeQtBipapItem}"
+								style="font-weight: 100;"
+								completeMethod="#{dadosQtOralController.BuscaInsumoNome}"
+								size="40" required="true"
+								requiredMessage="Nome Insumo obrigatório" var="dados"
+								itemValue="#{dados}" itemLabel="#{dados.nomeInsumo}"
+								disabled="#{dadosQtOralController.lgInsumoTravadoAlteracao}"
+								converter="entityConverter" forceSelection="true">
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.cdInsumo}" />
+								</p:column>
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.nomeInsumo}" />
+								</p:column>
+								<p:ajax event="itemSelect"
+									listener="#{dadosQtOralController.onItemSelectInsumo}"
+									update="nomeInsumoAlteracao codigoInsumoAlteracao tipoInsumoAlteracao" />
+							</p:autoComplete>
+						</div>
+
+						<div style="padding-top: 32px; width: 5%; float: right;"
+							class="col-md-4">
+							<p:commandLink styleClass="ui-icon ui-icon-circle-close"
+								process="@this"
+								actionListener="#{dadosQtOralController.limpaInsumoAlteracao}"
+								update="nomeInsumoAlteracao,codigoInsumoAlteracao,tipoInsumoAlteracao" />
+						</div>
+
+					</div>
+					<div class="row">
+
+						<div class="col-md-4" style="width: 12%;">
+							<p:outputLabel value="Qtd:" />
+							<p:inputMask mask="?999" size="2" maxlength="100" required="true"
+								requiredMessage="Quantidade de Insumo obrigatório"
+								id="quantidadeItensInsumoAlteracao"
+								value="#{dadosQtOralController.opmeQtBipapItem.quantidade}" />
+						</div>
+						<div class="col-md-4" style="width: 23%;">
+							<p:outputLabel value="Valor Total:" />
+
+							<pe:inputNumber id="Input2Alteracao" style="width: 100px;"
+								value="#{dadosQtOralController.opmeQtBipapItem.valor}"
+								required="true" requiredMessage="Valor Insumo obrigatório"
+								symbolPosition="s" decimalSeparator="," thousandSeparator=".">
+								<p:ajax event="blur" update="Input2Alteracao" />
+							</pe:inputNumber>
+						</div>
+
+
+						<div class="col-md-4" style="width: 12%;">
+							<p:outputLabel value="Observações" />
+							<p:inputText size="40" maxlength="100"
+								id="observacaoInsumoAlteracao"
+								value="#{dadosQtOralController.opmeQtBipapItem.observacao}" />
+						</div>
+
+
+
+
+					</div>
+					<div class="row">
+
+						<div class="col-md-4" style="width: 12%;">
+
+							<p:commandButton value="Salvar" class="btn btn-success btn-sm"
+								style="  margin-top: 20px;"
+								action="#{dadosQtOralController.gravaEdicaoInsumo()}"
+								onclick="itensOpmeAlterar.hide();" process="@form"
+								update=":formItens:itensNota :formItens:total :QtOralForm :form" />
+
+
+						</div>
+					</div>
+
+
+				</h:form>
+
+
+			</h:panelGroup>
+		</p:dialog>
+		<p:ajaxStatus id="startAjax" onstart="PF('start').show();"
+			oncomplete="PF('start').hide();">
+		</p:ajaxStatus>
+		<p:dialog widgetVar="start" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<h:graphicImage value="#{resource['img:carregandoo.gif']}"></h:graphicImage>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>

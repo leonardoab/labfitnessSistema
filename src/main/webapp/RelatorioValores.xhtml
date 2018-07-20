@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:opt="http://primefaces.prime.com.tr/optimus"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="#{perfilAcessoController.perfilTemplete}">
+	<ui:define name="corpo">
+		<script type="text/javascript"
+			src="recursos/js/jquery.validate.min.js" charset="charset=UTF-8" />
+		<script type="text/javascript" src="recursos/js/validaLogin.js"
+			charset="charset=UTF-8" />
+
+		<p:growl autoUpdate="true" />
+		<div class="titulo">
+			<legend>Geração Conferência Valores</legend>
+		</div>
+
+		<div class="form-horizontal">
+
+			<h:form class="formularioCentro" id="relatorioForm"
+				enctype="multipart/form-data">
+
+				<p:dataTable var="registro" widgetVar="gridNotas"
+					value="#{relatorioConferenciaController.listaNotaFiscal}" id="gridNotas"
+					emptyMessage="Não há notas fiscais cadastradas."
+					scrollable="true" 	scrollHeight="450">
+					
+					<f:facet name="header">
+						<!-- <h:outputText value="Data Transação" />
+						<p:graphicImage library="images" name="SPP_Interrogacao.png" 
+							style="height: 15px; margin-left: 5px;" data-toggle="tooltip"
+							title="A busca no filtro deste campo deve seguir o mesmo padrão das datas exibidas na tabela AAAA-MM-DD e devem ser separados por ífen. Exemplo: 2016-04-06.">
+						</p:graphicImage> -->
+
+						<f:facet name="header">
+							<h:commandLink style="MARGIN-LEFT: 81%;padding-right: 15px;">
+								<p:graphicImage value="resources/img/excel.png" />
+								<p:dataExporter type="xls" target="gridNotas"
+									fileName="Relatorio_valores"
+									postProcessor="#{relatorioConferenciaController.postProcessXLS}" />
+							</h:commandLink>
+
+						</f:facet>
+
+
+					</f:facet>
+					
+					<p:column headerText="Tipo Nota Fiscal"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Tipo Nota Fiscal" />
+						</f:facet>
+						<h:outputText value="#{registro.tipoRegistro}" />
+						
+					</p:column>
+					
+					<p:column headerText="Nr. Nota Fiscal"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Nr. Nota Fiscal" />
+						</f:facet>
+						<h:outputText value="#{registro.numero}" />
+					</p:column>
+					<p:column headerText="Código Fornecedor"
+						style="padding: 4px 4px;width: 60px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Código Fornecedor" />
+						</f:facet>
+						<h:outputText value="#{registro.fornecedor.cdPrestador}">
+							<f:convertNumber pattern="00000000" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Nome Fornecedor"
+						style="padding: 4px 4px;text-align: center;width: 280px;">
+						<f:facet name="header">
+							<h:outputText value="Nome Fornecedor" />
+						</f:facet>
+						<h:outputText value="#{registro.fornecedor.nome}" />
+					</p:column>
+					
+					<p:column headerText="Valor Nota"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Valor Nota" />
+						</f:facet>
+						
+						<h:outputText value="#{registro.valor}">
+							<f:convertNumber pattern="#0.00" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Valor Detalhe"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Valor Detalhe" />
+						</f:facet>
+						
+						<h:outputText value="#{registro.valorDetalhe}">
+							<f:convertNumber pattern="#0.00" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Situação"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Situação" />
+						</f:facet>
+						
+						
+						<h:outputText value="#{registro.status}">
+							
+						</h:outputText>
+					</p:column>
+					
+					
+					
+					
+					
+				</p:dataTable>
+			</h:form>
+		</div>
+
+	</ui:define>
+</ui:composition>
+</html>

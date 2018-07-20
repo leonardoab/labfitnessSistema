@@ -1,0 +1,1057 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:opt="http://primefaces.prime.com.tr/optimus"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="#{perfilAcessoController.perfilTemplete}">
+	<ui:define name="corpo">
+		<script type="text/javascript"
+			src="recursos/js/jquery.validate.min.js" charset="charset=UTF-8" />
+		<script type="text/javascript" src="recursos/js/validaLogin.js"
+			charset="charset=UTF-8" />
+
+		<p:growl autoUpdate="true" />
+		<div class="titulo">
+			<legend>Dados DIU</legend>
+		</div>
+
+		<div class="form-horizontal">
+
+			<h:form class="formularioCentro" id="DiuForm"
+				enctype="multipart/form-data">
+
+				<p:commandButton value="Novo Registro"
+					class="btn btn-success btn-sm" onclick="PF('dlg2').show();"
+					actionListener="#{dadosDiuController.limparFormulario}"
+					style="  margin-left: 90.5%;    margin-bottom: 10px;"
+					disabled="#{dadosDiuController.travaDiu}"
+					update=":form" />
+
+				<p:dataTable var="registro"
+					value="#{dadosDiuController.listaNotaFiscal}" id="gridNotas"
+					widgetVar="gridNotas"
+					emptyMessage="Não há notas fiscais cadastradas."
+					filteredValue="#{dadosQtOralController.listaNotaFiscalFiltradas}"
+					scrollable="true" scrollHeight="450">
+
+
+					<f:facet name="header">
+						<h:commandLink style="MARGIN-LEFT: 81%;padding-right: 15px;">
+							<p:graphicImage value="resources/img/excel.png" />
+							<p:dataExporter type="xls" target="gridNotas"
+								fileName="Registro_DIU" />
+						</h:commandLink>
+						
+					</f:facet>
+
+					<p:column headerText="Nr.Nota" filterMatchMode="contains"
+						style="padding: 4px 4px;text-align: center;"
+						filterBy="#{registro.numero}" sortBy="#{registro.numero}" filterStyle="width: 170px;">
+						<f:facet name="header">
+							<h:outputText value="Nr. Nota Fiscal" />
+						</f:facet>
+						<h:outputText value="#{registro.numero}" />
+					</p:column>
+
+					<p:column headerText="Valor Nota" filterStyle="width: 170px;" filterMatchMode="contains"
+						style="padding: 4px 4px;text-align: center;" sortBy="#{registro.valor}"
+						filterBy="#{registro.valor}" >
+						<f:facet name="header">
+							<h:outputText value="Valor Nota" />
+						</f:facet>
+						<h:outputText value="#{registro.valor}">
+							<f:convertNumber pattern="R$#0.00" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Qtd" filterMatchMode="contains"
+						style="width: 49px; text-align: center;padding: 4px 4px;"  sortBy="#{registro.qtdItens}"
+						filterBy="#{registro.qtdItens}"  filterStyle="width: 41px;">
+						<f:facet name="header">
+							<h:outputText value="Qtd" />
+						</f:facet>
+						<h:outputText value="#{registro.qtdItens}" />
+					</p:column>
+
+					<p:column headerText="C.Forn." filterMatchMode="contains"
+						style="padding: 4px 4px;width: 68px;text-align: center;" filterStyle="width: 60px;"
+						filterBy="#{registro.fornecedor.cdPrestador}" sortBy="#{registro.fornecedor.cdPrestador}"
+						>
+						<f:facet name="header">
+							<h:outputText value="C.Forn." />
+						</f:facet>
+						<h:outputText value="#{registro.fornecedor.cdPrestador}">
+							<f:convertNumber pattern="00000000" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Nm.Forn." sortBy="#{registro.fornecedor.nome}" filterMatchMode="contains"
+						style="padding: 4px 4px;text-align: center;" filterStyle="width: 170px;"
+						filterBy="#{registro.fornecedor.nome}"
+						>
+						<f:facet name="header">
+							<h:outputText value="Nm.Forn." />
+						</f:facet>
+						<h:outputText value="#{registro.fornecedor.nome}" />
+					</p:column>
+
+					<p:column headerText="Data Emissão" sortBy="#{registro.dataEmissao}" filterMatchMode="contains"
+						style="padding: 4px 4px;width: 75px;text-align: center;" filterStyle="width: 67px;"
+						filterBy="#{registro.dataEmissao}"  
+						>
+						<f:facet name="header">
+							<h:outputText value="Dt.Emis." />
+						</f:facet>
+						<h:outputText value="#{registro.dataEmissao}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+								timeZone="America/Sao_Paulo" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Nr.Pedido" sortBy="#{registro.nrPedido}" filterMatchMode="contains"
+						style="padding: 4px 4px;text-align: center;" filterStyle="width: 169px;"
+						filterBy="#{registro.nrPedido}" >
+						<f:facet name="header">
+							<h:outputText value="Número Pedido" />
+						</f:facet>
+						<h:outputText value="#{registro.nrPedido}" />
+					</p:column>
+
+					<p:column headerText="Carteiras Internas" filterStyle="width: 170px;"
+						style="padding: 4px 4px;text-align: center;" filterMatchMode="contains"
+						filterBy="#{registro.carteirasInternas}"
+						>
+
+						<h:outputText value="#{registro.carteirasInternas}" />
+					</p:column>
+
+					<p:column style="padding: 4px 4px;width: 140px;text-align: center;"  
+						filterBy="#{registro.status}" filterMatchMode="contains"
+						filterStyle="display: none;" sortBy="#{dadosDiuController.situacaoFiltro}">
+
+						<f:facet name="header">
+							<h:outputText value="Situação Nota" />
+							<p:selectOneMenu value="#{dadosDiuController.situacaoFiltro}">
+
+								<f:selectItem itemLabel="Aberta" itemValue="Aberta"
+									noSelectionOption="true" />
+								<f:selectItem itemLabel="Todas" itemValue="Todas" />
+
+
+								<p:ajax event="change"
+									listener="#{dadosDiuController.BuscarPorStatus()}"
+									update="gridNotas" />
+
+							</p:selectOneMenu>
+						</f:facet>
+						<h:outputText value="#{registro.status}" />
+					</p:column>
+
+					<p:column style="padding: 4px 4px;width: 20px;text-align: center;">
+						<p:commandLink update=":formDados"
+							oncomplete="PF('usuarioMudanca').show()"
+							styleClass="ui-icon ui-icon-clipboard" title="Dados Registro">
+							<f:setPropertyActionListener value="#{registro}"
+								target="#{dadosDiuController.notaFiscalSelecionada}" />
+						</p:commandLink>
+					</p:column>
+
+					<p:column style="padding: 4px 4px;width: 20px;text-align: center;">
+						<p:commandLink update=":form" oncomplete="PF('dlg2').show()"
+							styleClass="ui-icon ui-icon-wrench" title="Editar Nota"
+							action="#{dadosDiuController.carregarNota()}">
+							<f:setPropertyActionListener value="#{registro}"
+								target="#{dadosDiuController.notaFiscalSelecionada}" />
+						</p:commandLink>
+					</p:column>
+
+					<p:column style="padding: 4px 4px;width: 20px;text-align: center;">
+						<p:commandLink update=":formItens" oncomplete="PF('itens').show()"
+							styleClass="ui-icon ui-icon-search" title="Itens Nota"
+							action="#{dadosDiuController.carregarDetalhesNota()}">
+							<f:setPropertyActionListener value="#{registro}"
+								target="#{dadosDiuController.notaFiscalSelecionada}" />
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+		</div>
+
+		<p:dialog header="Dados Registro" widgetVar="usuarioMudanca"
+			modal="true" height="120" id="dlg_editar_dados" closeOnEscape="true"
+			width="400">
+			<h:panelGroup id="pnl_Dialogo_5">
+				<h:form id="formDados" style="font-size:12px;"
+					class="formularioCentro">
+
+					<div class="row">
+						<div class="col-md-6">
+							<p:outputLabel value="Matricula Usuário Inserção:" />
+							<p:outputLabel
+								value="#{dadosDiuController.notaFiscalSelecionada.usuarioInsercao}" />
+						</div>
+
+						<div class="col-md-6">
+							<p:outputLabel value="Data Inserção:" />
+							<p:outputLabel
+								value="#{dadosDiuController.notaFiscalSelecionada.dtInsercao}">
+								<f:convertDateTime pattern="dd/MM/yyyy - HH:mm:ss"
+									timeZone="America/Sao_Paulo" />
+							</p:outputLabel>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<p:outputLabel value="Matricula Usuário Atualização:" />
+							<p:outputLabel
+								value="#{dadosDiuController.notaFiscalSelecionada.usuarioAtualizacao}"
+								id="usuarioAtualizacao" />
+						</div>
+
+						<div class="col-md-6">
+							<p:outputLabel value="Data Atualização:" />
+
+
+							<p:outputLabel
+								value="#{dadosDiuController.notaFiscalSelecionada.dtAtualizacao}"
+								id="dtAtualizacao">
+								<f:convertDateTime pattern="dd/MM/yyyy - HH:mm:ss"
+									timeZone="America/Sao_Paulo" />
+							</p:outputLabel>
+
+
+
+						</div>
+					</div>
+
+
+				</h:form>
+			</h:panelGroup>
+		</p:dialog>
+
+		<!-- Tela Dialog -->
+		<p:dialog header="Nota Fiscal" widgetVar="dlg2" modal="true"
+			height="330" id="dlg_editar" closeOnEscape="true" width="600">
+			<h:panelGroup id="pnl_Dialogo">
+				<h:form id="form" style="font-size:12px;" class="formularioCentro">
+
+					<p:growl id="messages" autoUpdate="true" closable="true" />
+
+
+					<div class="row">
+						<div class="col-md-4" style="width: 31%;">
+
+
+							<p:outputLabel value="Número Nota Fiscal:" />
+							<p:inputText size="22" maxlength="100" id="numeroNotaFiscal"
+								required="true" requiredMessage="Número Nota Fiscal obrigatório"
+								value="#{dadosDiuController.notaFiscal.numero}"
+								disabled="#{dadosDiuController.habilitaLimpar}">
+								<p:ajax event="change"
+									listener="#{dadosDiuController.ValidaBeneficiarioUnidade()}" />
+							</p:inputText>
+
+						</div>
+
+						<div class="col-md-4" style="width: 31%;">
+
+							<p:outputLabel value="Valor Nota Fiscal:" />
+							<pe:inputNumber id="valorNotaFiscal"
+							    disabled="#{dadosDiuController.notaFiscal.travadoParcial}"
+								value="#{dadosDiuController.notaFiscal.valor}" required="true"
+								requiredMessage="Valor Nota Fiscal obrigatório"
+								symbolPosition="s" decimalSeparator="," thousandSeparator=".">
+								<p:ajax event="blur" update="valorNotaFiscal" />
+							</pe:inputNumber>
+						</div>
+						<div class="col-md-4" style="width: 31%;">
+
+							<p:outputLabel value="Qtd Itens Nota Fiscal:" />
+							<p:inputText size="22" maxlength="100" id="quantidadeItens"
+								disabled="true" required="true"
+								requiredMessage="Quantidade de Itens Fiscal obrigatória"
+								value="#{dadosDiuController.notaFiscal.qtdItens}" />
+
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col-md-4" style="width: 31%;">
+
+							<p:outputLabel value="Valor Frete:" />
+							<pe:inputNumber id="valorFrete"
+							    disabled="#{dadosDiuController.notaFiscal.travadoParcial}"
+								value="#{dadosDiuController.notaFiscal.frete}" required="true"
+								requiredMessage="Valor Frete obrigatório" symbolPosition="s"
+								decimalSeparator="," thousandSeparator=".">
+								<p:ajax event="blur" update="valorFrete" />
+							</pe:inputNumber>
+
+						</div>
+
+						<div class="col-md-4" style="width: 31%;">
+
+							<p:outputLabel value="Valor IPI:" />
+
+							<pe:inputNumber id="valorIpi"
+							    disabled="#{dadosDiuController.notaFiscal.travadoParcial}"
+								value="#{dadosDiuController.notaFiscal.ipi}" required="true"
+								requiredMessage="Valor IPI obrigatório" symbolPosition="s"
+								decimalSeparator="," thousandSeparator=".">
+								<p:ajax event="blur" update="valorIpi" />
+							</pe:inputNumber>
+
+
+						</div>
+						<div class="col-md-4" style="width: 31%;">
+
+							<p:outputLabel value="Valor Desconto:" />
+
+							<pe:inputNumber id="valorDesconto"
+							    disabled="#{dadosDiuController.notaFiscal.travadoParcial}"
+								value="#{dadosDiuController.notaFiscal.desconto}"
+								required="true" requiredMessage="Valor Desconto obrigatório"
+								symbolPosition="s" decimalSeparator="," thousandSeparator=".">
+								<p:ajax event="blur" update="valorDesconto" />
+							</pe:inputNumber>
+
+
+						</div>
+					</div>
+
+
+
+
+					<div class="row">
+						<div class="col-sm-4" style="width: 31%;">
+							<p:outputLabel value="Código Fornecedor:" />
+							<p:inputMask mask="?99999999" id="codigoFornecedor"
+								disabled="#{dadosDiuController.lgFornecedorTravado}"
+								value="#{dadosDiuController.notaFiscal.fornecedor.cdPrestador}"
+								size="22" style="font-weight: 100;" required="true"
+								requiredMessage="Codigo Fornecedor é obrigatório">
+								<p:ajax listener="#{dadosDiuController.ValidaFornecedor()}"
+									update="codigoFornecedor nomeFornecedor" event="change" />
+							</p:inputMask>
+						</div>
+						<div class="col-sm-6" style="width: 57%;">
+							<p:outputLabel value="Nome Fornecedor:" />
+							<p:autoComplete id="nomeFornecedor"
+								value="#{dadosDiuController.notaFiscal.fornecedor}"
+								style="font-weight: 100;"
+								completeMethod="#{dadosDiuController.BucarFornecedorNome}"
+								size="52" disabled="#{dadosDiuController.lgFornecedorTravado}"
+								required="true" requiredMessage="Nome Fornecedor obrigatório"
+								var="dados" itemValue="#{dados}" itemLabel="#{dados.nome}"
+								converter="entityConverter" forceSelection="true">
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.cdPrestador}" />
+								</p:column>
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.nome}" />
+								</p:column>
+								<p:ajax event="itemSelect"
+									listener="#{dadosDiuController.onItemSelectFornecedor}"
+									update="nomeFornecedor codigoFornecedor" />
+							</p:autoComplete>
+						</div>
+						<div style="padding-top: 28px;">
+							<p:commandLink styleClass="ui-icon ui-icon-circle-close"
+								process="@this,nomeFornecedor,codigoFornecedor"
+								actionListener="#{dadosDiuController.limpaFornecedor}"
+								update="nomeFornecedor codigoFornecedor" />
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col-md-4" style="width: 31%;">
+							<p:outputLabel value="Data Emissão:" />
+							<p:inputMask mask="99/99/9999" size="22" maxlength="100"
+							    disabled="#{dadosDiuController.notaFiscal.travadoParcial}"
+								id="dataEmissao" required="true"
+								requiredMessage="Data Emissão obrigatória" pattern="dd/MM/yyyy"
+								value="#{dadosDiuController.notaFiscal.dataEmissao}">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+									timeZone="America/Sao_Paulo" />
+								<p:ajax event="change"
+									listener="#{dadosDiuController.ValidaBeneficiarioUnidade()}" />
+
+							</p:inputMask>
+						</div>
+
+						<div class="col-md-4" style="width: 31%;">
+							<p:outputLabel value="Data Vencimento:" />
+							<p:inputMask mask="99/99/9999" size="22" maxlength="100"
+								disabled="#{dadosDiuController.notaFiscal.travadoParcial}"
+								id="dataVencimento" required="true"
+								requiredMessage="Data Vencimento obrigatória"
+								pattern="dd/MM/yyyy"
+								value="#{dadosDiuController.notaFiscal.dataVencimento}">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+									timeZone="America/Sao_Paulo" />
+								<p:ajax event="change"
+									listener="#{dadosDiuController.ValidaBeneficiarioUnidade()}" />
+
+							</p:inputMask>
+						</div>
+
+						<div class="col-md-4" style="width: 31%;">
+							<p:outputLabel value="Número Pedido:" />
+							<p:inputText size="22" maxlength="100" id="numeroPedido"
+							   disabled="#{dadosDiuController.notaFiscal.travadoParcial}"
+								required="true" requiredMessage="Número Pedido obrigatório"
+								value="#{dadosDiuController.notaFiscal.nrPedido}">
+								<p:ajax event="change"
+									listener="#{dadosDiuController.ValidaBeneficiarioUnidade()}" />
+							</p:inputText>
+
+						</div>
+
+					</div>
+
+
+
+
+
+					<div class="row">
+						<!-- <div class="col-md-4" style="width: 22%;">
+							<p:outputLabel value="Situação:" />
+							<p:selectOneMenu id="situacaoNota"
+								value="#{dadosDiuController.notaFiscal.status}" required="true"
+								requiredMessage="Status da Nota obrigatória" style="width:120px">
+								<f:selectItem itemLabel="Aberta" itemValue="Aberta" />
+								<f:selectItem itemLabel="Baixada" itemValue="Baixada" />
+								<f:selectItem itemLabel="Cancelada" itemValue="Cancelada" />
+								<p:ajax event="change"
+									listener="#{dadosDiuController.ValidaBeneficiarioUnidade()}" />
+
+							</p:selectOneMenu>
+						</div> -->
+
+
+						<div class="col-sm-6"
+							style="width: 19%; padding-left: 32%; padding-top: 20px;">
+							<p:commandButton value="Detalhes Nota"
+								class="btn btn-info btn-sm" update=":formItens"
+								oncomplete="PF('itens').show()"
+								rendered="#{dadosDiuController.habilitaDetalhe}"
+								style="  margin-left: 140px;    " title="Itens Nota"
+								process="@this" id="detalhesNotaBotao">
+
+							</p:commandButton>
+						</div>
+						<div class="col-sm-6"
+							style="width: 14%; float: right; padding-right: 22%; padding-top: 20px;">
+							<h:commandButton value="Salvar" class="btn btn-success btn-sm"
+								style="  margin-left: 10px;    margin-top: 3px;"
+								disabled="#{dadosDiuController.travaDiu}"
+								icon="ui-icon-circle-check">
+								<f:ajax listener="#{dadosDiuController.inserirNotaFiscal()}"
+									execute="form" render="form :DiuForm" />
+							</h:commandButton>
+						</div>
+					</div>
+
+
+
+
+
+				</h:form>
+			</h:panelGroup>
+		</p:dialog>
+		<!-- Tela Dialog -->
+		<p:dialog header="Adicionar Insumo Nota Fiscal " widgetVar="itens"
+			modal="true" height="400" id="itens" closeOnEscape="true"
+			width="1000">
+			<h:panelGroup id="pnl_Dialogo_Insumo">
+				<h:form id="formItens" style="font-size:12px;"
+					class="formularioCentro">
+					<p:growl id="messages" autoUpdate="true" closable="true" />
+					<div class="row">
+						<div class="col-md-4" style="width: 11%;">
+							<p:outputLabel value="Tipo DIU:" />
+							<p:selectOneMenu id="tipoDiu"
+								value="#{dadosDiuController.diuItem.tipo}" style="width:75px"
+								requiredMessage="Tipo DIU obrigatório" required="true">
+								<f:selectItem itemLabel="Tipo DIU" itemValue=""
+									noSelectionOption="true" />
+								<f:selectItem itemLabel="Hormonal" itemValue="Hormonal" />
+								<f:selectItem itemLabel="Não Hormonal" itemValue="Nao Hormonal" />
+								<f:selectItem itemLabel="Multiload" itemValue="Multiload" />
+							</p:selectOneMenu>
+						</div>
+
+
+						<div class="col-md-4" style="width: 7%;">
+							<p:outputLabel value="Qtd:" />
+							<p:inputMask mask="?999" size="2" id="quantidadeItensInsumo"
+								value="#{dadosDiuController.quantidadeDiu}"
+								requiredMessage="Quantidade DIU obrigatório" required="true" />
+						</div>
+						<div class="col-md-4" style="width: 14%;">
+							<p:outputLabel value="Valor Total:" />
+							<pe:inputNumber id="Input2" style="width: 100px;"
+								value="#{dadosDiuController.diuItem.valor}"
+								requiredMessage="Valor Total DIU obrigatório" required="true"
+								symbolPosition="s" decimalSeparator="," thousandSeparator=".">
+								<p:ajax event="blur" update="Input2" />
+							</pe:inputNumber>
+
+						</div>
+						<div class="col-md-4" style="width: 9%;">
+							<h:commandButton value="Cadastrar" class="btn btn-success btn-sm"
+							disabled="#{dadosDiuController.travaDiu || dadosDiuController.notaFiscal.travadoParcial}"
+								style="  margin-top: 20px;" icon="ui-icon-circle-check">
+								<f:ajax
+									listener="#{dadosDiuController.inserirNotaFiscalDetalhe()}"
+									execute="formItens" render="formItens :DiuForm :form" />
+							</h:commandButton>
+						</div>
+						<div class="col-md-4" style="width: 23%;">
+							<p:commandButton value="Excluir Dius"
+							disabled="#{dadosDiuController.travaDiu || dadosDiuController.notaFiscal.travadoParcial}"
+								class="btn btn-danger btn-sm" style="  margin-top: 20px;"
+								icon="ui-icon-circle-check"
+								onclick="PF('itensOpmeExclusao').show();" update="@this"
+								process="@this">
+
+
+
+							</p:commandButton>
+						</div>
+						<div class="col-md-4"
+							style="width: 28%; padding-top: 25px; padding-left: 70px;">
+														
+							Total Detalhe : 
+							<h:outputText id="total"
+								value="#{dadosDiuController.valorDetalheTotal}">
+								<f:convertNumber pattern="#0.00" />
+							</h:outputText>
+							
+							
+							
+						</div>
+					</div>
+					<div class="row">
+						<p:dataTable value="#{dadosDiuController.listadiu}" id="itensNota"
+							var="item" scrollable="true" scrollHeight="250"
+							style="table-layout: auto;"
+							emptyMessage="Não há insumos cadastrados.">
+
+
+							<p:column headerText="Seq"
+								style="text-align: center;width: 40px;padding: 0px 0px 0px 0px;">
+								<h:outputText value="#{item.sequencia}">
+									<f:convertNumber pattern="#00" />
+								</h:outputText>
+							</p:column>
+
+
+							<p:column headerText="Tipo"
+								style="text-align: center;padding: 0px 0px 0px 0px;">
+								<h:outputText value="#{item.tipo}">
+									<f:convertNumber pattern="#00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Data Lanc."
+								style="text-align: center;width: 70px;padding: 0px 0px 0px 0px;">
+								<h:outputText value="#{item.dtLancamento}">
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+										timeZone="America/Sao_Paulo" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Vl Item"
+								style="text-align: center;width: 80px;padding: 0px 0px 0px 0px;">
+								<h:outputText value="#{item.valor}">
+									<f:convertNumber pattern="R$#0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Número Carteira "
+								style="text-align: center;width: 130px;padding: 0px 0px 0px 0px;">
+
+								<h:outputText
+									value="#{item.beneficiario.cdCarteiraInteiraString}">
+
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Nome Benef."
+								style="padding: 0px 0px 0px 0px;padding-left: 4px;width: 120px;">
+								<h:outputText value="#{item.beneficiario.nome}" />
+
+
+							</p:column>
+							<p:column headerText="Guia Aut. "
+								style="text-align: center;width: 90px;padding: 0px 0px 0px 0px;">
+								<h:outputText value="#{item.guiaAutorizacao.numeroGuiaCompleto}" />
+							</p:column>
+							<p:column headerText="Dt. Sol. Med. "
+								style="text-align: center;width: 70px;padding: 0px 0px 0px 0px;">
+								<h:outputText value="#{item.dtSolicitacao}">
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+										timeZone="America/Sao_Paulo" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="CRM Med. "
+								style="text-align: center;width: 70px;padding: 0px 0px 0px 0px;">
+								<h:outputText value="#{item.medico.cdPrestadorString}">
+									<f:convertNumber pattern="00000000" />
+								</h:outputText>
+							</p:column>
+
+
+							<p:column headerText="Status "
+								style="text-align: center;width: 70px;padding: 0px 0px 0px 0px;">
+								<h:outputText value="#{item.status}">
+									<f:convertNumber pattern="00000000" />
+								</h:outputText>
+							</p:column>
+
+
+
+
+							<p:column headerText="Observações"
+								style="padding: 0px 0px 0px 0px;padding-left: 4px;">
+								<h:outputText value="#{item.observacao}" />
+
+
+							</p:column>
+
+
+
+
+
+							<p:column
+								style="width: 20px;text-align: center;padding: 0px 0px 0px 0px;">
+								<p:commandLink update=":formDiuItem" rendered="#{item.retirado}"
+									oncomplete="PF('retirarItem').show()"
+									action="#{dadosDiuController.limparDadosDiuDetalhe()}"
+									styleClass="ui-icon ui-icon-arrow-1-n" title="Retirar DIU"
+									disabled="#{dadosDiuController.travaDiu || item.travado}"
+									process="@this">
+									<f:setPropertyActionListener value="#{item}"
+										target="#{dadosDiuController.diuBaixa}" />
+								</p:commandLink>
+							</p:column>
+							<p:column
+								style="width: 20px;text-align: center;padding: 0px 0px 0px 0px;">
+								<p:commandLink styleClass="ui-icon ui-icon-arrow-1-s"
+									rendered="#{item.devolvido}"
+									action="#{dadosDiuController.ValidaBeneficiarioUnidade()}"
+									title="Devolver DIU" process="@this"
+									disabled="#{dadosDiuController.travaDiu || item.travado}"
+									onclick="PF('devolverDiu').show();">
+									<f:setPropertyActionListener value="#{item}"
+										target="#{dadosDiuController.diuSelecionado}" />
+
+								</p:commandLink>
+							</p:column>
+
+
+
+
+							<p:column
+								style="width: 20px;text-align: center;padding: 0px 0px 0px 0px;">
+								<p:commandLink update=":formDiuItem "
+									oncomplete="PF('retirarItem').show()"
+									rendered="#{item.devolvido}"
+									disabled="#{dadosDiuController.travaDiu || item.travado}"
+									action="#{dadosDiuController.AlteraDiu()}"
+									styleClass="ui-icon ui-icon-wrench" title="Alterar DIU"
+									process="@this">
+									<f:setPropertyActionListener value="#{item}"
+										target="#{dadosDiuController.diuSelecionado}" />
+								</p:commandLink>
+							</p:column>
+
+
+
+
+
+							<p:column
+								style="width: 20px;text-align: center;padding: 0px 0px 0px 0px;">
+								<p:commandLink styleClass="ui-icon ui-icon-clipboard"
+									oncomplete="PF('historicoItem').show()"
+									update=":formDiuItemhistorico" title="Histórico DIU"
+									action="#{dadosDiuController.carregaHistoricoDiu()}"
+									process="@this">
+									<f:setPropertyActionListener value="#{item}"
+										target="#{dadosDiuController.diuSelecionado}" />
+
+								</p:commandLink>
+							</p:column>
+
+
+
+
+
+
+
+
+
+						</p:dataTable>
+					</div>
+				</h:form>
+			</h:panelGroup>
+		</p:dialog>
+
+
+		<p:dialog header="Retirada de DIU" widgetVar="retirarItem"
+			modal="true" height="330" id="retirarItem" closeOnEscape="true"
+			width="600">
+			<h:panelGroup id="pnl_Dialogo_3">
+				<h:form id="formDiuItem" style="font-size:12px;"
+					class="formularioCentro">
+
+					<p:growl autoUpdate="true" closable="true" />
+
+
+					<div class="row">
+						<div class="col-md-4" style="width: 31%;">
+
+
+							<p:outputLabel value="Tipo:" />
+							<p:inputText size="22" maxlength="100" id="tipoDiu"
+								disabled="true" value="#{dadosDiuController.diuBaixa.tipo}" />
+
+						</div>
+
+						<div class="col-md-4" style="width: 31%;">
+
+							<p:outputLabel value="Valor:" />
+							<p:inputText size="22" maxlength="100" id="valorNotaFiscal"
+								disabled="true" required="true"
+								value="#{dadosDiuController.diuBaixa.valor}">
+								<f:convertNumber pattern="R$#0.00" />
+							</p:inputText>
+						</div>
+
+						<div class="col-md-4" style="width: 31%;">
+							<p:outputLabel value="Dt. Sol Med.:" />
+							<p:inputMask mask="99/99/9999" size="22" maxlength="100"
+								id="dataEmissaoDiu" required="true"
+								requiredMessage="Data Emissão obrigatória" pattern="dd/MM/yyyy"
+								value="#{dadosDiuController.diuSelecionado.dtSolicitacao}">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+									timeZone="America/Sao_Paulo" />
+							</p:inputMask>
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="col-sm-4" style="width: 31%;">
+							<p:outputLabel value="CRM Médico:" />
+							<p:inputMask mask="?99999999" id="crmMedico"
+								disabled="#{dadosDiuController.lgFornecedorTravado}"
+								value="#{dadosDiuController.diuSelecionado.medico.cdPrestador}"
+								size="22" style="font-weight: 100;" required="true"
+								requiredMessage="CRM Médico obrigatório">
+								<p:ajax listener="#{dadosDiuController.ValidaMedico()}"
+									update="crmMedico nomeMedico" event="change"
+									partialSubmit="true" process="@this,nomeMedico" />
+							</p:inputMask>
+						</div>
+						<div class="col-sm-6" style="width: 57%;">
+							<p:outputLabel value="Nome Médico:" />
+							<p:autoComplete id="nomeMedico"
+								value="#{dadosDiuController.diuSelecionado.medico}"
+								style="font-weight: 100;"
+								completeMethod="#{dadosDiuController.BucarMedicoNome}" size="52"
+								disabled="#{dadosDiuController.lgFornecedorTravado}"
+								required="true" requiredMessage="Nome Médico obrigatório"
+								var="dados" itemValue="#{dados}" itemLabel="#{dados.nome}"
+								converter="entityConverter" forceSelection="true">
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.cdPrestador}" />
+								</p:column>
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.nome}" />
+								</p:column>
+								<p:ajax event="itemSelect"
+									listener="#{dadosDiuController.onItemSelectFornecedor}"
+									update="crmMedico nomeMedico" />
+							</p:autoComplete>
+						</div>
+						<div style="padding-top: 28px;">
+							<p:commandLink styleClass="ui-icon ui-icon-circle-close"
+								process="@this,nomeMedico,crmMedico"
+								actionListener="#{dadosDiuController.limpaMedico}"
+								update="nomeMedico,crmMedico" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-4" style="width: 7%;">
+							<p:outputLabel value="Unid:" />
+							<p:inputMask mask="?9999" size="1" maxlength="10"
+								id="unidadeCarteiraBeneficiarioDiu" required="true"
+								requiredMessage="Unidade Carteira Beneficiário obrigatória"
+								value="#{dadosDiuController.diuSelecionado.beneficiario.unidade}"
+								disabled="#{dadosDiuController.lgBeneficiarioTravado}">
+								<p:ajax event="change"
+									listener="#{dadosDiuController.ValidaBeneficiarioUnidade()}" />
+							</p:inputMask>
+						</div>
+						<div class="col-md-4" style="width: 24%;">
+							<p:outputLabel value="Nr Carteira:" />
+							<p:inputMask mask="9999999999999" size="14" maxlength="100"
+								id="carteiraBeneficiarioDiu" required="true"
+								requiredMessage="Carteira Beneficiário obrigatória"
+								value="#{dadosDiuController.diuSelecionado.beneficiario.cdCarteiraInteira}"
+								disabled="#{dadosDiuController.lgBeneficiarioTravado}">
+								<p:ajax listener="#{dadosDiuController.ValidaBeneficiarioDiu()}"
+									update="nomeBeneficiarioDiu,carteiraBeneficiarioDiu,anoGuiaAutorizacaoDiu,unidadeCarteiraBeneficiarioDiu"
+									event="change" process="@this" />
+							</p:inputMask>
+						</div>
+						<div class="col-md-6" style="width: 57%;">
+							<p:outputLabel value="Nome Beneficiário:" />
+							<p:inputText id="nomeBeneficiarioDiu"
+								value="#{dadosDiuController.diuSelecionado.beneficiario.nome}"
+								size="52" disabled="true" />
+						</div>
+						<div style="padding-top: 28px;">
+							<p:commandLink id="beneficiarioNomeDiu"
+								styleClass="ui-icon ui-icon-circle-close"
+								process="@this,nomeBeneficiarioDiu,carteiraBeneficiarioDiu,unidadeCarteiraBeneficiarioDiu"
+								actionListener="#{dadosDiuController.limpaBeneficiario()}"
+								update="nomeBeneficiarioDiu,carteiraBeneficiarioDiu,unidadeCarteiraBeneficiarioDiu,anoGuiaAutorizacaoDiu,guiaAutorizacaoDiu" />
+						</div>
+					</div>
+					<div class="row">
+
+						<div class="col-md-4" style="width: 11%;">
+							<p:outputLabel value="Ano:" />
+							<p:selectOneMenu id="anoGuiaAutorizacaoDiu"
+								value="#{dadosDiuController.diuSelecionado.guiaAutorizacao.ano}"
+								style="width:60px" required="true"
+								requiredMessage="Ano Guia Autorização obrigatório">
+								<f:selectItem itemLabel="Ano" itemValue=""
+									noSelectionOption="true" />
+								<f:selectItems
+									value="#{dadosDiuController.listaAnoNrGuiasDisponivel}" />
+								<p:ajax event="change"
+									listener="#{dadosDiuController.liberaAnoGuia()}"
+									update="guiaAutorizacaoDiu" />
+							</p:selectOneMenu>
+						</div>
+						<div class="col-md-4" style="width: 20%;">
+							<p:outputLabel value="Nr Guia:" />
+							<p:selectOneMenu id="guiaAutorizacaoDiu"
+								value="#{dadosDiuController.diuSelecionado.guiaAutorizacao.numero}"
+								style="width:77px" required="true"
+								requiredMessage="Número Guia Autorização obrigatório">
+								<f:selectItem itemLabel="Nr. Guia" itemValue=""
+									noSelectionOption="true" />
+								<f:selectItems
+									value="#{dadosDiuController.listaNrGuiasDisponivel}" />
+							</p:selectOneMenu>
+						</div>
+
+						<div class="col-md-6" style="width: 57%;">
+							<p:outputLabel value="Observações:" />
+							<p:inputText id="observacaoDiu"
+								value="#{dadosDiuController.diuSelecionado.observacao}"
+								size="52" />
+						</div>
+					</div>
+					<div class="row">
+
+						<!-- <div class="col-md-4" style="width: 31%;">
+							<p:outputLabel value="Situação:" />
+							<p:selectOneMenu id="situacaoNota"
+								value="#{dadosDiuController.diuSelecionado.status}"
+								required="true" requiredMessage="Status da Nota obrigatória"
+								style="width:120px">
+								<f:selectItem itemLabel="Aberta" itemValue="Aberta" />
+								<f:selectItem itemLabel="Ajuste Contabil"
+									itemValue="Ajuste Contabil" />
+								<f:selectItem itemLabel="Baixa Ajuste" itemValue="Baixa Ajuste" />
+								<f:selectItem itemLabel="Baixa Completa"
+									itemValue="Baixa Completa" />
+								<f:selectItem itemLabel="Baixa Parcial"
+									itemValue="Baixa Parcial" />
+								<f:selectItem itemLabel="Cancelada" itemValue="Cancelada" />
+								<p:ajax event="change"
+									listener="#{dadosDiuController.ValidaBeneficiarioUnidade()}" />
+
+							</p:selectOneMenu>
+						</div>
+
+						<div class="col-md-4" style="width: 31%;">
+							<p:outputLabel value="Competência de Baixa:" />
+							<p:inputMask mask="99/9999" size="22" maxlength="100"
+								id="competenciaBaixa"
+								value="#{dadosDiuController.diuSelecionado.competenciaBaixa}">
+
+							</p:inputMask>
+						</div> -->
+
+						<div class="col-md-4">
+							<p:commandButton value="Salvar" class="botao-sucesso"
+								style="  margin-left: 10px;    margin-top: 20px;margin-left: 35%;"
+								icon="ui-icon-circle-check"
+								oncomplete="retirarItem.hide(); return false;"
+								update=":formItens formDiuItem :DiuForm:gridNotas"
+								actionListener="#{dadosDiuController.salvarRetirada()}">
+
+							</p:commandButton>
+						</div>
+					</div>
+
+				</h:form>
+			</h:panelGroup>
+		</p:dialog>
+
+		<p:dialog header="Histórico de DIU" widgetVar="historicoItem"
+			modal="true" height="250" id="historicoItem" closeOnEscape="true"
+			width="830">
+			<h:panelGroup id="pnl_Dialogo_4">
+				<h:form id="formDiuItemhistorico" style="font-size:12px;"
+					class="formularioCentro">
+
+					<p:growl autoUpdate="true" closable="true" />
+
+
+					<div class="row">
+
+						<p:dataTable value="#{dadosDiuController.listadiuHistorico}"
+							id="itensNotaHistorico" var="item" style="table-layout: auto;"
+							emptyMessage="Não históricos cadastrados.">
+							<p:column headerText="Tipo" style="text-align: center;">
+								<h:outputText value="#{item.tipo}">
+									<f:convertNumber pattern="#00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Data Lançamento"
+								style="text-align: center;">
+								<h:outputText value="#{item.dtLancamento}">
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+										timeZone="America/Sao_Paulo" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Valor Item" style="text-align: center;">
+								<h:outputText value="#{item.valor}">
+									<f:convertNumber pattern="R$#0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Número Carteira "
+								style="text-align: center;">
+								<h:outputText value="#{item.beneficiario.unidade}">
+									<f:convertNumber pattern="0000" />
+								</h:outputText>
+								<h:outputText value="#{item.beneficiario.cdCarteiraInteira}">
+									<f:convertNumber pattern="0000000000000" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Nome Beneficiário"
+								style="padding: 4px 4px;">
+								<h:outputText value="#{item.beneficiario.nome}" />
+
+
+							</p:column>
+							<p:column headerText="Guia Autorizacao "
+								style="text-align: center;">
+								<h:outputText
+									value="#{item.guiaAutorizacao.ano} - #{item.guiaAutorizacao.numero}" />
+							</p:column>
+							<p:column headerText="Dt. Sol. Med. " style="text-align: center;">
+								<h:outputText value="#{item.dtSolicitacao}">
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+										timeZone="America/Sao_Paulo" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="CRM Med. " style="text-align: center;">
+								<h:outputText value="#{item.medico.cdPrestador}">
+									<f:convertNumber pattern="00000000" />
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="Observações" style="padding: 4px 4px;">
+								<h:outputText value="#{item.observacao}" />
+
+
+							</p:column>
+
+						</p:dataTable>
+
+
+					</div>
+
+				</h:form>
+			</h:panelGroup>
+		</p:dialog>
+
+
+
+
+		<p:dialog header="Devolver DIU" widgetVar="devolverDiu" modal="true"
+			height="150" id="devolverDiu" closeOnEscape="true" width="290">
+			<h:panelGroup id="pnl_Dialogo_DIU">
+				<h:form id="formDevolverDiu">
+					<p:outputLabel value="Você deseja realmente devolver este DIU?"></p:outputLabel>
+
+					<p:commandButton value="Sim" class="btn btn-success btn-sm"
+						style="  margin-top: 20px;"
+						action="#{dadosDiuController.devolverDiu()}"
+						onclick="devolverDiu.hide();" process="@this"
+						update=":formItens:itensNota :DiuForm :form" />
+
+					<p:commandButton value="Nao" class="btn btn-danger btn-sm"
+						style="  margin-top: 20px;" onclick="devolverDiu.hide();"
+						process="@this" />
+				</h:form>
+			</h:panelGroup>
+		</p:dialog>
+
+		<p:dialog header="Excluir Todos Dius" widgetVar="itensOpmeExclusao"
+			modal="true" height="150" id="itensOpmeExclusao" closeOnEscape="true"
+			width="290">
+			<h:panelGroup id="pnl_Dialogo_Exclusao">
+				<h:form id="formItensExclusao">
+					<p:outputLabel
+						value="Você deseja realmente realizar a exclusão deste item?"></p:outputLabel>
+
+					<p:commandButton value="Sim" class="btn btn-success btn-sm"
+						style="  margin-top: 20px;"
+						action="#{dadosDiuController.excluirDiu()}"
+						onclick="itensOpmeExclusao.hide();" process="@this"
+						update=":formItens:itensNota :formItens:total :DiuForm :form" />
+
+					<p:commandButton value="Nao" class="btn btn-danger btn-sm"
+						style="  margin-top: 20px;" onclick="itensOpmeExclusao.hide();"
+						process="@this" />
+				</h:form>
+			</h:panelGroup>
+		</p:dialog>
+
+		<p:ajaxStatus id="startAjax" onstart="PF('start').show();"
+			oncomplete="PF('start').hide();">
+		</p:ajaxStatus>
+		<p:dialog widgetVar="start" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<h:graphicImage value="#{resource['img:carregandoo.gif']}"></h:graphicImage>
+		</p:dialog>
+
+
+
+
+
+
+
+
+
+
+
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    
+     <!-- /*ATUALIZAÇÕES*/
+/*DATA = 		      					ANALISTA = 								*/
+/*DATA = 			  					ANALISTA = 								*/
+/*DATA = 			  					ANALISTA = 								*/
+/*DATA = 			  					ANALISTA = 								*/
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:opt="http://primefaces.prime.com.tr/optimus"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="Templete.xhtml">
+	<style>
+.ui-button-icon-only {
+	width: 3.4em;
+}
+
+.btn-warning {
+	color: #fff;
+	background-color: #F5781E;
+	border-color: #F5781E;
+}
+</style>
+	<ui:define name="corpo">
+		<h:form id="FormRelatorio">
+			<p:growl autoUpdate="true" />
+			<div class="titulo">
+				<legend>Vincular Grupo Colaborador</legend>
+			</div>
+
+			<div class="formularioCorpo"
+				style="height: 724px; margin-bottom: -12%;">
+				<div class="form-horizontal">
+
+			
+
+					<div class="form-group">
+						<div class="col-sm-3" style="margin-left: 10%;  margin-top: 5%;width: 29%;">
+							<p:outputLabel for="IGrupo" value="Grupo" />
+							<div class="input-group">
+								<span class="input-group-addon"> <span
+									class="glyphicon glyphicon glyphicon-user"></span>
+								</span>
+								<h:selectOneMenu class="form-control" id="IGrupo"
+									required="true"
+									requiredMessage="Grupo : é um campo Obrigatório !!!"
+									style="width: 97%;"
+									value="#{vincularGrupoColaboradorController.grupoSelecionado}">
+									<f:selectItem itemValue="" itemLabel="SELEÇÃO GRUPO" />
+									<f:selectItems value="#{vincularPermissaoGrupo.grupos}" />
+									<p:ajax
+										listener="#{vincularGrupoColaboradorController.atribuirSetor()}"
+										update="@form" event="change" partialSubmit="true" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+						<p:commandLink type="button"
+							style="margin-left: -255px; margin-top: 30px;  margin-top: 78px;"
+							pt:data-toggle="modal" pt:data-target="#myModal"
+							styleClass="ui-icon ui-icon-plusthick" process="@none"></p:commandLink>
+						<div class="col-sm-3" style="margin-left: 2%;margin-top: -5%;width: 47%;">
+							<p:outputLabel for="ISetor" value="Setor" />
+							<div class="input-group">
+								<span class="input-group-addon"> <span
+									class="glyphicon glyphicon glyphicon-list-alt"></span>
+								</span>
+								<h:selectOneMenu class="form-control" id="ISetor"
+									style="width: 109%;" required="true"
+									requiredMessage="Setor : É um campo obrigatório !!!"
+									value="#{vincularGrupoColaboradorController.descricaoSetorSelecionado}">
+									<f:selectItem itemValue="" itemLabel="SELEÇÃO SETOR" />
+									<f:selectItems
+										value="#{vincularGrupoColaboradorController.setores}" />
+													<p:ajax
+										listener="#{vincularGrupoColaboradorController.passaDescricao()}"
+										update="@form" event="change" partialSubmit="true" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-5" style="margin-left: 10%;">
+							<div>
+								<p:outputLabel for="IColaboradorSelecionado" value="Colaborador" />
+							</div>
+							<p:autoComplete class="control-label" size="47" required="true"
+								requiredMessage="Colaborador : É um campo obrigatório !!!"
+								id="IColaboradorSelecionado"
+								value="#{vincularGrupoColaboradorController.nomeColaboradorSelecionado}"
+								dropdown="true"
+								completeMethod="#{vincularGrupoColaboradorController.completeText}">
+							</p:autoComplete>
+						</div>
+					</div>
+
+					<p:commandButton class="btn btn-warning btn-sm"
+						process="@this,ISetor,IGrupo"
+						style="  margin-left: 490px;margin-top: -127px;margin-bottom: -20%;"
+						action="#{vincularGrupoColaboradorController.adicionaSetor()}"
+						value="Adicionar Setor" ajax="true" update="tableGrupo">
+					</p:commandButton>
+
+
+					<p:commandButton class="btn btn-primary btn-sm"
+						style="margin-top: -127px;margin-bottom: -20%;"
+						action="#{vincularGrupoColaboradorController.adicionarTabela()}"
+						value="Adicionar" ajax="true" update="tableGrupo"
+						process="@this,IGrupo,IColaboradorSelecionado">
+					</p:commandButton>
+
+
+					<p:commandButton class="btn btn-success btn-sm"
+						style="margin-left: 721px;margin-top: -19%;margin-bottom: -20%;"
+						action="#{vincularGrupoColaboradorController.salvar()}"
+						value="Salvar" process="@this,IGrupo" ajax="true" update="@form">
+					</p:commandButton>
+
+
+					<p:dataTable var="grupo" id="tableGrupo"
+						emptyMessage="Não Existe Colaborador"
+						value="#{vincularGrupoColaboradorController.gruposMatricula}"
+						style="  width: 81%; margin-left: 10%;margin-top: 2%;">
+						<p:column headerText="Grupo" style="text-align: center">
+							<h:outputText value="#{grupo.grupo.descricao}" />
+						</p:column>
+						<p:column headerText="Matricula" style="text-align: center">
+							<h:outputText value="#{grupo.matricula}" />
+						</p:column>
+
+						<p:column headerText="Nome Colaborador" style="text-align: center">
+							<h:outputText value="#{grupo.nomeColaborador}" />
+						</p:column>
+
+						<p:column style="text-align: center">
+							<p:commandLink type="button" title="Remover da Tabela"
+								styleClass="ui-icon ui-icon-closethick" update="tableGrupo" process="@none,@this"
+								action="#{vincularGrupoColaboradorController.removerTabela()}">
+								<f:setPropertyActionListener value="#{grupo}"
+									target="#{vincularGrupoColaboradorController.selectGrupoMatricula}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+
+
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header"></div>
+								<div class="modal-body">
+
+									<p:outputLabel value="Cadastro de Grupos"
+										style="  margin-left: 35%; margin-top: 2%;font-family: -webkit-pictograph;font-size: 140%; color: darkgrey; margin-bottom: 2%;"></p:outputLabel>
+
+									<div class="form-group">
+										<div class="col-sm-5" style="margin-left: 10%;">
+											<p:outputLabel for="IDescricaoGrupo" value="Descrição" />
+											<h:inputText class="form-control" name="Descricao"
+												id="IDescricaoGrupo" pt:placeholder="Descrição do Grupo"
+												style="  width: 97%;" required="true"
+												requiredMessage="Descrição Grupo : É um campo obrigatório "
+												value="#{vincularGrupoColaboradorController.grupo.descricao}"></h:inputText>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="col-sm-5" style="margin-left: 10%;">
+											<p:outputLabel value="Sigla" for="ISiglaGrupo" />
+											<h:inputText class="form-control" name="Sigla"
+												required="true"
+												requiredMessage="Sigla Grupo : É um campo obrigatório "
+												pt:placeholder="Descrição da Sigla" style="width: 97%;"
+												id="ISiglaGrupo"
+												value="#{vincularGrupoColaboradorController.grupo.sigla}"></h:inputText>
+										</div>
+									</div>
+
+									<h:commandButton value="Cadastrar"
+										class="btn btn-success btn-sm" style="  margin-left: 439px;"
+										icon="ui-icon-circle-check">
+										<p:ajax update="@form" event="change" partialSubmit="true"
+											process="@none" />
+									</h:commandButton>
+								</div>
+
+								<div class="modal-footer"></div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

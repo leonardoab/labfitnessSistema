@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:opt="http://primefaces.prime.com.tr/optimus"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="#{perfilAcessoController.perfilTemplete}">
+	<ui:define name="corpo">
+		<script type="text/javascript"
+			src="recursos/js/jquery.validate.min.js" charset="charset=UTF-8" />
+		<script type="text/javascript" src="recursos/js/validaLogin.js"
+			charset="charset=UTF-8" />
+
+		<p:growl autoUpdate="true" />
+		<div class="titulo">
+			<legend>Competencias</legend>
+		</div>
+
+		<div class="form-horizontal">
+
+			<h:form class="formularioCentro" id="Competencias"
+				enctype="multipart/form-data">
+
+				<p:dataTable var="registro"
+					value="#{competenciasController.listaCompetencias}"
+					id="gridCompetencias" widgetVar="gridCompetencias"
+					scrollable="true" scrollHeight="450">
+
+
+					<p:column headerText="Competencia" 
+						style="padding: 4px 4px;text-align: center;"
+						>
+						<h:outputText value="#{registro.descritivo}" />
+					</p:column>
+										
+					<p:column headerText="Travar Competencia"
+						style="padding: 4px 4px;text-align: center;"
+						>
+
+
+					<p:selectBooleanButton id="travar"
+						value="#{registro.travadoLogico}" onLabel="Travado" offLabel="Destravado"
+						onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:90px">
+						  <p:ajax listener="#{competenciasController.travarNotas(registro) }" />
+						 
+						
+					</p:selectBooleanButton>
+					</p:column>
+
+
+				</p:dataTable>
+			</h:form>
+		</div>
+		<p:ajaxStatus id="startAjax" onstart="PF('start').show();"
+			oncomplete="PF('start').hide();">
+		</p:ajaxStatus>
+		<p:dialog widgetVar="start" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<h:graphicImage value="#{resource['img:carregandoo.gif']}"></h:graphicImage>
+		</p:dialog>
+
+
+
+
+
+
+	</ui:define>
+</ui:composition>
+</html>

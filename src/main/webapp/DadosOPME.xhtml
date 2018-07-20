@@ -1,0 +1,1094 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:opt="http://primefaces.prime.com.tr/optimus"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="#{perfilAcessoController.perfilTemplete}">
+	<ui:define name="corpo">
+		<script type="text/javascript"
+			src="recursos/js/jquery.validate.min.js" charset="charset=UTF-8" />
+		<script type="text/javascript" src="recursos/js/validaLogin.js"
+			charset="charset=UTF-8" />
+
+		<p:growl autoUpdate="true" />
+		<div class="titulo">
+			<legend>Dados OPME</legend>
+		</div>
+
+		<div class="form-horizontal">
+
+			<h:form class="formularioCentro" id="OpmeForm"
+				enctype="multipart/form-data">
+
+				<p:commandButton value="Novo Registro"
+					class="btn btn-success btn-sm" onclick="PF('dlg2').show();"
+					actionListener="#{dadosOPMEController.limparFormulario}"
+					style="  margin-left: 90.5%;    margin-bottom: 10px;"
+					update=":form :form:detalhesNotaBotao" />
+
+				<p:dataTable var="registro" widgetVar="gridNotas"
+					value="#{dadosOPMEController.listaNotaFiscal}" id="gridNotas"
+					emptyMessage="Não há notas fiscais cadastradas."
+					filteredValue="#{dadosOPMEController.listaNotaFiscalFiltradas}"
+					scrollable="true" scrollHeight="450">
+					<f:facet name="header">
+
+						<h:commandLink style="MARGIN-LEFT: 81%;padding-right: 15px;">
+							<p:graphicImage value="resources/img/excel.png" />
+							<p:dataExporter type="xls" target="gridNotas"
+								fileName="registro_OPME" />
+						</h:commandLink>
+
+						
+
+					</f:facet>
+
+
+					<p:column headerText="Nr. Nota" sortBy="#{registro.numero}"
+						style="padding: 4px 4px;text-align: center;width: 69px;"
+						filterBy="#{registro.numero}" filterStyle="width: 61px;">
+						<f:facet name="header">
+							<h:outputText value="Nr. Nota" />
+						</f:facet>
+						<h:outputText value="#{registro.numero}" />
+					</p:column>
+
+					<p:column headerText="Valor Nota" filterBy="#{registro.valor}" filterMatchMode="contains"
+						filterStyle="width: 75px;" sortBy="#{registro.hospital.nome}"
+						style="padding: 4px 4px;text-align: center;width: 83px;">
+						<f:facet name="header">
+							<h:outputText value="Valor Nota" />
+						</f:facet>
+						<h:outputText value="#{registro.valor}">
+							<f:convertNumber pattern="R$#0.00" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Qtd" filterBy="#{registro.qtdItens}" filterMatchMode="contains"
+						filterStyle="width: 39px;" sortBy="#{registro.qtdItens}"
+						style="width: 47px; text-align: center;padding: 4px 4px;">
+						<f:facet name="header">
+							<h:outputText value="Qtd" />
+						</f:facet>
+						<h:outputText value="#{registro.qtdItens}" />
+					</p:column>
+
+					<p:column headerText="C.Forn."
+						filterBy="#{registro.fornecedor.cdPrestador}" filterMatchMode="contains"
+						filterStyle="width: 72px;" sortBy="#{registro.fornecedor.cdPrestador}"
+						style="padding: 4px 4px;width: 80px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="C.Forn." />
+						</f:facet>
+						<h:outputText value="#{registro.fornecedor.cdPrestador}">
+							<f:convertNumber pattern="00000000" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Nm.Forn."
+						filterBy="#{registro.fornecedor.nome}" filterMatchMode="contains"
+						filterStyle="width: 90px;" sortBy="#{registro.fornecedor.nome}"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Nm.Forn." />
+						</f:facet>
+						<h:outputText value="#{registro.fornecedor.nome}" />
+					</p:column>
+
+
+					<p:column headerText="C.Hosp."
+						filterBy="#{registro.hospital.cdPrestador}" filterMatchMode="contains"
+						filterStyle="width: 63px;" sortBy="#{registro.hospital.cdPrestador}"
+						style="padding: 4px 4px;width: 70px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="C.Hosp." />
+						</f:facet>
+						<h:outputText value="#{registro.hospital.cdPrestador}">
+							<f:convertNumber pattern="00000000" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Nome Hosp." sortBy="#{registro.hospital.nome}" filterMatchMode="contains"
+						filterBy="#{registro.hospital.nome}" filterStyle="width: 90px;"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Nome Hosp." />
+						</f:facet>
+						<h:outputText value="#{registro.hospital.nome}" />
+					</p:column>
+
+					<p:column headerText="Data Vencimento" sortBy="#{registro.dataEmissao}"
+						filterBy="#{registro.dataEmissao}" filterStyle="width: 64px;" filterMatchMode="contains"
+						style="padding: 4px 4px;width: 72px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Dt.Venc." />
+						</f:facet>
+						<h:outputText value="#{registro.dataEmissao}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+								timeZone="America/Sao_Paulo" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Data Realização" sortBy="#{registro.dtRealizacao}"
+						filterBy="#{registro.dtRealizacao}" filterStyle="width: 68px;" filterMatchMode="contains"
+						style="padding: 4px 4px;width: 76px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Dt.Realiz." />
+						</f:facet>
+						<h:outputText value="#{registro.dtRealizacao}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+								timeZone="America/Sao_Paulo" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Número Pedido" sortBy="#{registro.nrPedido}"
+						filterBy="#{registro.nrPedido}" filterStyle="width: 72px;" filterMatchMode="contains"
+						style="padding: 4px 4px;width: 80px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Nr.Pedido" />
+						</f:facet>
+						<h:outputText value="#{registro.nrPedido}" />
+					</p:column>
+
+					<p:column headerText="Guia Autorização" sortBy="#{registro.guiaAutorizacao.numeroGuiaCompleto}"
+						filterBy="#{registro.guiaAutorizacao.numeroGuiaCompleto}" filterMatchMode="contains"
+						filterStyle="width: 76px;"
+						style="padding: 4px 4px;width: 85px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Guia.Aut." />
+						</f:facet>
+						<h:outputText
+							value="#{registro.guiaAutorizacao.numeroGuiaCompleto}" />
+					</p:column>
+
+					<p:column headerText="Número Carteira Beneficiário"
+						filterBy="#{registro.beneficiario.cdCarteiraInteiraString}" filterMatchMode="contains"
+						filterStyle="width: 117px;" sortBy="#{registro.beneficiario.cdCarteiraInteiraString}"
+						style="padding: 4px 4px;width: 125px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Carteira Benef." />
+						</f:facet>
+						<h:outputText
+							value="#{registro.beneficiario.cdCarteiraInteiraString}">
+
+						</h:outputText>
+
+					</p:column>
+
+					<p:column headerText="Nm.Benef." style="padding: 4px 4px;" filterMatchMode="contains"
+						filterBy="#{registro.beneficiario.nome}" sortBy="#{registro.beneficiario.nome}"
+						filterStyle="width: 91px;">
+
+						<f:facet name="header">
+							<h:outputText value="Nm.Benef." />
+						</f:facet>
+						<h:outputText value="#{registro.beneficiario.nome}" />
+					</p:column>
+
+					<p:column style="padding: 4px 4px;width: 140px;text-align: center;"  filterMatchMode="contains"
+						filterBy="#{registro.status}" 
+						filterStyle="display: none;">
+
+						<f:facet name="header">
+							<h:outputText value="Situação Nota" />
+							<p:selectOneMenu value="#{dadosOPMEController.situacaoFiltro}">
+
+								<f:selectItem itemLabel="Aberta" itemValue="Aberta"
+									noSelectionOption="true" />
+								<f:selectItem itemLabel="Todas" itemValue="Todas" />
+
+
+								<p:ajax event="change"
+									listener="#{dadosOPMEController.BuscarPorStatus()}"
+									update="gridNotas" />
+
+							</p:selectOneMenu>
+						</f:facet>
+						<h:outputText value="#{registro.status}" />
+					</p:column>
+
+					<p:column style="padding: 4px 4px;width: 20px;text-align: center;">
+						<p:commandLink update=":formDados"
+							oncomplete="PF('usuarioMudanca').show()"
+							styleClass="ui-icon ui-icon-clipboard" title="Dados Registro">
+							<f:setPropertyActionListener value="#{registro}"
+								target="#{dadosOPMEController.notaFiscalSelecionada}" />
+						</p:commandLink>
+					</p:column>
+
+					<p:column style="padding: 4px 4px;width: 20px;text-align: center;">
+						<p:commandLink update=":form" oncomplete="PF('dlg2').show()"
+							styleClass="ui-icon ui-icon-wrench" title="Editar Nota"
+							action="#{dadosOPMEController.carregarNota()}">
+							<f:setPropertyActionListener value="#{registro}"
+								target="#{dadosOPMEController.notaFiscalSelecionada}" />
+						</p:commandLink>
+					</p:column>
+					<p:column style="padding: 4px 4px;width: 20px;text-align: center;">
+						<p:commandLink update=":formItens" oncomplete="PF('itens').show()"
+							styleClass="ui-icon ui-icon-search" title="Itens Nota"
+							action="#{dadosOPMEController.carregarDetalhesNota()}">
+							<f:setPropertyActionListener value="#{registro}"
+								target="#{dadosOPMEController.notaFiscalSelecionada}" />
+						</p:commandLink>
+					</p:column>
+
+
+					<h3>Export Page Data Only</h3>
+					<h:commandLink>
+						<p:graphicImage name="/img/excel.png" />
+						<p:dataExporter type="xls" target="gridNotas" fileName="cars"
+							pageOnly="true" />
+					</h:commandLink>
+
+
+
+				</p:dataTable>
+			</h:form>
+		</div>
+
+		<p:dialog header="Dados Registro" widgetVar="usuarioMudanca"
+			modal="true" height="120" id="dlg_editar_dados" closeOnEscape="true"
+			width="400">
+			<h:panelGroup id="pnl_Dialogo_5">
+				<h:form id="formDados" style="font-size:12px;"
+					class="formularioCentro">
+
+					<div class="row">
+						<div class="col-md-6">
+							<p:outputLabel value="Matricula Usuário Inserção:" />
+							<p:outputLabel
+								value="#{dadosOPMEController.notaFiscalSelecionada.usuarioInsercao}" />
+						</div>
+
+						<div class="col-md-6">
+							<p:outputLabel value="Data Inserção:" />
+							<p:outputLabel
+								value="#{dadosOPMEController.notaFiscalSelecionada.dtInsercao}">
+								<f:convertDateTime pattern="dd/MM/yyyy - HH:mm:ss"
+									timeZone="America/Sao_Paulo" />
+							</p:outputLabel>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<p:outputLabel value="Matricula Usuário Atualização:" />
+							<p:outputLabel
+								value="#{dadosOPMEController.notaFiscalSelecionada.usuarioAtualizacao}"
+								id="usuarioAtualizacao" />
+						</div>
+
+						<div class="col-md-6">
+							<p:outputLabel value="Data Atualização:" />
+
+
+							<p:outputLabel
+								value="#{dadosOPMEController.notaFiscalSelecionada.dtAtualizacao}"
+								id="dtAtualizacao">
+								<f:convertDateTime pattern="dd/MM/yyyy - HH:mm:ss"
+									timeZone="America/Sao_Paulo" />
+							</p:outputLabel>
+
+
+
+						</div>
+					</div>
+
+
+				</h:form>
+			</h:panelGroup>
+		</p:dialog>
+
+		<!-- Tela Dialog -->
+		<p:dialog header="Nota Fiscal" widgetVar="dlg2" modal="true"
+			height="480" id="dlg_editar" closeOnEscape="true" width="750">
+			<h:panelGroup id="pnl_Dialogo">
+				<h:form id="form" style="font-size:12px;" class="formularioCentro">
+
+					<p:growl id="messages" autoUpdate="true" closable="true" />
+
+
+					<div class="row">
+						<div class="col-md-4" style="width: 23%;">
+
+
+							<p:outputLabel value="Número Nota Fiscal:" />
+							<p:inputText size="22" id="numeroNotaFiscal" required="true"
+								requiredMessage="Número Nota Fiscal obrigatório"
+								value="#{dadosOPMEController.notaFiscal.numero}"
+								disabled="#{dadosOPMEController.habilitaLimpar}">
+								<p:ajax event="change"
+									listener="#{dadosOPMEController.ValidaBeneficiarioUnidade()}" />
+							</p:inputText>
+
+						</div>
+
+						<div class="col-md-4" style="width: 23%;">
+							<p:outputLabel value="Data Emissão:" />
+							<p:inputMask mask="99/99/9999" size="22" maxlength="100"
+							    disabled="#{dadosOPMEController.notaFiscal.travadoParcial}"
+								id="dataEmissao" required="true"
+								requiredMessage="Data Emissão obrigatória" pattern="dd/MM/yyyy"
+								value="#{dadosOPMEController.notaFiscal.dataEmissao}">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+									timeZone="America/Sao_Paulo" />
+								<p:ajax event="change"
+									listener="#{dadosOPMEController.ValidaBeneficiarioUnidade()}" />
+							</p:inputMask>
+						</div>
+
+						<div class="col-md-4" style="width: 23%;">
+
+							<p:outputLabel value="Valor Nota Fiscal:" />
+							<pe:inputNumber id="valorNotaFiscal"
+							    disabled="#{dadosOPMEController.notaFiscal.travadoParcial}"
+								value="#{dadosOPMEController.notaFiscal.valor}" required="true"
+								requiredMessage="Valor Nota Fiscal obrigatório"
+								symbolPosition="s" decimalSeparator="," thousandSeparator=".">
+								<p:ajax event="blur" update="valorNotaFiscal" />
+							</pe:inputNumber>
+						</div>
+						<div class="col-md-4" style="width: 23%;">
+
+							<p:outputLabel value="Qtd Itens Nota Fiscal:" />
+							<p:inputText size="22" maxlength="100" id="quantidadeItens"
+								disabled="true" required="true"
+								requiredMessage="Quantidade de Itens Fiscal obrigatória"
+								value="#{dadosOPMEController.notaFiscal.qtdItens}" />
+
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-4" style="width: 23%;">
+
+							<p:outputLabel value="Valor Frete:" />
+							<pe:inputNumber id="valorFrete"
+							    disabled="#{dadosOPMEController.notaFiscal.travadoParcial}"
+								value="#{dadosOPMEController.notaFiscal.frete}" required="true"
+								requiredMessage="Valor Frete obrigatório" symbolPosition="s"
+								decimalSeparator="," thousandSeparator=".">
+								<p:ajax event="blur" update="valorFrete" />
+							</pe:inputNumber>
+
+						</div>
+
+						<div class="col-md-4" style="width: 23%;">
+
+							<p:outputLabel value="Valor IPI:" />
+
+							<pe:inputNumber id="valorIpi"
+							    disabled="#{dadosOPMEController.notaFiscal.travadoParcial}"
+								value="#{dadosOPMEController.notaFiscal.ipi}" required="true"
+								requiredMessage="Valor IPI obrigatório" symbolPosition="s"
+								decimalSeparator="," thousandSeparator=".">
+								<p:ajax event="blur" update="valorIpi" />
+							</pe:inputNumber>
+
+
+						</div>
+						<div class="col-md-4" style="width: 23%;">
+
+							<p:outputLabel value="Valor Desconto:" />
+
+							<pe:inputNumber id="valorDesconto"
+							    disabled="#{dadosOPMEController.notaFiscal.travadoParcial}"
+								value="#{dadosOPMEController.notaFiscal.desconto}"
+								required="true" requiredMessage="Valor Desconto obrigatório"
+								symbolPosition="s" decimalSeparator="," thousandSeparator=".">
+								<p:ajax event="blur" update="valorDesconto" />
+							</pe:inputNumber>
+
+
+						</div>
+
+
+						<div class="col-md-4" style="width: 23%;">
+							<p:outputLabel value="Data Vencimento:" />
+							<p:inputMask mask="99/99/9999" size="22" maxlength="100"
+							    disabled="#{dadosOPMEController.notaFiscal.travadoParcial}"
+								id="dataVencimento" required="true"
+								requiredMessage="Data Vencimento obrigatória"
+								pattern="dd/MM/yyyy"
+								value="#{dadosOPMEController.notaFiscal.dataVencimento}">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+									timeZone="America/Sao_Paulo" />
+								<p:ajax event="change"
+									listener="#{dadosOPMEController.ValidaBeneficiarioUnidade()}" />
+							</p:inputMask>
+						</div>
+
+
+					</div>
+
+					<div class="row">
+						<div class="col-md-4" style="width: 23%;">
+							<p:outputLabel value="Número Pedido:" />
+							<p:inputText size="22" maxlength="100" id="numeroPedido" 
+							    disabled="#{dadosOPMEController.notaFiscal.travadoParcial}"
+								required="true" requiredMessage="Número Pedido obrigatório"
+								value="#{dadosOPMEController.notaFiscal.nrPedido}">
+								<p:ajax event="change"
+									listener="#{dadosOPMEController.ValidaBeneficiarioUnidade()}" />
+							</p:inputText>
+						</div>
+						<div class="col-sm-4" style="width: 23%;">
+							<p:outputLabel value="Código Hospital:" />
+							<p:inputMask mask="?99999999" id="codigoHospital"
+								value="#{dadosOPMEController.notaFiscal.hospital.cdPrestador}"
+								size="22" style="font-weight: 100;"
+								disabled="#{dadosOPMEController.lgHospitalTravado}"
+								required="true" requiredMessage="Codigo Hospital é obrigatório">
+								<p:ajax listener="#{dadosOPMEController.ValidaHospital()}"
+									update="codigoHospital nomeHospital" event="change" />
+
+							</p:inputMask>
+						</div>
+						<div class="col-sm-6" style="width: 46%;">
+							<p:outputLabel value="Nome Hospital:" />
+							<p:autoComplete id="nomeHospital"
+								value="#{dadosOPMEController.notaFiscal.hospital}"
+								style="font-weight: 100;"
+								completeMethod="#{dadosOPMEController.BucarHospitalNome}"
+								size="52" required="true"
+								requiredMessage="Nome Hospital obrigatório" var="dados"
+								itemValue="#{dados}" itemLabel="#{dados.nome}"
+								disabled="#{dadosOPMEController.lgHospitalTravado}"
+								converter="entityConverter" forceSelection="true">
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.cdPrestador}" />
+								</p:column>
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.nome}" />
+								</p:column>
+								<p:ajax event="itemSelect"
+									listener="#{dadosOPMEController.onItemSelectHospital}"
+									update="codigoHospital nomeHospital" />
+							</p:autoComplete>
+						</div>
+						
+						<div style="padding-top: 28px;">
+							<p:commandLink styleClass="ui-icon ui-icon-circle-close"
+								process="@this,codigoHospital,nomeHospital"
+								actionListener="#{dadosOPMEController.limpaHospital}"
+								update="codigoHospital,nomeHospital" />
+						</div>
+						
+						
+					</div>
+					<div class="row">
+						<div class="col-sm-4" style="width: 23%;">
+							<p:outputLabel value="Cód. Forn.:" />
+							<p:inputMask mask="?99999999" id="codigoFornecedor"
+								disabled="#{dadosOPMEController.lgFornecedorTravado}"
+								value="#{dadosOPMEController.notaFiscal.fornecedor.cdPrestador}"
+								size="22" style="font-weight: 100;" required="true"
+								requiredMessage="Codigo Fornecedor é obrigatório">
+								<p:ajax listener="#{dadosOPMEController.ValidaFornecedor()}"
+									update="codigoFornecedor nomeFornecedor cnpjFornecedor"
+									event="change" partialSubmit="true" />
+							</p:inputMask>
+						</div>
+						<div class="col-sm-4" style="width: 23%;">
+							<p:outputLabel value="CNPJ Forn.:" />
+							<p:inputText id="cnpjFornecedor" disabled="true"
+								value="#{dadosOPMEController.notaFiscal.fornecedor.cnpj}"
+								size="22" style="font-weight: 100;">
+								<p:ajax listener="#{dadosOPMEController.ValidaFornecedor()}"
+									update="codigoFornecedor nomeFornecedor cnpjFornecedor"
+									event="change" partialSubmit="true" />
+							</p:inputText>
+						</div>
+						<div class="col-sm-6" style="width: 46%;">
+							<p:outputLabel value="Nome Forn.:" />
+							<p:autoComplete id="nomeFornecedor"
+								value="#{dadosOPMEController.notaFiscal.fornecedor}"
+								style="font-weight: 100;"
+								completeMethod="#{dadosOPMEController.BucarFornecedorNome}"
+								size="52" disabled="#{dadosOPMEController.lgFornecedorTravado}"
+								required="true" requiredMessage="Nome Fornecedor obrigatório"
+								var="dados" itemValue="#{dados}" itemLabel="#{dados.nome}"
+								converter="entityConverter" forceSelection="true">
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.cdPrestador}" />
+								</p:column>
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.nome}" />
+								</p:column>
+								<p:ajax event="itemSelect"
+									listener="#{dadosOPMEController.onItemSelectFornecedor}"
+									update="codigoFornecedor nomeFornecedor cnpjFornecedor" />
+							</p:autoComplete>
+						</div>
+						<div style="padding-top: 28px;">
+							<p:commandLink styleClass="ui-icon ui-icon-circle-close"
+								process="@this,nomeFornecedor,codigoFornecedor,cnpjFornecedor"
+								actionListener="#{dadosOPMEController.limpaFornecedor}"
+								update="nomeFornecedor,codigoFornecedor,cnpjFornecedor" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4" style="width: 23%;">
+							<p:outputLabel value="Data Realização:" />
+							<p:inputMask mask="99/99/9999" size="22" maxlength="100"
+							    disabled="#{dadosOPMEController.notaFiscal.travadoParcial}"
+								id="dataRealizacao" required="true"
+								requiredMessage="Data Realização obrigatória"
+								pattern="dd/MM/yyyy"
+								value="#{dadosOPMEController.notaFiscal.dtRealizacao}">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+									timeZone="America/Sao_Paulo" />
+								<p:ajax event="change"
+									listener="#{dadosOPMEController.ValidaBeneficiarioUnidade()}" />
+							</p:inputMask>
+						</div>
+						<div class="col-md-4" style="width: 6%;">
+							<p:outputLabel value="Unid:" />
+							<p:inputMask mask="?9999" size="1" maxlength="10"
+					    
+								id="unidadeCarteiraBeneficiario" required="true"
+								requiredMessage="Unidade Carteira Beneficiário obrigatória"
+								value="#{dadosOPMEController.notaFiscal.beneficiario.unidade}"
+								disabled="#{dadosOPMEController.lgBeneficiarioTravado}">
+								<p:ajax event="change"
+									listener="#{dadosOPMEController.ValidaBeneficiarioUnidade()}" />
+							</p:inputMask>
+						</div>
+						<div class="col-md-4" style="width: 17%;">
+							<p:outputLabel value="Nr Carteira:" />
+							<p:inputMask mask="?9999999999999" size="14" maxlength="100"
+							    
+								id="carteiraBeneficiario" required="true"
+								requiredMessage="Carteira Beneficiário obrigatória"
+								value="#{dadosOPMEController.notaFiscal.beneficiario.cdCarteiraInteira}"
+								disabled="#{dadosOPMEController.lgBeneficiarioTravado}">
+								<p:ajax listener="#{dadosOPMEController.ValidaBeneficiario()}"
+									update="nomeBeneficiario,carteiraBeneficiario,anoGuiaAutorizacao,unidadeCarteiraBeneficiario"
+									event="change" process="@this" />
+							</p:inputMask>
+						</div>
+						<div class="col-md-6" style="width: 46%;">
+							<p:outputLabel value="Nome Beneficiário:" />
+							<p:inputText id="nomeBeneficiario"
+								value="#{dadosOPMEController.notaFiscal.beneficiario.nome}"
+								size="52" disabled="true" />
+						</div>
+						<div style="padding-top: 28px;">
+							<p:commandLink id="beneficiarioNome"
+								styleClass="ui-icon ui-icon-circle-close"
+								process="@this,nomeBeneficiario,carteiraBeneficiario,unidadeCarteiraBeneficiario"
+								actionListener="#{dadosOPMEController.limpaBeneficiario()}"
+								update="nomeBeneficiario,carteiraBeneficiario,unidadeCarteiraBeneficiario,anoGuiaAutorizacao,guiaAutorizacao" />
+						</div>
+					</div>
+
+					<div class="row">
+
+
+						<div class="col-md-4" style="width: 11%;">
+							<p:outputLabel value="Ano:" />
+							<p:selectOneMenu id="anoGuiaAutorizacao"
+							    disabled="#{dadosOPMEController.notaFiscal.travadoParcial}"
+								value="#{dadosOPMEController.notaFiscal.guiaAutorizacao.ano}"
+								style="width:60px" required="true"
+								requiredMessage="Ano Guia Autorização obrigatório">
+								<f:selectItem itemLabel="Ano" itemValue=""
+									noSelectionOption="true" />
+								<f:selectItems
+									value="#{dadosOPMEController.listaAnoNrGuiasDisponivel}" />
+								<p:ajax event="change"
+									listener="#{dadosOPMEController.liberaAnoGuia()}"
+									update="guiaAutorizacao" />
+							</p:selectOneMenu>
+						</div>
+						<div class="col-md-4" style="width: 12%;">
+							<p:outputLabel value="Nr Guia:" />
+							<p:selectOneMenu id="guiaAutorizacao"
+							    disabled="#{dadosOPMEController.notaFiscal.travadoParcial}"
+								value="#{dadosOPMEController.notaFiscal.guiaAutorizacao.numero}"
+								style="width:77px" required="true"
+								requiredMessage="Número Guia Autorização obrigatório">
+								<f:selectItem itemLabel="Nr. Guia" itemValue=""
+									noSelectionOption="true" />
+								<f:selectItems
+									value="#{dadosOPMEController.listaNrGuiasDisponivel}" />
+								<p:ajax event="change"
+									listener="#{dadosOPMEController.ValidaBeneficiarioUnidade()}" />
+							</p:selectOneMenu>
+						</div>
+						<div class="col-sm-4" style="width: 23%;">
+							<p:outputLabel value="CRM Médico:" />
+
+
+
+							<p:inputMask mask="?99999999" id="crmMedico"
+							    value="#{dadosOPMEController.notaFiscal.medico.cdPrestador}"
+								size="22" style="font-weight: 100;"
+								disabled="#{dadosOPMEController.lgMedicoTravado}"
+								required="true" requiredMessage="CRM Médico obrigatório">
+								<p:ajax listener="#{dadosOPMEController.ValidaMedico()}"
+									update="@this,nomeMedico" partialSubmit="true" event="change" />
+
+							</p:inputMask>
+
+
+
+
+
+
+
+
+						</div>
+						<div class="col-sm-6" style="width: 46%;">
+							<p:outputLabel value="Nome Médico:" />
+							<p:autoComplete id="nomeMedico"
+								value="#{dadosOPMEController.notaFiscal.medico}"
+								style="font-weight: 100;"
+								completeMethod="#{dadosOPMEController.BucarMedicoNome}"
+								size="52" required="true"
+								requiredMessage="Nome Medico obrigatório" var="dados"
+								itemValue="#{dados}" itemLabel="#{dados.nome}"
+								disabled="#{dadosOPMEController.lgMedicoTravado}"
+								converter="entityConverter" forceSelection="true">
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.cdPrestador}" />
+								</p:column>
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.nome}" />
+								</p:column>
+								<p:ajax event="itemSelect"
+									listener="#{dadosOPMEController.onItemSelectMedico}"
+									update="@this,nomeMedico,crmMedico" />
+							</p:autoComplete>
+						</div>
+						<div style="padding-top: 28px;">
+							<p:commandLink styleClass="ui-icon ui-icon-circle-close"
+								process="@this,nomeMedico,crmMedico"
+								actionListener="#{dadosOPMEController.limpaMedico}"
+								update="nomeMedico,crmMedico" />
+						</div>
+					</div>
+
+					<div class="row">
+
+						<!-- <div class="col-md-4" style="width: 22%;">
+							<p:outputLabel value="Situação:" />
+							<p:selectOneMenu id="situacaoNota"
+								value="#{dadosOPMEController.notaFiscal.status}" required="true"
+								requiredMessage="Status da Nota obrigatória" style="width:120px">
+								<f:selectItem itemLabel="Aberta" itemValue="Aberta" />
+								<f:selectItem itemLabel="Ajuste Contabil"
+									itemValue="Ajuste Contabil" />
+								<f:selectItem itemLabel="Baixa Ajuste" itemValue="Baixa Ajuste" />
+								<f:selectItem itemLabel="Baixa Completa"
+									itemValue="Baixa Completa" />
+								<f:selectItem itemLabel="Baixa Parcial"
+									itemValue="Baixa Parcial" />
+								<f:selectItem itemLabel="Cancelada" itemValue="Cancelada" />
+								<p:ajax event="change"
+									listener="#{dadosOPMEController.ValidaBeneficiarioUnidade()}" />
+
+							</p:selectOneMenu>
+						</div>
+
+						<div class="col-md-4" style="width: 31%;">
+							<p:outputLabel value="Competência de Baixa:" />
+							<p:inputMask mask="99/9999" size="22" maxlength="100"
+								id="competenciaBaixa"
+								value="#{dadosOPMEController.notaFiscal.competenciaBaixa}">
+
+							</p:inputMask>
+						</div> -->
+
+						<div class="col-sm-6"
+							style="width: 19%; padding-left: 12%; padding-top: 20px;">
+							<p:commandButton value="Detalhes Nota"
+								class="btn btn-info btn-sm" update=":formItens"
+								oncomplete="PF('itens').show()"
+								rendered="#{dadosOPMEController.habilitaDetalhe}"
+								style="  margin-left: 380px;    " title="Itens Nota"
+								process="@this" id="detalhesNotaBotao">
+
+							</p:commandButton>
+						</div>
+						<div class="col-sm-6"
+							style="width: 14%; float: right; padding-right: 17%; padding-top: 20px;">
+							<h:commandButton value="Salvar" class="btn btn-success btn-sm"
+								style="  margin-left: 10px;    margin-top: 3px;"
+								 disabled="#{dadosOPMEController.notaFiscal.travadoParcial}"
+								icon="ui-icon-circle-check">
+								<f:ajax listener="#{dadosOPMEController.inserirNotaFiscal()}"
+									execute="form" render="form :OpmeForm" />
+							</h:commandButton>
+						</div>
+					</div>
+
+
+
+
+
+
+				</h:form>
+			</h:panelGroup>
+		</p:dialog>
+		<!-- Tela Dialog -->
+		<p:dialog header="Adicionar Insumo Nota Fiscal " widgetVar="itens"
+			modal="true" height="450" id="itens" closeOnEscape="true" width="750">
+			<h:panelGroup id="pnl_Dialogo_Insumo">
+				<h:form id="formItens" style="font-size:12px;"
+					class="formularioCentro">
+					<p:growl id="messages" autoUpdate="true" closable="true" />
+					<div class="row">
+						<div class="col-md-4" style="width: 6%;">
+							<p:outputLabel value="Tipo:" />
+							<p:inputMask mask="?99" size="1" id="tipoInsumo" required="true"
+								requiredMessage="Tipo Insumo obrigatório"
+								value="#{dadosOPMEController.opmeQtBipapItem.tpInsumo}"
+								disabled="#{dadosOPMEController.lgInsumoTravado}">
+
+
+								<p:ajax event="change"
+									listener="#{dadosOPMEController.ValidaBeneficiarioUnidade()}" />
+							</p:inputMask>
+
+
+						</div>
+
+						<div class="col-md-4" style="width: 12%;">
+
+							<p:outputLabel value="Codigo:" />
+							<p:inputMask mask="?99999999" size="9" id="codigoInsumo"
+								value="#{dadosOPMEController.opmeQtBipapItem.cdInsumo}"
+								required="true" requiredMessage="Código Insumo obrigatório"
+								disabled="#{dadosOPMEController.lgInsumoTravado}">
+								<p:ajax listener="#{dadosOPMEController.ValidaInsumo()}"
+									update="nomeInsumo,codigoInsumo,tipoInsumo" event="change"
+									process="@this" />
+
+
+							</p:inputMask>
+
+						</div>
+
+						<div class="col-sm-4" style="width: 35%;">
+							<p:outputLabel value="Nome Insumo:" />
+							<p:autoComplete id="nomeInsumo"
+								value="#{dadosOPMEController.opmeQtBipapItem}"
+								style="font-weight: 100;"
+								completeMethod="#{dadosOPMEController.BuscaInsumoNome}"
+								size="40" required="true"
+								requiredMessage="Nome Insumo obrigatório" var="dados"
+								itemValue="#{dados}" itemLabel="#{dados.nomeInsumo}"
+								disabled="#{dadosOPMEController.lgInsumoTravado}"
+								converter="entityConverter" forceSelection="true">
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.cdInsumo}" />
+								</p:column>
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.nomeInsumo}" />
+								</p:column>
+								<p:ajax event="itemSelect"
+									listener="#{dadosOPMEController.onItemSelectInsumo}"
+									update="nomeInsumo codigoInsumo tipoInsumo" />
+							</p:autoComplete>
+						</div>
+
+						<div class="col-md-4" style="width: 7%;">
+							<p:outputLabel value="Qtd:" />
+							<p:inputMask mask="?999" size="2" maxlength="100" required="true"
+								requiredMessage="Quantidade de Insumo obrigatório"
+								id="quantidadeItensInsumo"
+								value="#{dadosOPMEController.opmeQtBipapItem.quantidade}" />
+						</div>
+						<div class="col-md-4" style="width: 16%; padding-right: 0px;">
+							<p:outputLabel value="Valor Unitário:" />
+
+							<pe:inputNumber id="Input2" style="width: 100px;"
+								value="#{dadosOPMEController.opmeQtBipapItem.valor}"
+								required="true" requiredMessage="Valor Insumo obrigatório"
+								symbolPosition="s" decimalSeparator="," thousandSeparator=".">
+								<p:ajax event="blur" update="Input2" />
+							</pe:inputNumber>
+
+
+						</div>
+
+
+
+						<div style="padding-top: 28px; width: 5%;" class="col-md-4">
+							<p:commandLink styleClass="ui-icon ui-icon-circle-close"
+								process="@this"
+								actionListener="#{dadosOPMEController.limpaInsumo}"
+								update="nomeInsumo,codigoInsumo,tipoInsumo,Input2,quantidadeItensInsumo" />
+						</div>
+
+
+						<div class="col-md-4" style="width: 12%;">
+
+
+							<h:commandButton value="Cadastrar" class="btn btn-success btn-sm"
+								style="  margin-top: 20px;" icon="ui-icon-circle-check"
+								disabled="#{dadosOPMEController.notaFiscal.travadoParcial}">
+								<f:ajax
+									listener="#{dadosOPMEController.inserirNotaFiscalDetalhe()}"
+									execute="formItens" render="formItens :OpmeForm :form" />
+							</h:commandButton>
+
+
+
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col-md-4" style="width: 71%;">
+							<p:outputLabel value="Observações:" />
+							<p:inputText size="95" id="observacao" maxlength="300"
+								value="#{dadosOPMEController.opmeQtBipapItem.observacao}">
+
+
+
+							</p:inputText>
+
+
+						</div>
+						<!-- <div class="col-md-4" style="width: 28%;padding-top: 25px;padding-left: 70px;">
+							<h:outputLabel id="total"
+								value="Total Detalhe_TLINER: #{dadosOPMEController.valorDetalheTotal}">
+								<f:convertNumber pattern="#0,00" minFractionDigits="2" maxFractionDigits="2" locale="en_US"/>
+								</h:outputLabel>
+						</div> -->
+						<div class="col-md-4"
+							style="width: 28%; padding-top: 25px; padding-left: 70px;">
+							
+													
+							Total Detalhe : 
+							<h:outputText id="total"
+								value="#{dadosOPMEController.valorDetalheTotal}">
+								<f:convertNumber pattern="#0.00" />
+							</h:outputText>
+						</div>
+					</div>
+					<div class="row">
+						<p:dataTable value="#{dadosOPMEController.listaopmeQtBipap}"
+							id="itensNota" var="item" style="table-layout: auto;"
+							emptyMessage="Não há insumos cadastrados." scrollable="true"
+							scrollHeight="250">
+							<p:column headerText="Tipo" style="text-align: center;">
+								<h:outputText value="#{item.tpInsumo}">
+									<f:convertNumber pattern="#00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Código" style="text-align: center;">
+								<h:outputText value="#{item.cdInsumo}"
+									style="text-align: center;">
+									<f:convertNumber pattern="#00000000" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Nome">
+								<h:outputText value="#{item.nomeInsumo}"
+									style="text-align: center;">
+									<f:convertNumber pattern="#00000000" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Observações" style="text-align: center;">
+								<h:outputText value="#{item.observacao}">
+
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="Qtd" style="text-align: center;">
+								<h:outputText value="#{item.quantidade}" />
+							</p:column>
+							<p:column headerText="Valor Total" style="text-align: center;">
+								<h:outputText value="#{item.valor}">
+									<f:convertNumber pattern="#0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column style="width: 40px;text-align: center;">
+								<p:commandLink styleClass="ui-icon ui-icon-cancel"
+								   disabled="#{dadosOPMEController.notaFiscal.travadoParcial}"
+									onclick="PF('itensOpmeExclusao').show();" process="@this"
+									action="#{dadosOPMEController.ValidaBeneficiarioUnidade()}">
+									<f:setPropertyActionListener value="#{item}"
+										target="#{dadosOPMEController.opmeQtBipapSelecionado}" />
+
+								</p:commandLink>
+							</p:column>
+							<p:column style="width: 40px;text-align: center;">
+								<p:commandLink styleClass="ui-icon ui-icon-wrench"
+								disabled="#{dadosOPMEController.notaFiscal.travadoParcial}"
+									onclick="PF('itensOpmeAlterar').show();" process="@this"
+									update=":formItensAlterar" title="Editar Insumo"
+									action="#{dadosOPMEController.selecionaInsumo()}">
+									<f:setPropertyActionListener value="#{item}"
+										target="#{dadosOPMEController.opmeQtBipapSelecionado}" />
+								</p:commandLink>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</h:form>
+			</h:panelGroup>
+		</p:dialog>
+
+		<p:dialog header="Excluir Item OPME" widgetVar="itensOpmeExclusao"
+			modal="true" height="150" id="itensOpmeExclusao" closeOnEscape="true"
+			width="290">
+			<h:panelGroup id="pnl_Dialogo_Exclusao">
+				<h:form id="formItensExclusao">
+					<p:outputLabel
+						value="Você deseja realmente realizar a exclusão deste item?"></p:outputLabel>
+
+					<p:commandButton value="Sim" class="btn btn-success btn-sm"
+						style="  margin-top: 20px;"
+						action="#{dadosOPMEController.excluirOpme()}"
+						onclick="itensOpmeExclusao.hide();" process="@this"
+						update=":formItens:itensNota :formItens:total :OpmeForm :form" />
+
+					<p:commandButton value="Nao" class="btn btn-danger btn-sm"
+						style="  margin-top: 20px;" onclick="itensOpmeExclusao.hide();"
+						process="@this" />
+				</h:form>
+			</h:panelGroup>
+		</p:dialog>
+		<p:dialog header="Alterar Item QT Oral" widgetVar="itensOpmeAlterar"
+			modal="true" height="230" id="itensOpmeAlterar" closeOnEscape="true"
+			width="500">
+			<h:panelGroup id="pnl_Dialogo_Alterar">
+				<h:form id="formItensAlterar">
+					<div class="row">
+
+						<div class="col-md-4" style="width: 12%;">
+
+
+							<p:outputLabel value="Tipo:" />
+							<p:inputMask mask="?99" size="2" id="tipoInsumoAlteracao"
+								required="true" requiredMessage="Tipo Insumo obrigatório"
+								value="#{dadosOPMEController.opmeQtBipapItem.tpInsumo}"
+								disabled="#{dadosOPMEController.lgInsumoTravadoAlteracao}">
+
+
+								<p:ajax event="change"
+									listener="#{dadosOPMEController.ValidaBeneficiarioUnidade()}" />
+							</p:inputMask>
+
+
+						</div>
+
+						<div class="col-md-4" style="width: 23%;">
+
+							<p:outputLabel value="Codigo:" />
+							<p:inputMask mask="?99999999" size="11"
+								id="codigoInsumoAlteracao"
+								value="#{dadosOPMEController.opmeQtBipapItem.cdInsumo}"
+								required="true" requiredMessage="Código Insumo obrigatório"
+								disabled="#{dadosOPMEController.lgInsumoTravadoAlteracao}">
+								<p:ajax listener="#{dadosOPMEController.ValidaInsumo()}"
+									update="nomeInsumoAlteracao,codigoInsumoAlteracao,tipoInsumoAlteracao"
+									event="change" process="@this" />
+
+
+							</p:inputMask>
+
+						</div>
+
+						<div class="col-sm-4" style="width: 35%;">
+							<p:outputLabel value="Nome Insumo:" />
+							<p:autoComplete id="nomeInsumoAlteracao"
+								value="#{dadosOPMEController.opmeQtBipapItem}"
+								style="font-weight: 100;"
+								completeMethod="#{dadosOPMEController.BuscaInsumoNome}"
+								size="40" required="true"
+								requiredMessage="Nome Insumo obrigatório" var="dados"
+								itemValue="#{dados}" itemLabel="#{dados.nomeInsumo}"
+								disabled="#{dadosOPMEController.lgInsumoTravadoAlteracao}"
+								converter="entityConverter" forceSelection="true">
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.cdInsumo}" />
+								</p:column>
+								<p:column style="font-size: 12px;">
+									<h:outputText value="#{dados.nomeInsumo}" />
+								</p:column>
+								<p:ajax event="itemSelect"
+									listener="#{dadosOPMEController.onItemSelectInsumo}"
+									update="nomeInsumoAlteracao codigoInsumoAlteracao tipoInsumoAlteracao" />
+							</p:autoComplete>
+						</div>
+
+						<div style="padding-top: 32px; width: 5%; float: right;"
+							class="col-md-4">
+							<p:commandLink styleClass="ui-icon ui-icon-circle-close"
+								process="@this"
+								actionListener="#{dadosOPMEController.limpaInsumoAlteracao}"
+								update="nomeInsumoAlteracao,codigoInsumoAlteracao,tipoInsumoAlteracao" />
+						</div>
+
+					</div>
+					<div class="row">
+
+						<div class="col-md-4" style="width: 12%;">
+							<p:outputLabel value="Qtd:" />
+							<p:inputMask mask="?999" size="2" maxlength="100" required="true"
+								requiredMessage="Quantidade de Insumo obrigatório"
+								id="quantidadeItensInsumoAlteracao"
+								value="#{dadosOPMEController.opmeQtBipapItem.quantidade}" />
+						</div>
+						<div class="col-md-4" style="width: 23%;">
+							<p:outputLabel value="Valor Total:" />
+
+							<pe:inputNumber id="Input2Alteracao" style="width: 100px;"
+								value="#{dadosOPMEController.opmeQtBipapItem.valor}"
+								required="true" requiredMessage="Valor Insumo obrigatório"
+								symbolPosition="s" decimalSeparator="," thousandSeparator=".">
+								<p:ajax event="blur" update="Input2Alteracao" />
+							</pe:inputNumber>
+
+						</div>
+						<div class="col-md-4" style="width: 12%;">
+							<p:outputLabel value="Observações" />
+							<p:inputText size="40" maxlength="100"
+								id="observacaoInsumoAlteracao"
+								value="#{dadosOPMEController.opmeQtBipapItem.observacao}" />
+						</div>
+
+
+
+
+					</div>
+					<div class="row">
+
+						<div class="col-md-4" style="width: 12%;">
+
+							<p:commandButton value="Salvar" class="btn btn-success btn-sm"
+								style="  margin-top: 20px;"
+								action="#{dadosOPMEController.gravaEdicaoInsumo()}"
+								onclick="itensOpmeAlterar.hide();" process="@form"
+								update=":formItens:itensNota :formItens:total :OpmeForm :form" />
+
+
+						</div>
+					</div>
+
+				</h:form>
+
+
+			</h:panelGroup>
+		</p:dialog>
+		<p:ajaxStatus id="startAjax" onstart="PF('start').show();"
+			oncomplete="PF('start').hide();">
+		</p:ajaxStatus>
+		<p:dialog widgetVar="start" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<h:graphicImage value="#{resource['img:carregandoo.gif']}"></h:graphicImage>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>

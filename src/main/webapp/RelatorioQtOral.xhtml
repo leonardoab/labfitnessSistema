@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:opt="http://primefaces.prime.com.tr/optimus"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="#{perfilAcessoController.perfilTemplete}">
+	<ui:define name="corpo">
+		<script type="text/javascript"
+			src="recursos/js/jquery.validate.min.js" charset="charset=UTF-8" />
+		<script type="text/javascript" src="recursos/js/validaLogin.js"
+			charset="charset=UTF-8" />
+
+		<p:growl autoUpdate="true" />
+		<div class="titulo">
+			<legend>Relatório QtOral</legend>
+		</div>
+
+		<div class="form-horizontal">
+
+			<h:form class="formularioCentro" id="relatorioForm"
+				enctype="multipart/form-data">
+
+				<div class="row" style="padding-bottom: 20px;">
+					<div class="col-md-4" style="width: 14%;">
+						<p:outputLabel value="Data Inicial:" />
+
+						<p:inputMask mask="99/99/9999" size="22" maxlength="100"
+							id="dataInicio" required="true"
+							requiredMessage="Competência obrigatória"
+							value="#{relatorioQtOralController.dtinicio}">
+
+
+						</p:inputMask>
+					</div>
+
+					<div class="col-md-4" style="width: 14%;">
+						<p:outputLabel value="Data Final:" />
+
+						<p:inputMask mask="99/99/9999" size="22" maxlength="100"
+							id="dataFinal" required="true"
+							requiredMessage="Competência obrigatória"
+							value="#{relatorioQtOralController.dtfinal}">
+
+
+						</p:inputMask>
+					</div>
+
+
+					<div class="col-md-4" style="width: 23%; padding-top: 18px;">
+						<h:commandButton
+							actionListener="#{relatorioQtOralController.carregaDados()}"
+							value="Gerar Dados" class="btn btn-success btn-sm">
+							<p:dataExporter type="xls" target="gridNotas"
+								fileName="#{relatorioQtOralController.competenciaAlterada}_QtOral" />
+						</h:commandButton>
+
+					</div>
+				</div>
+
+
+				<p:dataTable var="registro" rendered="false"
+					value="#{relatorioQtOralController.listaNotaDetalhe}"
+					id="gridNotas" emptyMessage="Não há notas fiscais cadastradas.">
+
+					<p:column headerText="Nr. Nota Fiscal"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Nr. Nota Fiscal" />
+						</f:facet>
+						<h:outputText value="#{registro.notaFiscal.numero}" />
+					</p:column>
+
+					<p:column headerText="Nome Fornecedor"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Nome Fornecedor" />
+						</f:facet>
+						<h:outputText value="#{registro.notaFiscal.fornecedor.nome}" />
+					</p:column>
+
+					<p:column headerText="CNPJ Fornecedor"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="CNPJ Fornecedor" />
+						</f:facet>
+						<h:outputText value="#{registro.notaFiscal.fornecedor.cnpj}">
+
+							<f:convertNumber pattern="0000000000000" />
+						</h:outputText>
+
+					</p:column>
+
+					<p:column headerText="Código Beneficiario"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Código Beneficiario" />
+						</f:facet>
+						<h:outputText value="#{registro.notaFiscal.beneficiario.unidade}" /> - <h:outputText
+							value="#{registro.notaFiscal.beneficiario.cdCarteiraInteira}" />
+					</p:column>
+
+					<p:column headerText="Nome Beneficiario"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Nome Beneficiario" />
+						</f:facet>
+						<h:outputText value="#{registro.notaFiscal.beneficiario.nome}" />
+					</p:column>
+
+					<p:column headerText="Data Emissão"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Data Emissão" />
+						</f:facet>
+						<h:outputText value="#{registro.notaFiscal.dataEmissao}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+								timeZone="America/Sao_Paulo" />
+						</h:outputText>
+
+
+					</p:column>
+
+					<p:column headerText="Data Vencimento"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Data Vencimento" />
+						</f:facet>
+						<h:outputText value="#{registro.notaFiscal.dataVencimento}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+								timeZone="America/Sao_Paulo" />
+						</h:outputText>
+
+
+					</p:column>
+
+					<p:column headerText="Situação"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Situação" />
+						</f:facet>
+						<h:outputText value="#{registro.notaFiscal.status}" />
+
+
+					</p:column>
+					
+					<p:column headerText="Código Insumo"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Código Insumo" />
+						</f:facet>
+						<h:outputText value="#{registro.opmeQtBipap.tpInsumo}" /> - <h:outputText value="#{registro.opmeQtBipap.cdInsumo}" />
+					</p:column>
+					
+					<p:column headerText="Descrição Insumo"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Descrição Insumo" />
+						</f:facet>
+						<h:outputText value="#{registro.opmeQtBipap.nomeInsumo}" />
+					</p:column>
+					
+					<p:column headerText="Quantidade"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Quantidade" />
+						</f:facet>
+						<h:outputText value="#{registro.opmeQtBipap.quantidade}" />
+					</p:column>
+					
+					<p:column headerText="Valor Unitário"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Valor Unitário" />
+						</f:facet>
+
+						<h:outputText value="#{registro.valorUnitario}">
+							<f:convertNumber pattern="R$#0.00" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Observações"
+						style="padding: 4px 4px;text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="Observação" />
+						</f:facet>
+						<h:outputText value="#{registro.opmeQtBipap.observacao}" />
+					</p:column>
+
+					
+
+				</p:dataTable>
+			</h:form>
+		</div>
+
+	</ui:define>
+</ui:composition>
+</html>
