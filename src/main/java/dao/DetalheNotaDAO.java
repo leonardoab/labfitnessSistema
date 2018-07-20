@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import labfitness.util.ConexaoMySql;
+import labfitness.util.GerarId;
 import model.Diu;
 import model.GuiaAutorizacao;
 import model.OpmeQtBipap;
 import model.Prestador;
-import util.ConexaoOracle;
-import util.GerarId;
 
 public class DetalheNotaDAO implements Serializable{
 
@@ -38,7 +38,7 @@ public class DetalheNotaDAO implements Serializable{
 		try {
 
 
-			state = ConexaoOracle.getConexao().prepareStatement(sql);
+			state = ConexaoMySql.getConexao().prepareStatement(sql);
 			state.setLong(1, id);			
 			state.execute();
 			state.clearBatch();
@@ -63,7 +63,7 @@ public class DetalheNotaDAO implements Serializable{
 
 		try {
 			BeneficiarioDAO beneficiarioDAO = new BeneficiarioDAO();
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 
 			while (rs.next()) {
@@ -140,7 +140,7 @@ public class DetalheNotaDAO implements Serializable{
 		PreparedStatement state;
 		try {
 
-			state = ConexaoOracle.getConexao().prepareStatement(sql);
+			state = ConexaoMySql.getConexao().prepareStatement(sql);
 			state.setLong(1, idPrincipal);
 			state.setFloat(2, opmeQtBipap.getValor());						
 			state.setInt(3,  opmeQtBipap.getQuantidade());
@@ -185,7 +185,7 @@ public class DetalheNotaDAO implements Serializable{
 		PreparedStatement state;
 		try {
 
-			state = ConexaoOracle.getConexao().prepareStatement(sql);
+			state = ConexaoMySql.getConexao().prepareStatement(sql);
 			state.setLong(1, idPrincipal);
 			state.setFloat(2, opmeQtBipap.getValor());						
 			state.setInt(3,  opmeQtBipap.getQuantidade());
@@ -267,7 +267,7 @@ public class DetalheNotaDAO implements Serializable{
 		PreparedStatement state;
 		try {
 
-			state = ConexaoOracle.getConexao().prepareStatement(sql);
+			state = ConexaoMySql.getConexao().prepareStatement(sql);
 			state.setLong(1, idPrincipal);
 			state.setDouble(2, diu.getValor());						
 			state.setString(3,  diu.getTipo());
@@ -383,7 +383,7 @@ public class DetalheNotaDAO implements Serializable{
 		Statement State;
 		try {
 			InsumoDAO insumoDAO = new InsumoDAO();
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {
 				OpmeQtBipap opmeQtBipap = new OpmeQtBipap();
@@ -417,7 +417,7 @@ public class DetalheNotaDAO implements Serializable{
 		String sql = "SELECT  * FROM SRUNI.SCO_DADO_CENTRALIZADO_DET " + "where SCO_DADO_CENTRALIZADO_DET.ID_PRINCIPAL = "+ codigo +" and SITUACAO = 'A' order by sequencia";	
 		Statement State;
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {
 				Diu diu = new Diu();

@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import labfitness.util.ConexaoMySql;
+import labfitness.util.GerarId;
 import model.Beneficiario;
 import model.NotaFiscal;
 import model.Prestador;
-import util.ConexaoOracle;
-import util.GerarId;
 
 public class NotaFiscalDAO {
 
@@ -118,7 +118,7 @@ public class NotaFiscalDAO {
 
 			}
 
-			state = ConexaoOracle.getConexao().prepareStatement(sql);
+			state = ConexaoMySql.getConexao().prepareStatement(sql);
 			state.setInt(1, notaFiscal.getFornecedor().getCdPrestador());
 			state.setInt(2, notaFiscal.getFornecedor().getUnidade());						
 			state.setString(3, notaFiscal.getNumero());
@@ -225,7 +225,7 @@ public class NotaFiscalDAO {
 			BeneficiarioDAO beneficiarioDAO = new BeneficiarioDAO();
 			PrestardorDAO preservDAO = new PrestardorDAO();
 
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {
 				NotaFiscal notaFiscal = new NotaFiscal();
@@ -315,7 +315,7 @@ public class NotaFiscalDAO {
 			BeneficiarioDAO beneficiarioDAO = new BeneficiarioDAO();
 			PrestardorDAO preservDAO = new PrestardorDAO();
 
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {
 				NotaFiscal notaFiscal = new NotaFiscal();
@@ -402,7 +402,7 @@ public class NotaFiscalDAO {
 		Statement State;
 		try {			
 
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {
 				NotaFiscal notaFiscal = new NotaFiscal();
@@ -504,7 +504,7 @@ public class NotaFiscalDAO {
 		Statement State;
 		try {			
 
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {		
 
@@ -527,7 +527,7 @@ public class NotaFiscalDAO {
 		Statement State;
 		try {			
 
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {
 				NotaFiscal notaFiscal = new NotaFiscal();
@@ -642,7 +642,7 @@ public class NotaFiscalDAO {
 		Statement State;
 		try {			
 
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {
 				NotaFiscal notaFiscal = new NotaFiscal();
@@ -730,7 +730,7 @@ public class NotaFiscalDAO {
 		Statement State;
 		NotaFiscal notaFiscal = null;
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {	
 				notaFiscal = new NotaFiscal();
@@ -778,7 +778,7 @@ public class NotaFiscalDAO {
 		Statement State;
 		NotaFiscal notaFiscal = null;
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {	
 				notaFiscal = new NotaFiscal();
@@ -805,7 +805,7 @@ public class NotaFiscalDAO {
 		Statement State;
 		try {			
 
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {
 				NotaFiscal notaFiscal = new NotaFiscal();

@@ -7,8 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import labfitness.util.ConexaoMySql;
 import model.Beneficiario;
-import util.ConexaoOracle;
 
 public class BeneficiarioDAO implements Serializable{
 
@@ -35,7 +35,7 @@ public class BeneficiarioDAO implements Serializable{
                         		
 		Statement State;
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {	
 				beneficiario.setNome(rs.getString("NM_USUARIO").toUpperCase());
@@ -58,7 +58,7 @@ public class BeneficiarioDAO implements Serializable{
                         
 		Statement State;
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {	
 				nomeUnimed = rs.getString("NM_UNIMED");
@@ -78,7 +78,7 @@ public class BeneficiarioDAO implements Serializable{
 		String sql = "SELECT NM_USUARIO FROM SRCADGER.OUT_UNI where cd_unidade = " + unidade + " AND cd_carteira_usuario = " + carteira;
 		Statement State;
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {		
 				beneficiario.setNome(rs.getString("NM_USUARIO").toUpperCase());
@@ -101,7 +101,7 @@ public class BeneficiarioDAO implements Serializable{
 				+ "where USUARIO.NM_USUARIO like '%" + codigo + "%'";	
 		Statement State;
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {
 				Beneficiario beneficiario = new Beneficiario();

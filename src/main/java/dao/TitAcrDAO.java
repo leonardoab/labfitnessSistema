@@ -4,7 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import util.ConexaoOracle;
+
+import labfitness.util.ConexaoMySql;
 import model.TitAcr;
 
 public class TitAcrDAO {
@@ -40,7 +41,7 @@ public class TitAcrDAO {
 			ArrayList<TitAcr> TitAcrs = new ArrayList<TitAcr>();
 			Statement State;
 			try {
-				State = ConexaoOracle.getConexao().createStatement();
+				State = ConexaoMySql.getConexao().createStatement();
 
 				ResultSet rs;
 				rs = State.executeQuery(sql);

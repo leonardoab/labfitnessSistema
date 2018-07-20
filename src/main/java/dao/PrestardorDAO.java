@@ -7,8 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import labfitness.util.ConexaoMySql;
 import model.Prestador;
-import util.ConexaoOracle;
 
 public class PrestardorDAO implements Serializable {
 
@@ -30,7 +30,7 @@ public class PrestardorDAO implements Serializable {
 		String sql = "SELECT CD_UNIDADE,CD_PRESTADOR,NM_PRESTADOR,nr_cgc_cpf,CD_CONTRATANTE FROM SRCADGER.PRESERV where cd_grupo_prestador = 38 AND CD_UNIDADE = 49  and CD_PRESTADOR = " +  codigo  ;
 		Statement State;		
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			
 			if (codigo == 99998888){
@@ -69,7 +69,7 @@ public class PrestardorDAO implements Serializable {
 		String sql = "SELECT CD_UNIDADE,CD_PRESTADOR,NM_PRESTADOR,nr_cgc_cpf FROM SRCADGER.PRESERV where CD_UNIDADE = 49  and cd_grupo_prestador = 11 AND CD_PRESTADOR = " +  codigo  ;
 		Statement State;		
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			
 			if (codigo == 99998888){
@@ -112,7 +112,7 @@ public class PrestardorDAO implements Serializable {
 		Statement State;
 
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 
 			ResultSet rs = State.executeQuery(sql);
 			
@@ -157,7 +157,7 @@ public class PrestardorDAO implements Serializable {
 		Statement State;
 
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 
 			ResultSet rs = State.executeQuery(sql);
 
@@ -193,7 +193,7 @@ public class PrestardorDAO implements Serializable {
 		Statement State;
 
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 
 			ResultSet rs = State.executeQuery(sql);
 
@@ -231,7 +231,7 @@ public class PrestardorDAO implements Serializable {
 		Statement State;
 
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 
 			ResultSet rs = State.executeQuery(sql);
 

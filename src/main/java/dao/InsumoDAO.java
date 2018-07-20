@@ -7,8 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import labfitness.util.ConexaoMySql;
 import model.OpmeQtBipap;
-import util.ConexaoOracle;
 
 public class InsumoDAO implements Serializable {
 
@@ -42,7 +42,7 @@ public class InsumoDAO implements Serializable {
 		Statement State;
 
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 
 			ResultSet rs = State.executeQuery(sql);
 
@@ -83,7 +83,7 @@ public class InsumoDAO implements Serializable {
 				
 		Statement State;		
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {
 				

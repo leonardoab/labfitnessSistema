@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import util.ConexaoOracle;
+import labfitness.util.ConexaoMySql;
 
 public class GuiaAutorizacaoDAO implements Serializable{
 
@@ -42,7 +42,7 @@ public class GuiaAutorizacaoDAO implements Serializable{
 				+ "order by 1 desc";		
 		Statement State;		
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {				
 				listaGuiasDisponiveis.add(rs.getString("nr_guia_atendimento"));				
@@ -69,7 +69,7 @@ public class GuiaAutorizacaoDAO implements Serializable{
 				+ " and in_liberado_guias <> 8";
 		Statement State;		
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {				
 				listaGuiasDisponiveis.add(rs.getString("nr_guia_atendimento"));				
@@ -97,7 +97,7 @@ public class GuiaAutorizacaoDAO implements Serializable{
 				+ "order by 1 desc";
 		Statement State;	
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {			
 				listaGuiasDisponiveis.add(rs.getString("aa_guia_atendimento"));			
@@ -134,7 +134,7 @@ public class GuiaAutorizacaoDAO implements Serializable{
 		
 		Statement State;	
 		try {
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {			
 				listaGuiasDisponiveis.add(rs.getString("aa_guia_atendimento"));			

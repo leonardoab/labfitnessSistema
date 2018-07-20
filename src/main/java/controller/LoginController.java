@@ -45,9 +45,6 @@ public class LoginController implements Serializable {
 //============================================================ METHODS =================================================================================//
 	
 	@Inject
-	private ColaboradorDAOImpl colaboradorDAO = new ColaboradorDAOImpl();
-	
-	@Inject
 	private FacesContext facesContext;
 	
 	@Inject
@@ -56,65 +53,12 @@ public class LoginController implements Serializable {
 	@Inject
 	private HttpServletResponse response;
 	
-	public void login() throws ServletException, IOException {
-		
-		if(validarLogin()==true){
+	public void login() throws ServletException, IOException {		
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/j_spring_security_check");
 		dispatcher.forward(request, response);
-		facesContext.responseComplete();}
+		facesContext.responseComplete();		
 	}	
-	
-	public boolean validarLogin() {
-	
-
-		Hashtable<String, String> authEnv = new Hashtable<String, String>(11);
-		/*authEnv.put(Context.INITIAL_CONTEXT_FACTORY,"com.sun.jndi.ldap.LdapCtxFactory");
-		authEnv.put(Context.PROVIDER_URL, "ldap://172.16.4.120:389");
-		authEnv.put(Context.SECURITY_AUTHENTICATION, "simple");
-		authEnv.put(Context.SECURITY_PRINCIPAL, login + "@unimedjf.com.br");
-		authEnv.put(Context.SECURITY_CREDENTIALS, senha);*/
-
-		try {
-			@SuppressWarnings("unused")
-			DirContext authContext = new InitialDirContext(authEnv);
-			Colaborador funcionario = new Colaborador();
-			funcionario.setUsuarioRede("lbezerra");
-			setColaborador(funcionario);
-
-			// System.out.println("Autenticado!");
-
-		} catch (AuthenticationException authEx) {
-			System.out.println("Erro na autenticação! ");
-			// authEx.getCause().printStackTrace();
-			GerarConfirmacao();
-			return false;
-
-		} catch (NamingException namEx) {
-			System.out.println("Problemas na conexão! ");
-			// namEx.getCause().printStackTrace();
-			GerarErroConexao();
-			return false;
-		}
-
-		return true;
-
-	}
-	
-	public void GerarConfirmacao() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN,
-				"Usuário/Senha inválidos", "Mensagem de erro completa");
-		context.addMessage("destinoErro", msg);
-	}
-
-	public void GerarErroConexao() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN,
-				"Falha ao conectar com Active Directory",
-				"Mensagem de erro completa");
-		context.addMessage("destinoErro", msg);
-	}
 	
 //======================================================================================================================================================//
 //===================================================== GETTERS AND SETTERS ============================================================================//

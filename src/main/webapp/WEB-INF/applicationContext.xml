@@ -5,7 +5,7 @@
            http://www.springframework.org/schema/security
            http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-	<beans:bean id="appUserDetailsService" class="springSecurity.AppUserDetailsService" />
+	<beans:bean id="appUserDetailsService" class="labfitness.springSecurity.AppUserDetailsService" />
 
 	<beans:bean id="exceptionTranslationFilter"
 		class="org.springframework.security.web.access.ExceptionTranslationFilter">
@@ -13,20 +13,20 @@
 		<beans:property name="authenticationEntryPoint" ref="authenticationEntryPoint" />
 	</beans:bean>
 
-	<beans:bean id="jsfAccessDeniedHandler" class="springSecurity.JsfAccessDeniedHandler">
+	<beans:bean id="jsfAccessDeniedHandler" class="labfitness.springSecurity.JsfAccessDeniedHandler">
 		<beans:property name="loginPath" value="/Erro.xhtml" />
 		<beans:property name="contextRelative" value="true" />
 	</beans:bean>
 
 	<beans:bean id="authenticationEntryPoint"
-		class="springSecurity.JsfLoginUrlAuthenticationEntryPoint">
+		class="labfitness.springSecurity.JsfLoginUrlAuthenticationEntryPoint">
 		<beans:property name="loginFormUrl" value="/Login.xhtml" />
 		<beans:property name="redirectStrategy" ref="jsfRedirectStrategy" />
 	</beans:bean>
 	
 	
 
-	<beans:bean id="jsfRedirectStrategy" class="springSecurity.JsfRedirectStrategy" />
+	<beans:bean id="jsfRedirectStrategy" class="labfitness.springSecurity.JsfRedirectStrategy" />
 
 	<http pattern="/Login.xhtml" security="none" />
 	<http pattern="/Erro.xhtml" security="none" />

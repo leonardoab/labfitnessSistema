@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import labfitness.util.ConexaoMySql;
 import model.Competencia;
-import util.ConexaoOracle;
 
 public class CompetenciaDAO {
 
@@ -18,7 +18,7 @@ public class CompetenciaDAO {
 		Statement State;
 		try {		
 
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {
 				Competencia competencia = new Competencia();
@@ -46,7 +46,7 @@ public class CompetenciaDAO {
 					+ "USUARIO_ATUALIZACAO = ?"
 					+ "where COMPETENCIA_BAIXA = ?";
 
-			state = ConexaoOracle.getConexao().prepareStatement(sql);
+			state = ConexaoMySql.getConexao().prepareStatement(sql);
 			state.setInt(1, competencia.getTravado());
 			state.setString(2, usuario);
 			state.setString(3, competencia.getDescritivo());

@@ -14,9 +14,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import labfitness.util.ConexaoMySql;
 import model.Colaborador;
 import model.Competencia;
-import util.ConexaoOracle;
 
 public class ColaboradorDAOImpl  implements  Serializable{
 	private static final long serialVersionUID = 1L;
@@ -73,7 +73,7 @@ public class ColaboradorDAOImpl  implements  Serializable{
 		Statement State;
 		try {		
 
-			State = ConexaoOracle.getConexao().createStatement();
+			State = ConexaoMySql.getConexao().createStatement();
 			ResultSet rs = State.executeQuery(sql);
 			while (rs.next()) {
 				Colaborador colaborador = new Colaborador();
@@ -103,7 +103,7 @@ public class ColaboradorDAOImpl  implements  Serializable{
 		
 		try {		
 
-			state = ConexaoOracle.getConexao().prepareStatement(sql);
+			state = ConexaoMySql.getConexao().prepareStatement(sql);
 			state.setString(1, colaborador.getUsuarioRede());
 			state.execute();
 			state.close();
@@ -131,7 +131,7 @@ public class ColaboradorDAOImpl  implements  Serializable{
 		
 		try {		
 
-			state = ConexaoOracle.getConexao().prepareStatement(sql);
+			state = ConexaoMySql.getConexao().prepareStatement(sql);
 			state.setString(1, colaborador.getUsuarioRede().toLowerCase());
 			state.setString(2, colaborador.getPerfilAcesso());
 			state.setString(3, usuarioAtualizacao);
