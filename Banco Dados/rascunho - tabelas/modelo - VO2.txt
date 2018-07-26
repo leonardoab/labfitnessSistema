@@ -1,0 +1,22 @@
+-ID
+-ID Aluno
+-Data Realizacao
+----------------------------------------------------
+-FC
+-PA(calculado)
+-Sistolica
+-diastolica
+---------------------------------------------------ZONA TREINAMENTO
+-100%(calculado) FC max prevista
+-92%(calculado)
+-85%(calculado)
+-75%(calculado)
+-65%(calculado)
+-50%(calculado)
+selecioinar zona de treinamento
+---------------------------------------------------RESULTADOS
+-VO2 max(calculado)
+-VO2 max previsto
+-Classificacao(MET)
+-MET
+-Conclusoes

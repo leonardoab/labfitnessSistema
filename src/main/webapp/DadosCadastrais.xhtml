@@ -16,36 +16,113 @@
 			src="recursos/js/jquery.validate.min.js" charset="charset=UTF-8" />
 		<script type="text/javascript" src="recursos/js/validaLogin.js"
 			charset="charset=UTF-8" />
+			
+			
+			
 
-		<p:growl autoUpdate="true" />
+		 <p:growl id="msgs" showDetail="true"/>
+		 
+		 
 		<div class="titulo">
 			<legend>Dados Cadastrais</legend>
 		</div>
 
 		<div class="row">
-			<p:dataTable value="#{dadosBipapController.listaopmeQtBipap}"
-				id="itensNota" var="item" style="table-layout: auto;"
-				emptyMessage="Não há insumos cadastrados." scrollable="true"
-				scrollHeight="250">
-				<p:column headerText="Tipo" style="text-align: center;">
-					<h:outputText value="#{item.tpInsumo}">
-						<f:convertNumber pattern="#00" />
-					</h:outputText>
-				</p:column>
-			</p:dataTable>
+			<div class="col-md-6">
+				<p:outputLabel value="Data Cadastro:" />
+			</div>
+			<div class="col-md-6">
+				<p:inputText
+					value="#{dadosCadastraisController.alunoSelecionado.dt_cadastro}"
+					size="50" />
+				<p:outputLabel />
+			</div>
+
+			<div class="col-md-6">
+				<p:outputLabel value="Nome:" />
+			</div>
+			<div class="col-md-6">
+				<p:inputText
+					value="#{dadosCadastraisController.alunoSelecionado.dsc_Nome}"
+					size="50" />
+
+			</div>
+
+			<div class="col-md-6">
+				<p:outputLabel value="Email:" />
+			</div>
+			<div class="col-md-6">
+				<p:inputText
+					value="#{dadosCadastraisController.alunoSelecionado.dsc_email}"
+					size="50" />
+
+			</div>
+
+
+			<div class="col-md-6">
+				<p:outputLabel value="Data Nascimento:" />
+			</div>
+			<div class="col-md-6">
+				<p:inputText
+					value="#{dadosCadastraisController.alunoSelecionado.dt_nascimento}"
+					size="50" />
+
+			</div>
+
+			<div class="col-md-6">
+				<p:outputLabel value="Sexo:" />
+			</div>
+			<div class="col-md-6">
+				<p:inputText
+					value="#{dadosCadastraisController.alunoSelecionado.flg_sexo}"
+					size="50" />
+
+			</div>
 		</div>
 
-		<p:ajaxStatus id="startAjax" onstart="PF('start').show();"
-			oncomplete="PF('start').hide();">
-		</p:ajaxStatus>
-		<p:dialog widgetVar="start" modal="true" draggable="false"
-			closable="false" resizable="false" showHeader="false">
-			<h:graphicImage value="#{resource['img:carregandoo.gif']}"></h:graphicImage>
-		</p:dialog>
+		<div class="titulo">
+			<legend>Anamnese</legend>
+		</div>
 
+		<h:form id="form">
+		
+		<p:dataTable id="anamneses" var="anamnese" value="#{dadosCadastraisController.listaAnamneseQuestionamento}" editable="true" editMode="cell" widgetVar="anamneseVar">
+       <f:facet name="header">
+           HISTORICO ATIVIDADES
+       </f:facet>
+ 
+       <p:ajax event="cellEdit" listener="#{dadosCadastraisController.onCellEdit}" update=":form" />
+ 
+       <p:column headerText="Pergunta">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText
+								value="#{anamnese.questionamento.dsc_questionamento}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText 
+								value="#{anamnese.questionamento.dsc_questionamento}"
+								style="width:96%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+          <p:column headerText="Pergunta">
+              <p:cellEditor>
+                  <f:facet name="output"><h:outputText value="#{anamnese.dsc_resposta}" /></f:facet>
+                  <f:facet name="input"><p:inputText  value="#{anamnese.dsc_resposta}" style="width:96%"/></f:facet>
+              </p:cellEditor>
+          </p:column>
+ 
+ 
+       
+   </p:dataTable>
+ 
 
+ 
 
-
+		
+		
+		</h:form>
 	</ui:define>
 </ui:composition>
 </html>

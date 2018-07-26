@@ -1,0 +1,48 @@
+-ID
+-ID Aluno
+-Data Realizacao
+----------------------------------------------------HISTORICO ATIVIDADES
+-Pratica ou praticou atividades fisicas regurlamente?
+-Afatastamento de atividade fisica?
+-----------------------------------------------------
+-Objetivos
+-Modalidade Indicada
+-Frequencia
+-Tempo disponivel
+-----------------------------------------------------HISTORICO DE SAUDE
+-Musculo-Esqueletico
+-Cardiovascular
+-Respiratorio
+-Endocrino
+-Digestivo
+-Passado de doencas
+-Cirurgias
+-Medicamentos
+-Tipo de estresse
+-Sono
+-----------------------------------------------------HISTORICO FAMILIAR
+-Cancer
+-Cardiopatia
+-Diabetes
+-Hipertensao
+-Neurologia
+-Outros
+-----------------------------------------------------QUESTIONARIO DE PRONTIDAO ATIV.
+-Necessita de supervisao medica devido a problemas cardiacos?
+-Tem dor toracica resultante de atividade fisica?
+-Voce teve dor no torax no ultimo mes?
+-Voce tente a perder a conciencia ou a cair como resultado de vertinges ou touturas?
+-Voce tem algum problema osseo ou articular que poderia se agravar com a atividade proposta?
+-Algum medico ja recomendou medicamento para sua pressao arterial ou problema cardiaco?
+-Existe qualquer outra razao que o impeca de se exercitar sem supervisao medica?
+-----------------------------------------------------QUESTIONARI RISCO CORONARIANO
+-Idade -- Homem acima de 55 anos ou mulher acima dos 65?
+-Colesterol-- Acima de 240 mg/dl ou desconhecido
+-Pressao Arterial -- Acima de 14090 mmHG,deconhecida ou controlada?
+-Tabagismo
+-Diabetes
+-Historico familiar ataque cardiaco
+-Sendentarismo -- Atividade profissional sedentaria e menos de 30min de ativ. fis. pelo menos 3 vezes na semana
+-Obesidade
+-----------------------------------------------------
+Observacoes

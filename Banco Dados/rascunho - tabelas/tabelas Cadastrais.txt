@@ -1,0 +1,14 @@
+estado
+cidade
+bairro
+endereco
+estado civil
+tipo questionamento
+questionamento
+tipo medicao
+medicao
+unidade
+exercicios
+grupamento
+met
+

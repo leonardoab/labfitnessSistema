@@ -1,0 +1,22 @@
+-ID
+-Data Cadastro
+-Nome
+-Data Nascimento
+-Estado Civil
+------------------------CONTATO
+-Telefone - Residencial
+-Telefone - Celular 1
+-Telefone - Celular 2
+-Profissao
+-Sexo
+-Observacoes
+------------------------RESIDENCIA
+-CEP
+-Estado
+-Logadouro
+-Complemento
+-Bairro
+-Cidade
+------------------------
+-Foto
+

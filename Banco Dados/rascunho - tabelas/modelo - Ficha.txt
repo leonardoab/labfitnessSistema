@@ -1,0 +1,9 @@
+-ID
+-ID Aluno
+-nivel
+-date teste carga
+-proximo teste carga
+-proxima avalicao
+-descanso
+-duracao
+
