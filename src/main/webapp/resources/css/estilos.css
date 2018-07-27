@@ -380,3 +380,19 @@ float: left;
 .row {
     padding: 1px 20px 1px 20px;
 }
+
+.espacotop {
+
+    padding-top: 30px;
+
+}
+
+.titulo {
+
+    text-align: center;
+
+}
+
+.alinharCentro {
+    text-align: center;
+}

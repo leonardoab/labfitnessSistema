@@ -12,7 +12,7 @@ import labfitness.model.Questionamento;
 import labfitness.model.TipoQuestionamento;
 import labfitness.util.ConexaoMySql;
 
-public class AnamneseQuestionamentoDAO {
+public class AntropometriaDAO {
 
 	public List<AnamneseQuestionamento> BuscarAnamnesePorAlunoId(Integer id) {
 
@@ -58,10 +58,8 @@ public class AnamneseQuestionamentoDAO {
 						.getInt("id_questionamento"));
 
 				questionamento.setTipoQuestionamento(tipoQuestionamento);
-				
 
 				anamneseQuestionamento.setQuestionamento(questionamento);
-				
 
 				listaAnamneseQuestionamento.add(anamneseQuestionamento);
 

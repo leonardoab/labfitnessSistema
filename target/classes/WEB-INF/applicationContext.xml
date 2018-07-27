@@ -45,8 +45,8 @@
 		<intercept-url pattern="/RelatorioDiu.xhtml" access="hasAnyRole('OPME','TOTAL')" />
 		<intercept-url pattern="/RelatorioDiuDevolvidos.xhtml" access="hasAnyRole('OPME','TOTAL')" />
 		<intercept-url pattern="/Competencias.xhtml" access="hasAnyRole('CONTABILIDADE','TOTAL')" />
-		<intercept-url pattern="/Baixas.xhtml" access="hasAnyRole('BAIXAS','TOTAL')" />		
-		<intercept-url pattern="/Home.xhtml" access="isAuthenticated()" />
+		<intercept-url pattern="/Baixas.xhtml" access="hasAnyRole('BAIXAS','TOTAL')" />	
+		
 		<intercept-url pattern="/ControleAcesso.xhtml" access="hasAnyRole('TOTAL')" />		
 	
 		<!-- GRUPOS -->

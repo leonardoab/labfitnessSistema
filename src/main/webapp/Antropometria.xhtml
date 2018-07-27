@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:opt="http://primefaces.prime.com.tr/optimus"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="Templete.xhtml">
+	<ui:define name="corpo">
+		<script type="text/javascript"
+			src="recursos/js/jquery.validate.min.js" charset="charset=UTF-8" />
+		<script type="text/javascript" src="recursos/js/validaLogin.js"
+			charset="charset=UTF-8" />
+
+
+
+
+		<p:growl id="msgs" showDetail="true" />
+
+
+		<div class="titulo">
+			<legend>Dados Cadastrais</legend>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6">
+				<p:outputLabel value="Data Cadastro:" />
+			</div>
+			<div class="col-md-6 alinharCentro">
+				<p:inputText
+					value="#{antropometriaController.alunoSelecionado.dt_cadastro}"
+					size="50" />
+				<p:outputLabel />
+			</div>
+
+
+
+			<div class="col-md-6 ">
+				<p:outputLabel value="Nome:" />
+			</div>
+			<div class="col-md-6 alinharCentro">
+				<p:inputText
+					value="#{antropometriaController.alunoSelecionado.dsc_Nome}"
+					size="50" />
+
+			</div>
+
+			<div class="col-md-6">
+				<p:outputLabel value="Email:" />
+			</div>
+			<div class="col-md-6 alinharCentro">
+				<p:inputText
+					value="#{antropometriaController.alunoSelecionado.dsc_email}"
+					size="50" />
+
+			</div>
+
+
+			<div class="col-md-6">
+				<p:outputLabel value="Data Nascimento:" />
+			</div>
+			<div class="col-md-6 alinharCentro">
+				<p:inputText
+					value="#{antropometriaController.alunoSelecionado.dt_nascimento}"
+					size="50" />
+
+			</div>
+
+			<div class="col-md-6">
+				<p:outputLabel value="Sexo:" />
+			</div>
+			<div class="col-md-6 alinharCentro">
+				<p:inputText
+					value="#{antropometriaController.alunoSelecionado.flg_sexo}"
+					size="50" />
+
+			</div>
+
+			
+
+
+		</div>
+
+		<div class="titulo espacotop">
+			<legend>Antropometria</legend>
+		</div>
+
+		<div class="col-md-6">
+				<p:outputLabel value="Sexo:" />
+			</div>
+			<div class="col-md-6 alinharCentro">
+				<p:inputText
+					value="#{antropometriaController.editAction(delete)}"
+					
+					size="50" >
+					
+				</p:inputText>
+					
+
+			</div>
+
+
+
+
+
+		
+	</ui:define>
+</ui:composition>
+</html>
