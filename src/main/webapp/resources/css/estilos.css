@@ -396,3 +396,10 @@ float: left;
 .alinharCentro {
     text-align: center;
 }
+
+
+.row.antropometria > table {
+    padding-bottom: 36px;
+    
+    margin-bottom: 25px;
+}

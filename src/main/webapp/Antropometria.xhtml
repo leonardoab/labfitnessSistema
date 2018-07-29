@@ -80,35 +80,30 @@
 					size="50" />
 
 			</div>
-
-			
-
-
 		</div>
 
 		<div class="titulo espacotop">
 			<legend>Antropometria</legend>
 		</div>
-
-		<div class="col-md-6">
-				<p:outputLabel value="Sexo:" />
-			</div>
-			<div class="col-md-6 alinharCentro">
-				<p:inputText
-					value="#{antropometriaController.editAction(delete)}"
-					
-					size="50" >
-					
-				</p:inputText>
-					
-
-			</div>
-
-
-
-
-
 		
+		<div class="row antropometria">
+		<h:form id="form">
+			<p:repeat value="#{antropometriaController.listaAntropometriaUnidade}" var="car">
+				<h:panelGrid columns="2"   styleClass="col-md-3"
+					columnClasses="logo,detail">
+					
+					<p:outputPanel>
+						<h:panelGrid columns="1" cellpadding="5">						
+
+							<h:outputText value="#{car.medicao.dsc_medicao}" />
+							<p:inputText  value="#{car.vl_medicao}" style="font-weight: bold" />
+						</h:panelGrid>
+					</p:outputPanel>
+				</h:panelGrid>
+				
+			</p:repeat>
+		</h:form>
+</div>
 	</ui:define>
 </ui:composition>
 </html>
