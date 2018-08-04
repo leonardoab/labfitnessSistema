@@ -46,6 +46,14 @@ public class AntropometriaController implements Serializable {
 
 	List<AntropometriaUnidade> listaAntropometriaUnidade;
 	
+	List<AntropometriaUnidade> listaAntropometriaGeral;
+	List<AntropometriaUnidade> listaAntropometriaDobras;
+	List<AntropometriaUnidade> listaAntropometriaCircunferencia;
+	List<AntropometriaUnidade> listaAntropometriaComposicao;
+	List<AntropometriaUnidade> listaAntropometriaPressao;
+	List<AntropometriaUnidade> listaAntropometriaZona;
+	List<AntropometriaUnidade> listaAntropometriaVo;
+	
 
 	@PostConstruct
 	public void iniciar() {
@@ -53,9 +61,13 @@ public class AntropometriaController implements Serializable {
 		alunoSelecionado = alunoDAO.BuscarAlunosPorId(1);
 		listaAntropometriaUnidade = antropometriaUnidadeDAO.BuscarAnamnesePorAlunoId(1);
 		
-		
-		
-		
+		listaAntropometriaGeral = geralService.BucarMedicaoTipoMedicao(4,listaAntropometriaUnidade);
+		listaAntropometriaDobras = geralService.BucarMedicaoTipoMedicao(1,listaAntropometriaUnidade);
+		listaAntropometriaCircunferencia = geralService.BucarMedicaoTipoMedicao(2,listaAntropometriaUnidade);
+		listaAntropometriaComposicao = geralService.BucarMedicaoTipoMedicao(3,listaAntropometriaUnidade);		
+		listaAntropometriaPressao = geralService.BucarMedicaoTipoMedicao(7,listaAntropometriaUnidade);		
+		listaAntropometriaZona = geralService.BucarMedicaoTipoMedicao(5,listaAntropometriaUnidade);		
+		listaAntropometriaVo = geralService.BucarMedicaoTipoMedicao(6,listaAntropometriaUnidade);		
 		
 	}
 
@@ -101,6 +113,69 @@ public class AntropometriaController implements Serializable {
 	public String editAction(String a) {
 		  return  a;
 		}
+
+	public List<AntropometriaUnidade> getListaAntropometriaGeral() {
+		return listaAntropometriaGeral;
+	}
+
+	public void setListaAntropometriaGeral(
+			List<AntropometriaUnidade> listaAntropometriaGeral) {
+		this.listaAntropometriaGeral = listaAntropometriaGeral;
+	}
+
+	public List<AntropometriaUnidade> getListaAntropometriaDobras() {
+		return listaAntropometriaDobras;
+	}
+
+	public void setListaAntropometriaDobras(
+			List<AntropometriaUnidade> listaAntropometriaDobras) {
+		this.listaAntropometriaDobras = listaAntropometriaDobras;
+	}
+
+	public List<AntropometriaUnidade> getListaAntropometriaCircunferencia() {
+		return listaAntropometriaCircunferencia;
+	}
+
+	public void setListaAntropometriaCircunferencia(
+			List<AntropometriaUnidade> listaAntropometriaCircunferencia) {
+		this.listaAntropometriaCircunferencia = listaAntropometriaCircunferencia;
+	}
+
+	public List<AntropometriaUnidade> getListaAntropometriaComposicao() {
+		return listaAntropometriaComposicao;
+	}
+
+	public void setListaAntropometriaComposicao(
+			List<AntropometriaUnidade> listaAntropometriaComposicao) {
+		this.listaAntropometriaComposicao = listaAntropometriaComposicao;
+	}
+
+	public List<AntropometriaUnidade> getListaAntropometriaPressao() {
+		return listaAntropometriaPressao;
+	}
+
+	public void setListaAntropometriaPressao(
+			List<AntropometriaUnidade> listaAntropometriaPressao) {
+		this.listaAntropometriaPressao = listaAntropometriaPressao;
+	}
+
+	public List<AntropometriaUnidade> getListaAntropometriaZona() {
+		return listaAntropometriaZona;
+	}
+
+	public void setListaAntropometriaZona(
+			List<AntropometriaUnidade> listaAntropometriaZona) {
+		this.listaAntropometriaZona = listaAntropometriaZona;
+	}
+
+	public List<AntropometriaUnidade> getListaAntropometriaVo() {
+		return listaAntropometriaVo;
+	}
+
+	public void setListaAntropometriaVo(
+			List<AntropometriaUnidade> listaAntropometriaVo) {
+		this.listaAntropometriaVo = listaAntropometriaVo;
+	}
 	
 	
 

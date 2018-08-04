@@ -28,63 +28,78 @@
 		</div>
 
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-4 cadastro alinharright">
 				<p:outputLabel value="Data Cadastro:" />
 			</div>
-			<div class="col-md-6 alinharCentro">
-				<p:inputText
-					value="#{dadosCadastraisController.alunoSelecionado.dt_cadastro}"
-					size="50" />
-				<p:outputLabel />
+			<div class="col-md-4  alinharCentro cadastro">
+				<p:inputText disabled="true"
+					value="#{antropometriaController.alunoSelecionado.dt_cadastro}"
+					size="40">
+					<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+						timeZone="America/Sao_Paulo" />
+				</p:inputText>
+
 			</div>
+			<div class="col-md-4 cadastro"></div>
 
 
-
-			<div class="col-md-6 ">
+			<div class="col-md-4 alinharright">
 				<p:outputLabel value="Nome:" />
 			</div>
-			<div class="col-md-6 alinharCentro">
+			<div class="col-md-4 alinharCentro">
 				<p:inputText
-					value="#{dadosCadastraisController.alunoSelecionado.dsc_Nome}"
-					size="50" />
+					value="#{antropometriaController.alunoSelecionado.dsc_Nome}"
+					size="40" />
 
 			</div>
+			<div class="col-md-4"></div>
 
-			<div class="col-md-6">
+			<div class="col-md-4 alinharright">
 				<p:outputLabel value="Email:" />
 			</div>
-			<div class="col-md-6 alinharCentro">
+			<div class="col-md-4  alinharCentro">
 				<p:inputText
-					value="#{dadosCadastraisController.alunoSelecionado.dsc_email}"
-					size="50" />
+					value="#{antropometriaController.alunoSelecionado.dsc_email}"
+					size="40" />
 
 			</div>
+			<div class="col-md-4 alinharright"></div>
 
 
-			<div class="col-md-6">
+			<div class="col-md-4 alinharright">
 				<p:outputLabel value="Data Nascimento:" />
 			</div>
-			<div class="col-md-6 alinharCentro">
+			<div class="col-md-4  alinharCentro">
 				<p:inputText
-					value="#{dadosCadastraisController.alunoSelecionado.dt_nascimento}"
-					size="50" />
+					value="#{antropometriaController.alunoSelecionado.dt_nascimento}"
+					size="40">
+					<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+						timeZone="America/Sao_Paulo" />
+				</p:inputText>
 
 			</div>
+			<div class="col-md-4"></div>
 
-			<div class="col-md-6">
+			<div class="col-md-4 alinharright">
 				<p:outputLabel value="Sexo:" />
 			</div>
-			<div class="col-md-6 alinharCentro">
+			<div class="col-md-4  alinharCentro">
 				<p:inputText
-					value="#{dadosCadastraisController.alunoSelecionado.flg_sexo}"
-					size="50" />
+					value="#{antropometriaController.alunoSelecionado.sexo}" size="40" />
 
 			</div>
+			<div class="col-md-4"></div>
 
-			<div class="col-md-6"></div>
-			<div class="col-md-6 alinharCentro">
-				<p:commandButton value="Salvar Dados"
-					class="btn btn-success btn-sm" />
+			<div class="col-md-4"></div>
+			<div class="col-md-4  alinharCentro">
+				<div class="col-md-12 alinharCentro espacotop">
+					<p:commandButton value="Salvar Dados"
+						class="btn btn-success btn-sm" />
+				</div>
+				<div class="col-md-4"></div>
+
+
+
 			</div>
 
 
@@ -98,106 +113,58 @@
 			<div class="col-md-12">
 				<p:dataTable id="anamnesesUm" var="anamnese"
 					value="#{dadosCadastraisController.listaAnamneseQuestionamentoUm}"
-					editable="true" editMode="cell" widgetVar="anamneseVar">
+					widgetVar="anamneseVar">
 					<f:facet name="header">           HISTÓRICO ATIVIDADES       </f:facet>
 
-					<p:ajax event="cellEdit"
-						listener="#{dadosCadastraisController.onCellEdit}"
-						update="anamnesesUm" />
-
 					<p:column headerText="Pergunta">
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText
-									value="#{anamnese.questionamento.dsc_questionamento}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText
-									value="#{anamnese.questionamento.dsc_questionamento}"
-									style="width:96%" />
-							</f:facet>
-						</p:cellEditor>
+						<h:outputText
+							value="#{anamnese.questionamento.dsc_questionamento}" />
 					</p:column>
-					<p:column headerText="Pergunta">
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{anamnese.dsc_resposta}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText value="#{anamnese.dsc_resposta}" style="width:96%" />
-							</f:facet>
-						</p:cellEditor>
+					<p:column headerText="Resposta" styleClass="alinharCentro">
+						<p:inputText value="#{anamnese.dsc_resposta}" rendered="#{anamnese.questionamento.inputext}" style="width:96%" />
+								<p:triStateCheckbox value="#{anamnese.dsc_resposta}" rendered="#{anamnese.questionamento.check}" style="width:96%" />
 					</p:column>
 				</p:dataTable>
 			</div>
-			<div class="col-md-12 espacotop">
+			
+			
+			<div class="col-md-6 espacotop">
 				<p:dataTable id="anamnesesDois" var="anamnese"
 					value="#{dadosCadastraisController.listaAnamneseQuestionamentoDois}"
-					editable="true" editMode="cell" widgetVar="anamneseVar">
+					 widgetVar="anamneseVar">
 					<f:facet name="header">           HISTÓRICO SAÚDE       </f:facet>
 
-					<p:ajax event="cellEdit"
-						listener="#{dadosCadastraisController.onCellEdit}"
-						update="anamnesesDois" />
+					
 
-					<p:column headerText="Pergunta">
-						<p:cellEditor>
-							<f:facet name="output">
+					<p:column headerText="Pergunta">						
 								<h:outputText
-									value="#{anamnese.questionamento.dsc_questionamento}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText
-									value="#{anamnese.questionamento.dsc_questionamento}"
-									style="width:96%" />
-							</f:facet>
-						</p:cellEditor>
+									value="#{anamnese.questionamento.dsc_questionamento}" />				
+						
 					</p:column>
-					<p:column headerText="Pergunta">
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{anamnese.dsc_resposta}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText value="#{anamnese.dsc_resposta}" style="width:96%" />
-							</f:facet>
-						</p:cellEditor>
+					<p:column headerText="Resposta" styleClass="alinharCentro">
+						
+							    
+								<p:inputText value="#{anamnese.dsc_resposta}" rendered="#{anamnese.questionamento.inputext}" style="width:96%" />
+								<p:triStateCheckbox value="#{anamnese.dsc_resposta}" rendered="#{anamnese.questionamento.check}" style="width:96%" />
+							
+						
 					</p:column>
 				</p:dataTable>
 			</div>
 
-			<div class="col-md-12 espacotop">
+			<div class="col-md-6 espacotop">
 				<p:dataTable id="anamnesesTres" var="anamnese"
 					value="#{dadosCadastraisController.listaAnamneseQuestionamentoTres}"
-					editable="true" editMode="cell" widgetVar="anamneseVar">
-					<f:facet name="header">           HISTÓRICO FAMILIAR       </f:facet>
+					 widgetVar="anamneseVar">
+					<f:facet name="header">           HISTÓRICO FAMILIAR       </f:facet>					
 
-					<p:ajax event="cellEdit"
-						listener="#{dadosCadastraisController.onCellEdit}"
-						update="anamnesesTres" />
-
-					<p:column headerText="Pergunta">
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText
-									value="#{anamnese.questionamento.dsc_questionamento}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText
-									value="#{anamnese.questionamento.dsc_questionamento}"
-									style="width:96%" />
-							</f:facet>
-						</p:cellEditor>
-					</p:column>
-					<p:column headerText="Pergunta">
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{anamnese.dsc_resposta}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText value="#{anamnese.dsc_resposta}" style="width:96%" />
-							</f:facet>
-						</p:cellEditor>
+					
+					<p:column headerText="Resposta" styleClass="alinharCentro">				
+							
+							    <p:selectBooleanButton  value="#{anamnese.dsc_resposta}" rendered="#{anamnese.questionamento.botton}" onLabel="#{anamnese.questionamento.dsc_questionamento}" offLabel="#{anamnese.questionamento.dsc_questionamento}" style="width:100%" />
+								<p:inputText value="#{anamnese.dsc_resposta}" rendered="#{anamnese.questionamento.inputext}" style="width:96%" />
+								
+							
 					</p:column>
 				</p:dataTable>
 			</div>
@@ -205,35 +172,23 @@
 			<div class="col-md-12 espacotop">
 				<p:dataTable id="anamnesesQuatro" var="anamnese"
 					value="#{dadosCadastraisController.listaAnamneseQuestionamentoQuatro}"
-					editable="true" editMode="cell" widgetVar="anamneseVar">
+					 widgetVar="anamneseVar">
 					<f:facet name="header">           PRONTIDÃO ATIVIDADES       </f:facet>
 
-					<p:ajax event="cellEdit"
-						listener="#{dadosCadastraisController.onCellEdit}"
-						update="anamnesesQuatro" />
+					
 
-					<p:column headerText="Pergunta">
-						<p:cellEditor>
-							<f:facet name="output">
+					<p:column headerText="Pergunta" colspan="8">
+						
 								<h:outputText
 									value="#{anamnese.questionamento.dsc_questionamento}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText
-									value="#{anamnese.questionamento.dsc_questionamento}"
-									style="width:96%" />
-							</f:facet>
-						</p:cellEditor>
+							
 					</p:column>
-					<p:column headerText="Pergunta">
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{anamnese.dsc_resposta}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText value="#{anamnese.dsc_resposta}" style="width:96%" />
-							</f:facet>
-						</p:cellEditor>
+					<p:column headerText="Resposta" styleClass="alinharCentro">
+						
+							
+								<p:inputText value="#{anamnese.dsc_resposta}" rendered="#{anamnese.questionamento.inputext}" style="width:96%" />
+								<p:triStateCheckbox value="#{anamnese.dsc_resposta}" rendered="#{anamnese.questionamento.check}" style="width:96%" />
+							
 					</p:column>
 				</p:dataTable>
 			</div>
@@ -241,37 +196,28 @@
 			<div class="col-md-12 espacotop">
 				<p:dataTable id="anamnesesCinco" var="anamnese"
 					value="#{dadosCadastraisController.listaAnamneseQuestionamentoCinco}"
-					editable="true" editMode="cell" widgetVar="anamneseVar">
+					 widgetVar="anamneseVar">
 					<f:facet name="header">           QUESTIONÁRIO RISCO CORONARIANO       </f:facet>
 
-					<p:ajax event="cellEdit"
-						listener="#{dadosCadastraisController.onCellEdit}"
-						update="anamnesesCinco" />
+					
 
-					<p:column headerText="Pergunta">
-						<p:cellEditor>
-							<f:facet name="output">
+					<p:column headerText="Pergunta" colspan="8">
+						
 								<h:outputText
 									value="#{anamnese.questionamento.dsc_questionamento}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText
-									value="#{anamnese.questionamento.dsc_questionamento}"
-									style="width:96%" />
-							</f:facet>
-						</p:cellEditor>
+							
 					</p:column>
-					<p:column headerText="Pergunta">
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{anamnese.dsc_resposta}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText value="#{anamnese.dsc_resposta}" style="width:96%" />
-							</f:facet>
-						</p:cellEditor>
+					<p:column headerText="Resposta" colspan="1" styleClass="alinharCentro">
+						
+								<p:inputText value="#{anamnese.dsc_resposta}" rendered="#{anamnese.questionamento.inputext}" style="width:96%" />
+								<p:triStateCheckbox value="#{anamnese.dsc_resposta}" rendered="#{anamnese.questionamento.check}" style="width:96%" />
 					</p:column>
 				</p:dataTable>
+			</div>
+
+			<div class="col-md-12 alinharCentro espacotop">
+				<p:commandButton value="Salvar Questionario"
+					class="btn btn-success btn-sm" />
 			</div>
 
 

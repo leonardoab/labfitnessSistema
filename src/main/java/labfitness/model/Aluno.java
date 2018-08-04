@@ -47,4 +47,11 @@ public class Aluno {
 	public void setDt_cadastro(Date dt_cadastro) {
 		this.dt_cadastro = dt_cadastro;
 	}
+	
+	public String getSexo() {
+		if (flg_sexo == true) return "Masculino";
+		else  return "Feminino";
+		
+	}
+	
 }
