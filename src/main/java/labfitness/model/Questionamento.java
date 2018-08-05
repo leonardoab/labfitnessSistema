@@ -7,9 +7,8 @@ public class Questionamento {
 	private Integer id_questionamento;
 	private TipoQuestionamento tipoQuestionamento;
 	private String dsc_questionamento;
-	private String tp_campo;
-	private boolean check;
-	private boolean inputext;
+	private Integer id_tipo_campo;
+
 	
 	public Integer getId_questionamento() {
 		return id_questionamento;
@@ -29,24 +28,28 @@ public class Questionamento {
 	public void setDsc_questionamento(String dsc_questionamento) {
 		this.dsc_questionamento = dsc_questionamento;
 	}
-	public String getTp_campo() {
-		return tp_campo;
+	
+	
+	
+	
+	public Integer getId_tipo_campo() {
+		return id_tipo_campo;
 	}
-	public void setTp_campo(String tp_campo) {
-		this.tp_campo = tp_campo;
+	public void setId_tipo_campo(Integer id_tipo_campo) {
+		this.id_tipo_campo = id_tipo_campo;
 	}
 	public boolean isCheck() {
-		if (tp_campo.equals("check")) return true;
+		if (id_tipo_campo == 3) return true;
 		else return false;		
 	}
 	
 	public boolean isInputext() {
-		if (tp_campo.equals("inputText")) return true;
+		if (id_tipo_campo == 1) return true;
 		else return false;	
 	}
 	
 	public boolean isBotton() {
-		if (tp_campo.equals("Botton")) return true;
+		if (id_tipo_campo == 2) return true;
 		else return false;	
 	}
 	

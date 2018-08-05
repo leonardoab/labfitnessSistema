@@ -55,10 +55,10 @@ public class AnamneseQuestionamentoDAO {
 				questionamento.setDsc_questionamento(rs.getString(
 						"dsc_questionamento").toUpperCase());
 				questionamento.setId_questionamento(rs
-						.getInt("id_questionamento"));
+						.getInt("id_questionamento"));	
 				
-				questionamento.setTp_campo(rs.getString(
-						"tp_campo"));
+				
+				questionamento.setId_tipo_campo(rs.getInt("id_tipo_campo"));
 
 				questionamento.setTipoQuestionamento(tipoQuestionamento);
 				
