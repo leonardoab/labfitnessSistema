@@ -32,11 +32,11 @@ public class AntropometriaUnidadeDAO {
 				+ "(case when a.id_antropometria IS NULL then 0 else a.id_antropometria end) AS id_antropometria , "
 				+ "(case when a.id_aluno IS NULL then 0 else a.id_aluno end) AS id_aluno , "
 				+ "(case when a.dt_realizacao IS NULL then '1900-01-01' else a.dt_realizacao end) AS dt_realizacao  "
-				+ "FROM medicao m   "
-				+ "left join tipo_medicao tm on tm.id_tipo_medicao = m.id_tipo_medicao "
-				+ "left join unidade u on u.id_unidade = m.id_unidade "
-				+ "left join antropometria_unidade au on au.id_medicao = m.id_medicao "
-				+ "left join antropometria a on a.id_antropometria = au.id_antropometria "
+				+ "FROM basedados.labfitness.medicao m   "
+				+ "left join basedados.labfitness.tipo_medicao tm on tm.id_tipo_medicao = m.id_tipo_medicao "
+				+ "left join basedados.labfitness.unidade u on u.id_unidade = m.id_unidade "
+				+ "left join basedados.labfitness.antropometria_unidade au on au.id_medicao = m.id_medicao "
+				+ "left join basedados.labfitness.antropometria a on a.id_antropometria = au.id_antropometria "
 				+ "where id_aluno is null or a.id_aluno = " + id.toString();
 
 		Statement State;

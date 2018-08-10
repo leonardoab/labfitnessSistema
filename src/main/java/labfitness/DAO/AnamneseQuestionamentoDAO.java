@@ -25,9 +25,9 @@ public class AnamneseQuestionamentoDAO {
 				+ "(case when id_anamnese_questionamento IS NULL then 0 else aq.id_questionamento end) AS id_questionamento, "
 				+ "(case when id_anamnese_questionamento IS NULL then 0 else aq.id_aluno end) AS id_aluno, "
 				+ "(case when id_anamnese_questionamento IS NULL then '' else aq.dsc_resposta end) AS dsc_resposta "
-				+ "from questionamento q "
-				+ "left join anamnese_questionamento aq on aq.id_questionamento = q.id_questionamento "
-				+ "left join tipo_questionamento t on t.id_tipo_questionamento = q.id_tipo_questionamento "
+				+ "from basedados.labfitness.questionamento q "
+				+ "left join basedados.labfitness.anamnese_questionamento aq on aq.id_questionamento = q.id_questionamento "
+				+ "left join basedados.labfitness.tipo_questionamento t on t.id_tipo_questionamento = q.id_tipo_questionamento "
 				+ "where  aq.id_questionamento is null or aq.id_aluno = "
 				+ id.toString();
 

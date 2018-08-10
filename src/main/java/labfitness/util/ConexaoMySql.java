@@ -15,13 +15,24 @@ public class ConexaoMySql {
 	public static Connection getConexao() {
 		try {
 			if ((vConPostGree == null) || vConPostGree.isClosed()) {
-				Class.forName("com.mysql.jdbc.Driver");
-				vConPostGree = DriverManager.getConnection("jdbc:mysql://localhost/labfitness?user=root");
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				
+				
+				String hostName = "basedados.database.windows.net";
+		        String dbName = "basedados";
+		        String user = "lbezerra";
+		        String password = "Fernando210738!!";
+		        String url = String.format("jdbc:sqlserver://%s:1433;database=%s;user=%s;password=%s;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;", hostName, dbName, user, password);
+		      
+				
+				vConPostGree = DriverManager.getConnection(url);
 				// vConPostGree =
 				// DriverManager.getConnection("jdbc:oracle:thin:@bdrac1-vip.unimedjf.com.br:1521:BDUNIJF1",
 				// "SEUNI", "SEUNI");
 				//vConPostGree = DriverManager.getConnection("jdbc:oracle:thin:@bdprot11.unimedjf.com.br:1521:BDUNIJF","APWEB", "APWEB_PROT");
 				System.out.println("Conectou");
+				
+				 
 
 			}
 		} catch (SQLException e) {

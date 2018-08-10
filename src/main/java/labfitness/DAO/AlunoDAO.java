@@ -21,7 +21,7 @@ public class AlunoDAO {
 		
 		Aluno aluno = new Aluno();
 
-		String sql = "SELECT  * FROM aluno where id_aluno = " + id.toString();	
+		String sql = "SELECT  * FROM basedados.labfitness.aluno where id_aluno = " + id.toString();	
 				
 		Statement State;
 		
@@ -50,7 +50,7 @@ public List<Aluno> BuscarAlunosPorNome(String nome){
 		
 		Aluno aluno = new Aluno();
 		List<Aluno> listaAluno = new ArrayList<Aluno>();
-		String sql = "SELECT  * FROM aluno where dsc_nome like '%" + nome + "%'";	
+		String sql = "SELECT  * FROM basedados.labfitness.aluno where dsc_nome like '%" + nome + "%'";	
 				
 		Statement State;
 		
