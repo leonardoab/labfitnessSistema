@@ -1,6 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
@@ -9,50 +8,36 @@
 	xmlns:opt="http://primefaces.prime.com.tr/optimus"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
-
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</h:head>
 <ui:composition template="Templete.xhtml">
 	<ui:define name="corpo">
-		<script type="text/javascript"
-			src="recursos/js/jquery.validate.min.js" charset="charset=UTF-8" />
-		<script type="text/javascript" src="recursos/js/validaLogin.js"
-			charset="charset=UTF-8" />
-
-
-
-
-		<p:growl id="msgs" showDetail="true" />
-
-
-		<div class="titulo">
-			<legend>Dados Cadastrais</legend>
-		</div>
-
-		<div class="row">
-			<div class="col-md-4 cadastro alinharright">
-				<p:outputLabel value="Data Cadastro:" />
-			</div>
-			<div class="col-md-4  alinharCentro cadastro">
-				<p:inputText
-					value="#{antropometriaController.alunoSelecionado.dt_cadastro}"
-					size="40" disabled="true">
-					<f:convertDateTime type="date" pattern="dd/MM/yyyy"
-						timeZone="America/Sao_Paulo" />
-				</p:inputText>
-
-			</div>
-			<div class="col-md-4 cadastro "></div>
-
-
-			<div class="col-md-4 alinharright">
-				<p:outputLabel value="Nome:" />
-			</div>
-			<div class="col-md-4 alinharCentro">
-				<p:inputText disabled="#{antropometriaController.corpo}"
-					value="#{antropometriaController.alunoSelecionado.dsc_Nome}"
-					size="40" />
+		<h:body>
+			<h:form>
+				<div class="row">
+				
+					<div class="col-md-4 cadastro alinharright">
+						<p:outputLabel value="Data Cadastro:" />
+					</div>
 					
+					<div class="col-md-4  alinharCentro cadastro">
+						<p:inputText
+							value="#{antropometriaController.alunoSelecionado.dt_cadastro}"
+							size="40" disabled="true">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+								timeZone="America/Sao_Paulo" />
+						</p:inputText>
+					</div>
 					
-			   <p:autoComplete id="nome"
+					<div class="col-md-4 cadastro "/>
+					
+					<div class="col-md-4 alinharright">
+						<p:outputLabel value="Nome:" />
+					</div>
+					
+					<div class="col-md-4 alinharCentro">
+						<p:autoComplete id="nome"
 							value="#{antropometriaController.alunoSelecionado}"
 							completeMethod="#{antropometriaController.alunoNomes}"
 							converter="entityConverter" var="cl" itemValue="#{cl}"
@@ -63,364 +48,83 @@
 							<p:column style="width: 300px;font-size: 12px;">
 								<h:outputText value="#{cl.dsc_Nome}" />
 							</p:column>
-							
-						</p:autoComplete>		
 
-			</div>
-			
-			<p:autoComplete id="acSimple" value="#{autoCompleteView.txt1}" completeMethod="#{autoCompleteView.completeText}" />
-			
-			<div class="col-md-4  alinharleft">
-				<p:commandButton value="Nova Consulta" class="btn btn-success btn-sm" />
-			</div>
+						</p:autoComplete>
 
-			<div class="col-md-4 alinharright">
-				<p:outputLabel value="Email:" />
-			</div>
-			<div class="col-md-4  alinharCentro">
-				<p:inputText disabled="#{antropometriaController.corpo}"
-					value="#{antropometriaController.alunoSelecionado.dsc_email}"
-					size="40" />
+					</div>
 
-			</div>
-			<div class="col-md-4"></div>
+					<div class="col-md-4  alinharleft"/>
 
+					<div class="col-md-4 alinharright">
+						<p:outputLabel value="Email:" />
+					</div>
+					
+					<div class="col-md-4  alinharCentro">
+						<p:inputText disabled="#{antropometriaController.corpo}"
+							value="#{antropometriaController.alunoSelecionado.dsc_email}"
+							size="40" />
+					</div>
+					
+					<div class="col-md-4"/>
 
-			<div class="col-md-4 alinharright">
-				<p:outputLabel value="Data Nascimento:" />
-			</div>
-			<div class="col-md-4  alinharCentro">
-				<p:inputText disabled="#{antropometriaController.corpo}"
-					value="#{antropometriaController.alunoSelecionado.dt_nascimento}"
-					size="40">
-					<f:convertDateTime type="date" pattern="dd/MM/yyyy"
-						timeZone="America/Sao_Paulo" />
-				</p:inputText>
+					<div class="col-md-4 alinharright">
+						<p:outputLabel value="Data Nascimento:" />
+					</div>
+					
+					<div class="col-md-4  alinharCentro">
+						<p:inputText disabled="#{antropometriaController.corpo}"
+							value="#{antropometriaController.alunoSelecionado.dt_nascimento}"
+							size="40">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+								timeZone="America/Sao_Paulo" />
+						</p:inputText>
+					</div>
+					
+					<div class="col-md-4"/>
 
-			</div>
-			<div class="col-md-4"></div>
+					<div class="col-md-4 alinharright">
+						<p:outputLabel value="Sexo:" />
+					</div>
+					
+					<div class="col-md-4  alinharCentro">
+						<p:inputText disabled="#{antropometriaController.corpo}"
+							value="#{antropometriaController.alunoSelecionado.sexo}"
+							size="40" />
 
-			<div class="col-md-4 alinharright">
-				<p:outputLabel value="Sexo:" />
-			</div>
-			<div class="col-md-4  alinharCentro">
-				<p:inputText disabled="#{antropometriaController.corpo}"
-					value="#{antropometriaController.alunoSelecionado.sexo}" size="40" />
+					</div>
+					
+					<div class="col-md-4  alinharleft"/>
 
-			</div>
-			<div class="col-md-4  alinharleft">
+					<div class="col-md-4 espacotop alinharright">
+						<p:outputLabel value="Data Antropometria:" />
+					</div>
+					
+					<div class="col-md-4  alinharCentro espacotop">
+						<p:inputText
+							value="#{antropometriaController.alunoSelecionado.dt_cadastro}"
+							size="40">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+								timeZone="America/Sao_Paulo" />
+						</p:inputText>
+					</div>
+					
+					<div class="col-md-4  alinharleft espacotop"/>
+					
+					<div class="col-md-4 alinharCentro espacotop"/>
+					
+					<div class="col-md-4 alinharCentro espacotop">
+						<p:commandButton value="Salvar" class="btn btn-success btn-sm" />
+						<p:commandButton value="Nova Avaliação"
+							class="btn btn-success btn-sm" />
+						<p:commandButton value="Limpar" class="btn btn-success btn-sm" />
+					</div>
 
-				<p:commandButton value="Salvar Dados" class="btn btn-success btn-sm" />
-
-
-
-
-
-			</div>
-
-			<div class="col-md-4 espacotop alinharright">
-				<p:outputLabel value="Data Antropometria:" />
-			</div>
-			<div class="col-md-4  alinharCentro espacotop">
-				<p:inputText
-					value="#{antropometriaController.alunoSelecionado.dt_cadastro}"
-					size="40">
-					<f:convertDateTime type="date" pattern="dd/MM/yyyy"
-						timeZone="America/Sao_Paulo" />
-				</p:inputText>
-
-			</div>
-			<div class="col-md-4  alinharleft espacotop">
-
-				<p:commandButton value="Nova Avaliação"
-					class="btn btn-success btn-sm" />
-
-			</div>
-
-
-
-		</div>
-
-
-
-		<div style="#{antropometriaController.habilitarCorpo}">
-
-
-			<div class="titulo espacotop">
-				<legend>Dobras Cutâneas</legend>
-			</div>
-
-			<div class="row antropometria">
-				<h:form id="formDobras">
-					<p:repeat
-						value="#{antropometriaController.listaAntropometriaDobras}"
-						var="medicao">
-						<h:panelGrid columns="2" styleClass="col-md-3"
-							columnClasses="logo,detail">
-
-							<p:outputPanel>
-								<h:panelGrid columns="1" cellpadding="5"
-									style="position: relative;
-										margin-left: 50%;
-										left: -92px;">
-
-									<h:outputText value="#{medicao.medicao.dsc_medicao}:" />
-									<p:inputText value="#{medicao.vl_medicao}"
-										style="font-weight: bold" />
-								</h:panelGrid>
-							</p:outputPanel>
-						</h:panelGrid>
-
-					</p:repeat>
-				</h:form>
-			</div>
-
-			<div class="titulo espacotop">
-				<legend>Dados Gerais</legend>
-			</div>
-
-			<div class="row antropometria">
-				<h:form id="formGeral">
-					<p:repeat
-						value="#{antropometriaController.listaAntropometriaGeral}"
-						var="medicao">
-						<h:panelGrid columns="2" styleClass="col-md-3 "
-							columnClasses="logo,detail">
-
-							<p:outputPanel>
-								<h:panelGrid columns="1" cellpadding="5"
-									style="position: relative;
-										margin-left: 50%;
-										left: -92px;">
-
-									<h:outputText value="#{medicao.medicao.dsc_medicao}:" />
-									<p:inputText value="#{medicao.vl_medicao}"
-										style="font-weight: bold" />
-								</h:panelGrid>
-							</p:outputPanel>
-						</h:panelGrid>
-
-					</p:repeat>
-				</h:form>
-			</div>
-
-
-			<div class="titulo espacotop">
-				<legend>BioImpedancia por Regiao</legend>
-			</div>
-
-			<div class="row antropometria">
-				<div class="col-md-12">
-					<p:dataTable id="BioRegiao" var="medida"
-						value="#{antropometriaController.listaBio}" widgetVar="medidaVar">
-
-
-						<p:column headerText="Descritivo">
-							<h:outputText value="#{medida}" />
-						</p:column>
-						<p:column headerText="% - Gordura" styleClass="alinharCentro">
-
-						</p:column>
-						<p:column headerText="KG - Gordura" styleClass="alinharCentro">
-
-						</p:column>
-						<p:column headerText="% - Massa Magra" styleClass="alinharCentro">
-
-						</p:column>
-						<p:column headerText="KG - Massa Magra" styleClass="alinharCentro">
-
-						</p:column>
-
-
-
-
-					</p:dataTable>
+					<div class="col-md-4 alinharCentro espacotop"/>
+					
 				</div>
-			</div>
 
-			<div class="titulo espacotop">
-				<legend>Composição Corporal</legend>
-			</div>
-
-			<div class="row antropometria">
-				<div class="col-md-12">
-					<p:dataTable id="CompoRegiao" var="medida"
-						value="#{antropometriaController.listaDobras}"
-						widgetVar="medidaVar">
-
-
-
-						<p:columnGroup type="header">
-							<p:row>
-								<p:column rowspan="3" headerText="Descritivo" />
-								<p:column colspan="3" headerText="Bio" />
-								<p:column colspan="3" headerText="Dobras" />
-							</p:row>
-							<p:row>
-								<p:column headerText="%" />
-								<p:column headerText="KG" />
-								<p:column headerText="Indicador" />
-								<p:column headerText="%" />
-								<p:column headerText="KG" />
-								<p:column headerText="Indicador" />
-							</p:row>
-
-						</p:columnGroup>
-
-						<p:column headerText="Descritivo">
-							<h:outputText value="#{medida}" />
-						</p:column>
-						<p:column headerText="%" styleClass="alinharCentro">
-
-						</p:column>
-						<p:column headerText="KG" styleClass="alinharCentro">
-
-						</p:column>
-						<p:column headerText="Bio" styleClass="alinharCentro">
-
-						</p:column>
-						<p:column headerText="%" styleClass="alinharCentro">
-
-						</p:column>
-						<p:column headerText="KG" styleClass="alinharCentro">
-
-						</p:column>
-
-
-						<p:column headerText="Dobras" styleClass="alinharCentro">
-
-						</p:column>
-
-					</p:dataTable>
-				</div>
-			</div>
-
-			<div class="titulo espacotop">
-				<legend>Circunferências</legend>
-			</div>
-
-			<div class="row antropometria">
-				<h:form id="formCircu">
-					<p:repeat
-						value="#{antropometriaController.listaAntropometriaCircunferencia}"
-						var="medicao">
-						<h:panelGrid columns="2" styleClass="col-md-3"
-							columnClasses="logo,detail">
-
-							<p:outputPanel>
-								<h:panelGrid columns="1" cellpadding="5"
-									style="position: relative;
-										margin-left: 50%;
-										left: -92px;">
-
-									<h:outputText value="#{medicao.medicao.dsc_medicao}:" />
-									<p:inputText value="#{medicao.vl_medicao}"
-										style="font-weight: bold" />
-								</h:panelGrid>
-							</p:outputPanel>
-						</h:panelGrid>
-
-					</p:repeat>
-				</h:form>
-			</div>
-
-			<div class="titulo espacotop">
-				<legend>Pressão</legend>
-			</div>
-
-			<div class="row antropometria">
-				<h:form id="formPres">
-					<p:repeat
-						value="#{antropometriaController.listaAntropometriaPressao}"
-						var="medicao">
-						<h:panelGrid columns="2" styleClass="col-md-3"
-							columnClasses="logo,detail">
-
-							<p:outputPanel>
-								<h:panelGrid columns="1" cellpadding="5"
-									style="position: relative;
-										margin-left: 50%;
-										left: -92px;">
-
-									<h:outputText value="#{medicao.medicao.dsc_medicao}:" />
-									<p:inputText value="#{medicao.vl_medicao}"
-										style="font-weight: bold" />
-								</h:panelGrid>
-							</p:outputPanel>
-						</h:panelGrid>
-
-					</p:repeat>
-				</h:form>
-			</div>
-
-			<div class="titulo espacotop">
-				<legend>Zona de Treinamento</legend>
-			</div>
-
-			<div class="row antropometria">
-				<h:form id="formZona">
-					<p:repeat value="#{antropometriaController.listaAntropometriaZona}"
-						var="medicao">
-						<h:panelGrid columns="2" styleClass="col-md-2"
-							columnClasses="logo,detail">
-
-							<p:outputPanel>
-								<h:panelGrid columns="1" cellpadding="3"
-									style="position: relative;
-
-margin-left: 50%;
-
-left: -50px;">
-
-									<h:outputText value="#{medicao.medicao.dsc_medicao}:" />
-									<p:inputText value="#{medicao.vl_medicao}"
-										style="font-weight: bold" size="10" />
-								</h:panelGrid>
-							</p:outputPanel>
-						</h:panelGrid>
-
-					</p:repeat>
-				</h:form>
-			</div>
-
-
-			<div class="titulo espacotop">
-				<legend>Nutricional</legend>
-			</div>
-			<div class="row antropometria">
-				<h:form id="formNutri">
-					<p:repeat
-						value="#{antropometriaController.listaAntropometriaNutri}"
-						var="medicao">
-						<h:panelGrid columns="2" styleClass="col-md-3"
-							columnClasses="logo,detail">
-
-							<p:outputPanel>
-								<h:panelGrid columns="1" cellpadding="5"
-									style="position: relative;
-										margin-left: 50%;
-										left: -92px;">
-
-									<h:outputText value="#{medicao.medicao.dsc_medicao}:" />
-									<p:inputText value="#{medicao.vl_medicao}"
-										style="font-weight: bold" />
-								</h:panelGrid>
-							</p:outputPanel>
-						</h:panelGrid>
-
-					</p:repeat>
-				</h:form>
-			</div>
-
-			<div class="col-md-12 alinharCentro espacotop">
-				<p:commandButton value="Salvar Medidas"
-					class="btn btn-success btn-sm" />
-			</div>
-
-		</div>
-
-
-
+			</h:form>
+		</h:body>
 	</ui:define>
 </ui:composition>
 </html>

@@ -46,7 +46,7 @@ public class AntropometriaController implements Serializable {
 	AlunoDAO alunoDAO = new AlunoDAO();
 	AntropometriaUnidadeDAO antropometriaUnidadeDAO = new AntropometriaUnidadeDAO();
 
-	Aluno alunoSelecionado = new Aluno();;
+	public Aluno alunoSelecionado = new Aluno();;
 	boolean corpo = false;
 	
 
@@ -97,34 +97,18 @@ public class AntropometriaController implements Serializable {
 //		listaDobras.add("Massa Ossea");
 //		listaDobras.add("Densidade Corporatal");
 //		listaDobras.add("Razao Quadril");
-//		listaDobras.add("Idade Metabolica");
+//		listaDobras.add("Idade Metabolica");		
 		
-		
-		
-		
-		
-	}
-	
-	
-	
-	public List<String> completeText(String codigo) {
-		List<String> listaAluno = new ArrayList<String>();
-		listaAluno.add(codigo);
-			
-		return listaAluno;
-	}
+	}	
 	
 	public List<Aluno> alunoNomes(String codigo) {	
 		codigo = codigo.toUpperCase();		
 		return alunoDAO.BuscarAlunosPorNome(codigo);
 	}
 	
-	public String getHabilitarCorpo() {
-		
+	public String getHabilitarCorpo() {		
 		if (!corpo) return "display:none;";
-		else return "";
-		
-		
+		else return "";			
 	}
 
 	public void onCellEdit(CellEditEvent event) {
@@ -275,20 +259,12 @@ public class AntropometriaController implements Serializable {
 		this.corpo = corpo;
 	}
 
-
-
 	public String getTeste() {
 		return teste;
 	}
 
-
-
 	public void setTeste(String teste) {
 		this.teste = teste;
-	}
-	
-	
-	
-	
+	}	
 
 }
