@@ -20,8 +20,10 @@ import javax.inject.Named;
 
 
 
+
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
+
 
 import labfitness.DAO.AlunoDAO;
 import labfitness.DAO.AntropometriaUnidadeDAO;
@@ -30,7 +32,7 @@ import labfitness.model.AntropometriaUnidade;
 import labfitness.services.GeralService;
 import controller.LoginController;
 
-@ManagedBean(name = "antropometriaController")
+@Named 
 @ViewScoped
 public class AntropometriaController implements Serializable {
 
@@ -61,7 +63,7 @@ public class AntropometriaController implements Serializable {
 	List<String> listaBio = new ArrayList<String>();
 	List<String> listaDobras = new ArrayList<String>();
 	
-	
+	String teste = "";
 	
 	
 	
@@ -69,7 +71,7 @@ public class AntropometriaController implements Serializable {
 	@PostConstruct
 	public void iniciar() {
 
-//		alunoSelecionado = alunoDAO.BuscarAlunosPorId(1);
+		//alunoSelecionado = alunoDAO.BuscarAlunosPorId(1);
 //		listaAntropometriaUnidade = antropometriaUnidadeDAO.BuscarAnamnesePorAlunoId(1);
 //		
 //		listaAntropometriaGeral = geralService.BucarMedicaoTipoMedicao(4,listaAntropometriaUnidade);
@@ -101,6 +103,20 @@ public class AntropometriaController implements Serializable {
 		
 		
 		
+	}
+	
+	
+	
+	public List<String> completeText(String codigo) {
+		List<String> listaAluno = new ArrayList<String>();
+		listaAluno.add(codigo);
+			
+		return listaAluno;
+	}
+	
+	public List<Aluno> alunoNomes(String codigo) {	
+		codigo = codigo.toUpperCase();		
+		return alunoDAO.BuscarAlunosPorNome(codigo);
 	}
 	
 	public String getHabilitarCorpo() {
@@ -258,6 +274,19 @@ public class AntropometriaController implements Serializable {
 	public void setCorpo(boolean corpo) {
 		this.corpo = corpo;
 	}
+
+
+
+	public String getTeste() {
+		return teste;
+	}
+
+
+
+	public void setTeste(String teste) {
+		this.teste = teste;
+	}
+	
 	
 	
 	

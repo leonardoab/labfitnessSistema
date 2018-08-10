@@ -50,8 +50,26 @@
 				<p:inputText disabled="#{antropometriaController.corpo}"
 					value="#{antropometriaController.alunoSelecionado.dsc_Nome}"
 					size="40" />
+					
+					
+			   <p:autoComplete id="nome"
+							value="#{antropometriaController.alunoSelecionado}"
+							completeMethod="#{antropometriaController.alunoNomes}"
+							converter="entityConverter" var="cl" itemValue="#{cl}"
+							itemLabel="#{cl.dsc_Nome}" forceSelection="true">
+							<p:column style="width: 20px;    color: #DCDCDC;font-size: 12px;">
+								<h:outputText value="#{cl.id_Aluno}" />
+							</p:column>
+							<p:column style="width: 300px;font-size: 12px;">
+								<h:outputText value="#{cl.dsc_Nome}" />
+							</p:column>
+							
+						</p:autoComplete>		
 
 			</div>
+			
+			<p:autoComplete id="acSimple" value="#{autoCompleteView.txt1}" completeMethod="#{autoCompleteView.completeText}" />
+			
 			<div class="col-md-4  alinharleft">
 				<p:commandButton value="Nova Consulta" class="btn btn-success btn-sm" />
 			</div>
