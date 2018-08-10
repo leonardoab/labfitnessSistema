@@ -62,7 +62,7 @@ public class AntropometriaController implements Serializable {
 	List<AntropometriaUnidade> listaAntropometriaNutri;
 	List<String> listaBio = new ArrayList<String>();
 	List<String> listaDobras = new ArrayList<String>();
-	
+	  
 	String teste = "";
 	
 	
