@@ -14,30 +14,33 @@
 <ui:composition template="Templete.xhtml">
 	<ui:define name="corpo">
 		<h:body>
-			<h:form>
+
+			<h:form method="post">
+				<p:growl id="msgs" showDetail="true" />
 				<div class="row">
-				
+
 					<div class="col-md-4 cadastro alinharright">
 						<p:outputLabel value="Data Cadastro:" />
 					</div>
-					
+
 					<div class="col-md-4  alinharCentro cadastro">
-						<p:inputText
+						<p:inputText id="dtcadastro"
 							value="#{antropometriaController.alunoSelecionado.dt_cadastro}"
 							size="40" disabled="true">
 							<f:convertDateTime type="date" pattern="dd/MM/yyyy"
 								timeZone="America/Sao_Paulo" />
 						</p:inputText>
 					</div>
-					
-					<div class="col-md-4 cadastro "/>
-					
+
+					<div class="col-md-4 cadastro " />
+
 					<div class="col-md-4 alinharright">
 						<p:outputLabel value="Nome:" />
 					</div>
-					
+
 					<div class="col-md-4 alinharCentro">
-						<p:autoComplete id="nome"
+						<p:autoComplete id="nome" size="40" required="true" requiredMessage="Preencha o nome"
+							disabled="#{antropometriaController.travarCadastro}"
 							value="#{antropometriaController.alunoSelecionado}"
 							completeMethod="#{antropometriaController.alunoNomes}"
 							converter="entityConverter" var="cl" itemValue="#{cl}"
@@ -48,79 +51,96 @@
 							<p:column style="width: 300px;font-size: 12px;">
 								<h:outputText value="#{cl.dsc_Nome}" />
 							</p:column>
+							<p:ajax event="itemSelect"
+								listener="#{antropometriaController.onItemSelectAluno}"
+								update="email sexo dtcadastro dtnascimento nome dtantropometria" />
 
 						</p:autoComplete>
 
 					</div>
 
-					<div class="col-md-4  alinharleft"/>
+					<div class="col-md-4  alinharleft" />
 
 					<div class="col-md-4 alinharright">
 						<p:outputLabel value="Email:" />
 					</div>
-					
+
 					<div class="col-md-4  alinharCentro">
-						<p:inputText disabled="#{antropometriaController.corpo}"
+						<p:inputText disabled="#{antropometriaController.travarCadastro}"
 							value="#{antropometriaController.alunoSelecionado.dsc_email}"
-							size="40" />
+							size="40" id="email" />
 					</div>
-					
-					<div class="col-md-4"/>
+
+					<div class="col-md-4" />
 
 					<div class="col-md-4 alinharright">
 						<p:outputLabel value="Data Nascimento:" />
 					</div>
-					
+
 					<div class="col-md-4  alinharCentro">
-						<p:inputText disabled="#{antropometriaController.corpo}"
+						<p:inputMask disabled="#{antropometriaController.travarCadastro}"
 							value="#{antropometriaController.alunoSelecionado.dt_nascimento}"
-							size="40">
+							size="40" id="dtnascimento" mask="99/99/9999">
 							<f:convertDateTime type="date" pattern="dd/MM/yyyy"
 								timeZone="America/Sao_Paulo" />
-						</p:inputText>
+						</p:inputMask>
 					</div>
-					
-					<div class="col-md-4"/>
+
+					<div class="col-md-4" />
 
 					<div class="col-md-4 alinharright">
 						<p:outputLabel value="Sexo:" />
 					</div>
-					
+
 					<div class="col-md-4  alinharCentro">
-						<p:inputText disabled="#{antropometriaController.corpo}"
-							value="#{antropometriaController.alunoSelecionado.sexo}"
-							size="40" />
+						
+
+						<p:selectOneMenu disabled="#{antropometriaController.travarCadastro}"
+							value="#{antropometriaController.alunoSelecionado.dsc_Sexo}"
+							style="width: 362px;" id="sexo">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItem itemLabel="Feminino" itemValue="Feminino" />
+							<f:selectItem itemLabel="Masculino" itemValue="Masculino" />							
+						</p:selectOneMenu>
 
 					</div>
-					
-					<div class="col-md-4  alinharleft"/>
+
+					<div class="col-md-4  alinharleft" />
 
 					<div class="col-md-4 espacotop alinharright">
 						<p:outputLabel value="Data Antropometria:" />
 					</div>
-					
+
 					<div class="col-md-4  alinharCentro espacotop">
-						<p:inputText
+						<p:inputText disabled="true"
 							value="#{antropometriaController.alunoSelecionado.dt_cadastro}"
-							size="40">
+							id="dtantropometria" size="40">
 							<f:convertDateTime type="date" pattern="dd/MM/yyyy"
 								timeZone="America/Sao_Paulo" />
 						</p:inputText>
 					</div>
-					
-					<div class="col-md-4  alinharleft espacotop"/>
-					
-					<div class="col-md-4 alinharCentro espacotop"/>
-					
+
+					<div class="col-md-4  alinharleft espacotop" />
+
+					<div class="col-md-4 alinharCentro espacotop" />
+
 					<div class="col-md-4 alinharCentro espacotop">
-						<p:commandButton value="Salvar" class="btn btn-success btn-sm" />
+						<p:commandButton value="Salvar" class="btn btn-success btn-sm" 
+						partialSubmit="true" process="nome" update="msgs"/>
 						<p:commandButton value="Nova Avaliação"
 							class="btn btn-success btn-sm" />
-						<p:commandButton value="Limpar" class="btn btn-success btn-sm" />
+
+						<p:commandButton value="Limpar"
+							actionListener="#{antropometriaController.iniciar}"
+							class="btn btn-success btn-sm"
+							update="email sexo dtcadastro dtnascimento nome dtantropometria" />
+
+
+
 					</div>
 
-					<div class="col-md-4 alinharCentro espacotop"/>
-					
+					<div class="col-md-4 alinharCentro espacotop" />
+
 				</div>
 
 			</h:form>

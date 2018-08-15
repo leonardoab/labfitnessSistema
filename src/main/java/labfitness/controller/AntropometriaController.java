@@ -2,9 +2,11 @@ package labfitness.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -21,9 +23,16 @@ import javax.inject.Named;
 
 
 
+
+
+
+
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
+
+import org.primefaces.event.SelectEvent;
+import org.primefaces.push.annotation.OnOpen;
 
 import labfitness.DAO.AlunoDAO;
 import labfitness.DAO.AntropometriaUnidadeDAO;
@@ -33,7 +42,7 @@ import labfitness.services.GeralService;
 import controller.LoginController;
 
 @Named 
-@ViewScoped
+@SessionScoped
 public class AntropometriaController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -46,8 +55,10 @@ public class AntropometriaController implements Serializable {
 	AlunoDAO alunoDAO = new AlunoDAO();
 	AntropometriaUnidadeDAO antropometriaUnidadeDAO = new AntropometriaUnidadeDAO();
 
-	public Aluno alunoSelecionado = new Aluno();;
+	private Aluno alunoSelecionado = new Aluno();
+	
 	boolean corpo = false;
+	boolean travarCadastro = false;
 	
 
 	List<AntropometriaUnidade> listaAntropometriaUnidade;	
@@ -63,13 +74,17 @@ public class AntropometriaController implements Serializable {
 	List<String> listaBio = new ArrayList<String>();
 	List<String> listaDobras = new ArrayList<String>();
 	  
-	String teste = "";
+	
 	
 	
 	
 
 	@PostConstruct
 	public void iniciar() {
+		
+		alunoSelecionado = new Aluno();
+		alunoSelecionado.setDt_cadastro(new Date());
+		travarCadastro = false;
 
 		//alunoSelecionado = alunoDAO.BuscarAlunosPorId(1);
 //		listaAntropometriaUnidade = antropometriaUnidadeDAO.BuscarAnamnesePorAlunoId(1);
@@ -99,7 +114,15 @@ public class AntropometriaController implements Serializable {
 //		listaDobras.add("Razao Quadril");
 //		listaDobras.add("Idade Metabolica");		
 		
-	}	
+	}
+	
+	public void salvarAluno(){
+		
+		
+		
+		
+	}
+	
 	
 	public List<Aluno> alunoNomes(String codigo) {	
 		codigo = codigo.toUpperCase();		
@@ -120,6 +143,11 @@ public class AntropometriaController implements Serializable {
 					"Cell Changed", "Old: " + oldValue + ", New:" + newValue);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
+	}
+	
+	public void onItemSelectAluno(SelectEvent event) {
+		alunoSelecionado = (Aluno)event.getObject();	
+		travarCadastro = true;
 	}
 
 	public void onRowEdit(RowEditEvent event) {
@@ -259,12 +287,15 @@ public class AntropometriaController implements Serializable {
 		this.corpo = corpo;
 	}
 
-	public String getTeste() {
-		return teste;
+	public boolean isTravarCadastro() {
+		return travarCadastro;
 	}
 
-	public void setTeste(String teste) {
-		this.teste = teste;
-	}	
+	public void setTravarCadastro(boolean travarCadastro) {
+		this.travarCadastro = travarCadastro;
+	}
 
+	
+
+	
 }

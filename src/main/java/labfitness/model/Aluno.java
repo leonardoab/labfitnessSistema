@@ -9,7 +9,7 @@ public class Aluno {
 	private Date dt_cadastro;
 	private Date dt_nascimento;
 	private String dsc_email;
-	private boolean flg_sexo;	
+	private String dsc_Sexo;	
 	
 	public Integer getId_Aluno() {
 		return id_Aluno;
@@ -35,23 +35,20 @@ public class Aluno {
 	public void setDsc_email(String dsc_email) {
 		this.dsc_email = dsc_email;
 	}
-	public boolean isFlg_sexo() {
-		return flg_sexo;
-	}
-	public void setFlg_sexo(boolean flg_sexo) {
-		this.flg_sexo = flg_sexo;
-	}
+	
 	public Date getDt_cadastro() {
 		return dt_cadastro;
 	}
 	public void setDt_cadastro(Date dt_cadastro) {
 		this.dt_cadastro = dt_cadastro;
 	}
-	
-	public String getSexo() {
-		if (flg_sexo == true) return "Masculino";
-		else  return "Feminino";
-		
+	public String getDsc_Sexo() {
+		return dsc_Sexo;
 	}
+	public void setDsc_Sexo(String dsc_Sexo) {
+		this.dsc_Sexo = dsc_Sexo;
+	}
+	
+	
 	
 }
